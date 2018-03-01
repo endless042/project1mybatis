@@ -34,7 +34,7 @@ history.go(-1);
 
 <%} %>
 
-<jsp:include page="/menu.jsp"/>
+<jsp:include page="../common/menu.jsp"/>
  
 
 <div class="w3-container w3-padding-64"  width="100%"  >

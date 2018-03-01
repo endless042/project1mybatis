@@ -51,7 +51,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
       게시판 <i class="fa fa-caret-down"></i>
     </a>
     <div id="board" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="<%= request.getContextPath() %>/page/notice?select=notice&bdck=on" class="w3-bar-item w3-button <%= (select!=null&&select.equals("notice"))?"w3-light-grey":"" %>">소식</a>
+      <a href="<%= request.getContextPath() %>/board/list" class="w3-bar-item w3-button <%= (select!=null&&select.equals("notice"))?"w3-light-grey":"" %>">소식</a>
       <a href="<%= request.getContextPath() %>/view/board/list.jsp?select=review&bdck=on" class="w3-bar-item w3-button <%= (select!=null&&select.equals("review"))?"w3-light-grey":"" %>">후기</a>
       <a href="<%= request.getContextPath() %>/view/board/list.jsp?select=qna&bdck=on" class="w3-bar-item w3-button <%= (select!=null&&select.equals("qna"))?"w3-light-grey":"" %>">문의</a>
       <a href="<%= request.getContextPath() %>/view/board/list.jsp?select=community&bdck=on" class="w3-bar-item w3-button <%= (select!=null&&select.equals("community"))?"w3-light-grey":"" %>">커뮤니티</a>
@@ -67,16 +67,16 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   <div class="w3-small">
  <% if (!login){%>
   <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('login').style.display='block'">로그인</a>
-   <a href="<%= request.getContextPath() %>/view/join2.jsp" class="w3-bar-item w3-button w3-padding">회원가입</a>  <%}else{
+   <a href="<%= request.getContextPath() %>/user/join" class="w3-bar-item w3-button w3-padding">회원가입</a>  <%}else{
    
    	if(levelCk.equals("0")){%> <a href="<%= request.getContextPath() %>/admin/admin_userlist.jsp?select=auserlist" class="w3-bar-item w3-button w3-padding">관리자 페이지</a>
-	   <a href="<%= request.getContextPath() %>/view/logoutPro.jsp" class="w3-bar-item w3-button w3-padding">로그아웃</a><%}else{ %>
-	    <a href="<%= request.getContextPath() %>/mypage/mypage.jsp?select=myinfo" class="w3-bar-item w3-button w3-padding">마이페이지</a>
-	   <a href="<%= request.getContextPath() %>/view/logoutPro.jsp" class="w3-bar-item w3-button w3-padding">로그아웃</a>
-	   <%}}%>
+	  <%}else{ %>
+	    <a href="<%= request.getContextPath() %>/page/mypage" class="w3-bar-item w3-button w3-padding">마이페이지</a><%}%>
+	   <a href="../user/logoutPro" class="w3-bar-item w3-button w3-padding">로그아웃</a>
+	  <%  }%>
    
       
-  <a href="<%= request.getContextPath() %>/view/contact.jsp" class="w3-bar-item w3-button w3-padding">ABOUT US</a> 
+  <a href="<%= request.getContextPath() %>/page/contact" class="w3-bar-item w3-button w3-padding">ABOUT US</a> 
  <br><br>
  
  <!-- 최근 본 상품 -->
@@ -119,7 +119,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   <header class="w3-container w3-xlarge">
     <p class="w3-left" id="title">${title}</p>
     <p class="w3-right "><font class="w3-small "><%if(login){%><%=userName %>님 환영합니다.&nbsp;&nbsp;<%} %></font>
-      <i class="fa fa-shopping-cart w3-margin-right" onclick="location.href='<%=request.getContextPath()%>/mypage/mypage.jsp?select=cart'" style="cursor:pointer"></i>
+      <i class="fa fa-shopping-cart w3-margin-right" onclick="location.href='<%=request.getContextPath()%>/page/cart'" style="cursor:pointer"></i>
       <i class="fa fa-search" onclick="document.getElementById('search').style.display='block'" style="cursor:pointer"></i>
     </p>
     
@@ -157,7 +157,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
         
       </div>
 
-      <form class="w3-container" action="<%=request.getContextPath() %>/view/loginPro.jsp">
+      <form class="w3-container" method="post" action="../user/loginPro">
         <div class="w3-section">
           <label><b>ID</b></label>
           <input class="w3-input w3-border w3-margin-bottom" type="text" style="display: block; width: 100%;" placeholder="아이디를 입력하세요." name="tryid" required>
@@ -170,7 +170,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
       <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
         <button onclick="document.getElementById('login').style.display='none'" type="button" class="w3-button w3-black">취소</button>
-        <span class="w3-right w3-padding w3-hide-small"><a href="<%=request.getContextPath() %>/view/join.jsp?title=j">회원가입</a>&nbsp;&nbsp;&nbsp; <a href="#">비밀번호</a>를 잊으셨나요?</span>
+        <span class="w3-right w3-padding w3-hide-small"><a href="../user/join">회원가입</a>&nbsp;&nbsp;&nbsp; <a href="#">비밀번호</a>를 잊으셨나요?</span>
       </div>
 
     </div>

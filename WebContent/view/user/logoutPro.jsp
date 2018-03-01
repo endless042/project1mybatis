@@ -14,15 +14,12 @@
 <body>
 
 
-<% 
-session.invalidate();
-%><script>
+<script>
 alert("성공적으로 로그아웃되었습니다.");
 
-</script><%
-response.sendRedirect("main.jsp");
-%>
+</script>
 
+<Meta http-equiv="refresh" content="0;url='../page/main'">
 
 
 </body>

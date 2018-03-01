@@ -28,7 +28,7 @@
         <div class="w3-display-container"><img src="<%= request.getContextPath() %>/images/sample.PNG" class="w3-border-top w3-border-left w3-border-right" style="width:100%; ">
       <span class="w3-tag w3-display-topleft">New</span>
           <div class="w3-display-middle w3-display-hover">
-            <button class="w3-button w3-red"  onclick="location.href='<%= request.getContextPath() %>/view/gproductview.jsp';">참여하기</button>
+            <button class="w3-button w3-red"  onclick="location.href='<%= request.getContextPath() %>/page/gproductview';">참여하기</button>
           </div>
         </div>
       <div class="w3-container w3-border ">

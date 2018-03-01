@@ -244,6 +244,7 @@ public class BoardDBBean {
 					article.setContent(rs.getString("content"));
 					article.setIp(rs.getString("ip"));
 					
+					
 				}
 				
 				sql="SELECT count(*) FROM comments WHERE articlenum =?";
