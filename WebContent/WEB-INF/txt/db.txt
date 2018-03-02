@@ -1,0 +1,77 @@
+﻿aproduct 경매
+
+
+state	진행상황(완료,진행중,진행예정)
+re	회차수
+num	상품코드 a+숫자
+from	원산지
+title	상품페이지제목
+name	상품명
+category식물분류 
+size	식물크기
+sdate	경매시작일시
+edate	경매종료일시
+sprice	시작가
+eprice	종료가
+rdate	상품등록시간
+deliv	배송방법
+count 참여자수
+
+???
+images		상품이미지
+content		상품설명
+
+-----------------------
+gproduct 공동구매
+
+
+state	진행상황(완료,진행중,진행예정)
+process 수입진행단계(통관 등등)
+re	회차수
+num	상품코드 g+숫자
+from	원산지
+title	상품페이지제목
+name	상품명
+category식물분류 (선인장/다육, 양치식물, 난, 기타)
+size	식물크기
+sdate	공구시작일
+edate	공구종료일
+price	공구가격
+goal	목표수량
+count	현재수량
+rdate	상품등록일
+deliv	배송방법
+
+???
+images		상품이미지 : path  /project/saveImg/imgname
+content		상품설명   varchar(3000);
+
+-----------------------------
+ahistory
+
+num	경매상품번호
+memeber 경매참여자
+price 	입찰가
+date 	경매참여일시
+
+----------------------------
+order
+
+num	주문번호
+orderid	주문회원아이디
+state	주문상황
+paystate 결제상황
+date 	주문일시
+
+
+
+테이블가로길이
+이미지/상품설명등록
+
+페이지헤더
+
+
+« »
+
+게시판
+상품번호첨부

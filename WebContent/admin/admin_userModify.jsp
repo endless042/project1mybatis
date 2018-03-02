@@ -17,7 +17,7 @@
 		%>
     
 
-  <form class="w3-container w3-section" action="userModifyPro.jsp" style="padding-left:50px;">
+  <form class="w3-container w3-section" action="userModifyPro" style="padding-left:50px;">
   <h4>회원 정보 수정</h4>
   
    <table class="w3-white w3-small" style="width: 80%;" ><tr><td>
@@ -45,7 +45,7 @@
  pageNum="1";}%>
    <div class="w3-row-padding">
   <div class="w3-bar">
-   <input class="w3-button w3-black w3-margin-right w3-small" type="button" onclick="window.location='admin_userlist.jsp?pageNum=<%=pageNum %>&select=auserlist'" value="뒤로">
+   <input class="w3-button w3-black w3-margin-right w3-small" type="button" onclick="window.location='userlist?pageNum=<%=pageNum %>&select=auserlist'" value="뒤로">
 	<input type="hidden" name="id" value="<%=user.getId()%>">
 	<input type="hidden" name="pwd" value="<%=user.getPwd()%>">
 	<input type="hidden" name="pageNum" value="<%=pageNum %>">

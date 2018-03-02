@@ -46,10 +46,10 @@ history.go(-1);
   
   
     <div class="w3-bar w3-border w3-small" style="max-width:900px; width:90%;">
-    <button style="width:25%" class="w3-bar-item w3-button tablink <%=(select!=null&&select.equals("auserlist"))?"w3-green":"" %>  " onclick="location.href='admin_userlist.jsp?select=auserlist';">회원목록</button>
-    <button style="width:25%" class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("aauction"))?"w3-green":"" %> " onclick="location.href='admin_auction.jsp?select=aauction';">경매</button>
-    <button style="width:25%" class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("agpurchase"))?"w3-green":"" %> " onclick="location.href='admin_gpurchase.jsp?select=agpurchase';">공동구매</button>
-         <button style="width:25%" class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("aboard"))?"w3-green":"" %> " onclick="location.href='admin_board.jsp?select=aboard';">게시판</button>
+    <button style="width:25%" class="w3-bar-item w3-button tablink <%=(select!=null&&select.equals("auserlist"))?"w3-green":"" %>  " onclick="location.href='userlist?select=auserlist';">회원목록</button>
+    <button style="width:25%" class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("aauction"))?"w3-green":"" %> " onclick="location.href='auction?select=aauction';">경매</button>
+    <button style="width:25%" class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("agpurchase"))?"w3-green":"" %> " onclick="location.href='gpurchase?select=agpurchase';">공동구매</button>
+         <button style="width:25%" class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("aboard"))?"w3-green":"" %> " onclick="location.href='board?select=aboard';">게시판</button>
         <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="myFunction()">&#9776;</a>
   </div>
   <div id="demo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium">

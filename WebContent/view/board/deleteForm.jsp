@@ -34,7 +34,8 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 	<input type="hidden" name="num" value="${num}">	 
 	</td></tr><tr height="30">
 	<td align="center"><input type="submit" class="w3-button w3-hover-black" value="삭제">
-	<input type="button" class="w3-button w3-hover-black" value="목록" onclick="document.location.href='list?pageNum=${pageNum}'">
+	<input type="hidden" name="boardid" value="${boardid}">
+	<input type="button" class="w3-button w3-hover-black" value="목록" onclick="document.location.href='list?pageNum=${pageNum}&boardid=${boardid}'">
 	</td></tr>
 	</table>
 	

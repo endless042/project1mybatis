@@ -13,7 +13,7 @@
   
 <table align="center" width="100%" style="max-width:600px"><tr ><td>
  <div class="w3-card-4 w3-center " style="max-width:600px" >
-      <form class="w3-container w3-padding-24" action="/action_page.php">
+      <form class="w3-container w3-padding-24">
         <div class="w3-section">
         
           회원가입이 완료되었습니다.<div style="margin-top:50px"></div>

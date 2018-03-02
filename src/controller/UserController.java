@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,23 +10,48 @@ import com.sist.msk.Action;
 
 import db.UserlistDBBean;
 import db.UserlistDataBean;
+import user.JoinRequest;
+import user.JoinService;
 
 public class UserController extends Action{
+	
 	public String join(HttpServletRequest req,
-			 HttpServletResponse res)  throws Throwable {
+			 HttpServletResponse res)  throws Throwable { 
 			req.setAttribute("title", "회원가입");
-			
-			
-			
-			
-			
-			 return  "/view/user/join2.jsp"; 
+			 return  "/view/user/join.jsp"; 
 			} 
 	
 	public String joinPro(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable {
 			req.setAttribute("title", "회원가입");
 			
+			JoinRequest joinReq=new JoinRequest();
+			joinReq.setId(req.getParameter("id"));
+			joinReq.setName(req.getParameter("name"));
+			joinReq.setPwd(req.getParameter("pwd"));
+			joinReq.setConfirmPwd(req.getParameter("confirmPwd"));
+			joinReq.setBdate(req.getParameter("bdate"));
+			joinReq.setEmail(req.getParameter("email"));
+			
+			System.out.println(joinReq);
+			
+			Map<String,Boolean> errors=new HashMap<>();
+			req.setAttribute("errors", errors);
+			
+			joinReq.validate(errors);
+		
+			JoinService joinService=new JoinService();
+	
+		if(!joinService.dupIdTest(joinReq)) {
+			errors.put("duplicateId", Boolean.TRUE);
+			
+		}
+		
+		if(!errors.isEmpty()) {
+			return "/user/join";
+		}else if(errors.isEmpty()){
+			
+
 			UserlistDBBean userPro=UserlistDBBean.getInstance();
 			UserlistDataBean user=new UserlistDataBean();
 			
@@ -43,11 +71,11 @@ public class UserController extends Action{
 			
 			user.setTel(tel);
 			user.setAddr(addr);
-			user.setEmail(req.getParameter("email"));
-			user.setBdate(req.getParameter("bdate"));
-			user.setName(req.getParameter("name"));
-			user.setId(req.getParameter("id"));
-			user.setPwd(req.getParameter("pwd"));
+			user.setEmail(joinReq.getEmail());
+			user.setBdate(joinReq.getBdate());
+			user.setName(joinReq.getName());
+			user.setId(joinReq.getId());
+			user.setPwd(joinReq.getPwd());
 				
 			
 			System.out.println(user); 
@@ -56,10 +84,12 @@ public class UserController extends Action{
 			
 			res.sendRedirect("joinComp");
 			
-			
-			
 			 return  null; 
 			} 
+		return null;
+		
+		
+	}
 	
 
 	public String joinComp(HttpServletRequest req,

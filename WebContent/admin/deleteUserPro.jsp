@@ -20,7 +20,7 @@ alert("성공적으로 탈퇴되었습니다.");
 
 
 </script>
-<meta http-equiv="Refresh" content="0;url=admin_userlist.jsp?pageNum=<%=pageNum%>&select=auserlist">
+<meta http-equiv="Refresh" content="0;url=userlist?pageNum=<%=pageNum%>&select=auserlist">
 
 
 		<% }else{ %>

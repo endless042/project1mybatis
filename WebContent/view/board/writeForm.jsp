@@ -82,6 +82,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   </tr>
 <tr>      
  <td colspan=2  class="w3-center"> 
+ <input type="hidden"  name="boardid" value="${boardid}">
   <input type="submit" class="w3-button w3-hover-black" value="글쓰기" >  
   <input type="reset" class="w3-button w3-hover-black" value="다시작성">
   <input type="button" class="w3-button w3-hover-black" value="목록보기" OnClick="window.location='list'">

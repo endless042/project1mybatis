@@ -17,7 +17,7 @@
 
 <c:if test="${chk==1}">
 
-	<meta http-equiv="Refresh" content="0;url=content?num=${article.num}&pageNum=${pageNum}">
+	<meta http-equiv="Refresh" content="0;url=content?num=${article.num}&pageNum=${pageNum}&boardid=${boardid}">
 	</c:if>
 	
 	<c:if test="${chk!=1}">

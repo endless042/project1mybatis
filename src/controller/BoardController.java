@@ -17,11 +17,18 @@ public class BoardController extends Action {
 
 	public String list(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 
-		req.setAttribute("title", "소식");
+		
 		
 		    String boardid=req.getParameter("boardid");
 		    if(boardid==null) boardid="1";
 		    
+		    if(boardid.equals("1")) {
+		    req.setAttribute("title", "소식");
+		    }else if(boardid.equals("2")) {
+		    	req.setAttribute("title", "문의");
+		    }else {
+		    	req.setAttribute("title", "");
+		    }
 		    
 		     int pageSize=10;
 		    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -64,34 +71,56 @@ public class BoardController extends Action {
 		   
 		
 		
-		return "/view/board/list.jsp?select=notice&bdck=on";
+		return "/view/board/list.jsp?bdck=on";
 			
 	    	} 
 	
 	public String deleteForm(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 
-		req.setAttribute("title", "소식");
 		
+		  
+		String boardid=req.getParameter("boardid");
+		    if(boardid==null){
+		    	boardid="1";
+		    }
+		    
+		    if(boardid.equals("1")) {
+			    req.setAttribute("title", "소식");
+			    }else if(boardid.equals("2")) {
+			    	req.setAttribute("title", "문의");
+			    }else {
+			    	req.setAttribute("title", "");
+			    }
 		  
 		    int num=Integer.parseInt(req.getParameter("num"));
 		    String pageNum=req.getParameter("pageNum");
 		    
 		    req.setAttribute("num", num);
     		req.setAttribute("pageNum", pageNum);
-		
+    		req.setAttribute("boardid", boardid);
 		
 		return "/view/board/deleteForm.jsp?select=notice&bdck=on";
 			} 
 	
 	public String deletePro(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 
-		req.setAttribute("title", "소식");
+		
 		
 		
 	    String boardid=req.getParameter("boardid");
 	    if(boardid==null){
 	    	boardid="1";
 	    }
+	    
+	    if(boardid.equals("1")) {
+		    req.setAttribute("title", "소식");
+		    }else if(boardid.equals("2")) {
+		    	req.setAttribute("title", "문의");
+		    }else {
+		    	req.setAttribute("title", "");
+		    }
+	    
+	    
 	    String pageNum=req.getParameter("pageNum");
 	    if(pageNum==null||pageNum==""){
 			pageNum="1";}
@@ -102,7 +131,7 @@ public class BoardController extends Action {
 		BoardDBBean dbPro=BoardDBBean.getInstance();
 		int check=dbPro.deleteArticle(num,passwd,boardid);
 		
-			
+			req.setAttribute("boardid", boardid);
 			req.setAttribute("pageNum", pageNum);
 			req.setAttribute("check", check);
 			
@@ -112,12 +141,18 @@ public class BoardController extends Action {
 	
 	public String content(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 
-		req.setAttribute("title", "소식");
+		
 		
 		String boardid=req.getParameter("boardid");
 		if(boardid==null) boardid="1";
 		
-		
+		 if(boardid.equals("1")) {
+			    req.setAttribute("title", "소식");
+			    }else if(boardid.equals("2")) {
+			    	req.setAttribute("title", "문의");
+			    }else {
+			    	req.setAttribute("title", "");
+			    }
 	 
 		int num=Integer.parseInt(req.getParameter("num"));
 		String pageNum=req.getParameter("pageNum");
@@ -155,13 +190,21 @@ public class BoardController extends Action {
 	
 	public String updateForm(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 
-		req.setAttribute("title", "소식");
+		
 		
 		 
 		    String boardid=req.getParameter("boardid");
 		    if(boardid==null){
 		    	boardid="1";
 		    }
+		    
+		    if(boardid.equals("1")) {
+			    req.setAttribute("title", "소식");
+			    }else if(boardid.equals("2")) {
+			    	req.setAttribute("title", "문의");
+			    }else {
+			    	req.setAttribute("title", "");
+			    }
 		 
 			int num=Integer.parseInt(req.getParameter("num"));
 			String pageNum=req.getParameter("pageNum");
@@ -189,12 +232,21 @@ public class BoardController extends Action {
 	
 	public String updatePro(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 
-		req.setAttribute("title", "소식");
+		
 		
 		 int num=Integer.parseInt(req.getParameter("num"));
 	     
 	     String boardid=req.getParameter("boardid");
 	     if(boardid==null) boardid="1";
+	     
+	     if(boardid.equals("1")) {
+			    req.setAttribute("title", "소식");
+			    }else if(boardid.equals("2")) {
+			    	req.setAttribute("title", "문의");
+			    }else {
+			    	req.setAttribute("title", "");
+			    }
+	     
 	     String pageNum=req.getParameter("pageNum");
 	     if(pageNum==null||pageNum==""){pageNum="1";}
 	     
@@ -224,7 +276,7 @@ public class BoardController extends Action {
 	
 	public String writeForm(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 
-		req.setAttribute("title", "소식");
+		
 		
 		   
 		
@@ -238,15 +290,26 @@ public class BoardController extends Action {
 	    	re_level=Integer.parseInt(req.getParameter("re_level"));
 	     	re_step=Integer.parseInt(req.getParameter("re_step"));
 	     }
-	    if(boardid==null){
+	    if(boardid==null||boardid.equals("")){
 	    	boardid="1";
 	    }
+	    
+	    
+	    
+	    if(boardid.equals("1")) {
+		    req.setAttribute("title", "소식");
+		    }else if(boardid.equals("2")) {
+		    	req.setAttribute("title", "문의");
+		    }else {
+		    	req.setAttribute("title", "");
+		    }
 	    
 	    req.setAttribute("boardid", boardid);
 	    req.setAttribute("num", num);
 	 	req.setAttribute("ref", ref);
 	 	 req.setAttribute("re_step", re_step);
 		 req.setAttribute("re_level", re_level);
+		  req.setAttribute("pageNum", 1);
 	 	
 		
 		return "/view/board/writeForm.jsp?select=notice&bdck=on";
@@ -270,25 +333,45 @@ public class BoardController extends Action {
 		
 		   String boardid=req.getParameter("boardid");
 		     if(boardid==null) boardid="1";
+		     
+		     if(boardid.equals("1")) {
+				    req.setAttribute("title", "소식");
+				    }else if(boardid.equals("2")) {
+				    	req.setAttribute("title", "문의");
+				    }else {
+				    	req.setAttribute("title", "");
+				    }
+		     
 		     String pageNum=req.getParameter("pageNum");
 		     if(pageNum==null||pageNum==""){pageNum="1";}
   
 		     
 		     BoardDataBean article=new BoardDataBean();
+		     
+		     if(req.getParameter("num")!=null&& !req.getParameter("num").equals("")) {
+		    	 
+		    	  article.setNum(Integer.parseInt(req.getParameter("num")));
+		 	     article.setRef(Integer.parseInt(req.getParameter("ref")));
+		 	     article.setRe_step(Integer.parseInt(req.getParameter("re_step")));
+		 	     article.setRe_level(Integer.parseInt(req.getParameter("re_level")));
+		     }
+		     
 			 	article.setBoardid(boardid);
 			 	article.setWriter(req.getParameter("writer"));
 			 	article.setSubject(req.getParameter("subject"));
 			 	article.setEmail(req.getParameter("email"));
 			 	article.setContent(req.getParameter("content"));
 			 	article.setPasswd(passwd);
-			 	 req.setAttribute("article", article);
 			 	 
-			 	System.out.println(article);
+			 	 
+			 	
 			 	
 			 	BoardDBBean dbPro = BoardDBBean.getInstance(); 
 			 	article.setIp(req.getRemoteAddr());
 			 	dbPro.insertArticle(article);
-				
+			 	System.out.println(article);
+			 	
+			 	req.setAttribute("article", article);
 		     
 		     req.setAttribute("boardid", boardid);
 			 	req.setAttribute("pageNum", pageNum);

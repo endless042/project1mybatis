@@ -36,7 +36,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     <div class="w3-container w3-padding-64">
  
     	<p class="w3-right w3-padding-right-large">
-    	<a href="writeForm"><button class="w3-button w3-green w3-small">글쓰기</button></a>
+    	<a href="writeForm?boardid=${boardid }"><button class="w3-button w3-green w3-small">글쓰기</button></a>
     	</p>
     	
     	
@@ -84,7 +84,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     				
     				</c:if>
     				
-    				 <a href="content?num=${article.num}&pageNum=${currentPage}">
+    				 <a href="content?num=${article.num}&pageNum=${currentPage}&boardid=${boardid}">
     				${article.subject}</a> </td>
     				<td class="w3-center" width="100"><span class="w3-tag">${article.writer}</span></td>
     				<td class="w3-center" width="150">

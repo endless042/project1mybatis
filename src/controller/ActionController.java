@@ -9,8 +9,10 @@ import db.UserlistDBBean;
 import db.UserlistDataBean;
 
 public class ActionController extends Action{
+	
 	public String main(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable {
+		  
 			req.setAttribute("title", "메인");
 			 return  "/view/main.jsp"; 
 			} 
@@ -34,12 +36,7 @@ public class ActionController extends Action{
 		req.setAttribute("title", "수입제안");
 		return "/view/survey.jsp";
 			} 
-	
-	public String join(HttpServletRequest req,
-			 HttpServletResponse res)  throws Throwable { 
-			req.setAttribute("title", "회원가입");
-			 return  "/view/join2.jsp"; 
-			} 
+
 	public String contact(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 
 			req.setAttribute("title", "ABOUT US");
@@ -57,11 +54,6 @@ public class ActionController extends Action{
 		return  "/view/gproductview.jsp"; 
 			} 
 	
-	public String login(HttpServletRequest req,
-			 HttpServletResponse res)  throws Throwable { 
-		req.setAttribute("title", "로그인");	
-		return  "/view/login.jsp"; 
-			} 
 	
 	public String cart(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 
@@ -76,7 +68,7 @@ public class ActionController extends Action{
 		 }catch(Exception e){}
 		
 		
-		return  "/mypage/mypage.jsp?select=cart"; 
+		return  "/mypage/mypage_cart.jsp?select=cart"; 
 			} 
 	
 	public String mypage(HttpServletRequest req,
@@ -93,6 +85,38 @@ public class ActionController extends Action{
 		
 		
 		return  "/mypage/mypage.jsp?select=myinfo"; 
+			} 
+	
+	public String order(HttpServletRequest req,
+			 HttpServletResponse res)  throws Throwable { 
+		req.setAttribute("title", "마이페이지");	
+		
+		 try{
+				UserlistDBBean userPro=UserlistDBBean.getInstance();
+				UserlistDataBean user=userPro.getUser((String)req.getSession().getAttribute("loginId")); 
+				
+				req.setAttribute("user", user);
+			
+		 }catch(Exception e){}
+		
+		
+		return  "/mypage/mypage_order.jsp?select=order"; 
+			} 
+	
+	public String myarticle(HttpServletRequest req,
+			 HttpServletResponse res)  throws Throwable { 
+		req.setAttribute("title", "마이페이지");	
+		
+		 try{
+				UserlistDBBean userPro=UserlistDBBean.getInstance();
+				UserlistDataBean user=userPro.getUser((String)req.getSession().getAttribute("loginId")); 
+				
+				req.setAttribute("user", user);
+			
+		 }catch(Exception e){}
+		
+		
+		return  "/mypage/mypage_article.jsp?select=articles"; 
 			} 
 	
 }

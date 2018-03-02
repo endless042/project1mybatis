@@ -6,7 +6,7 @@
    
 	<c:if test="${check==1}">
      if(check==1){
-		<meta http-equiv="Refresh" content="0;url=list?pageNum=${pageNum}">
+		<meta http-equiv="Refresh" content="0;url=list?pageNum=${pageNum}&boardid=${boardid}">
 		</c:if>
 		<c:if test="${check!=1}">
 		

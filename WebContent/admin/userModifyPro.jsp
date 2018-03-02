@@ -44,7 +44,7 @@
 	<script>
 		alert("정보 수정 완료");
 		</script>
-	<meta http-equiv="Refresh" content="0;url=admin_userModify.jsp?id=<%=id%>&pwd=<%=pwd%>&pageNum=<%=pageNum%>&select=auserlist">
+	<meta http-equiv="Refresh" content="0;url=admin_userModify?id=<%=id%>&pwd=<%=pwd%>&pageNum=<%=pageNum%>&select=auserlist">
 	
 	<%}else{ %>
 		<script>

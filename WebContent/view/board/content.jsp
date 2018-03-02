@@ -15,7 +15,9 @@
  <style>
 .w3-sidebar a {font-family: "Roboto", sans-serif}
 body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
-
+pre {
+font-family: "Montserrat", sans-serif;
+}
 
 </style>
 </head>
@@ -49,13 +51,13 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 <td colspan="4" class="w3-center">
 <c:if test="${loginId==article.writer || loginId=='admin'}">
 
-<input type="button" class="w3-button w3-black " value="수정" onclick="document.location.href='updateForm?num=${article.num}&pageNum=${pageNum}'">
+<input type="button" class="w3-button w3-black " value="수정" onclick="document.location.href='updateForm?num=${article.num}&pageNum=${pageNum}&boardid=${boardid}'">
 &nbsp;&nbsp;&nbsp;&nbsp;
-<input type="button" class="w3-button w3-black " value="삭제" onclick="document.location.href='deleteForm?num=${article.num}&pageNum=${pageNum}'">
+<input type="button" class="w3-button w3-black " value="삭제" onclick="document.location.href='deleteForm?num=${article.num}&pageNum=${pageNum}&boardid=${boardid}'">
 &nbsp;&nbsp;&nbsp;&nbsp;</c:if>
-<input type="button" class="w3-button w3-black " value="답글" onclick="document.location.href='writeForm?num=${num}&ref=${ref}&re_step=${re_step}&re_level=${re_level}&pageNum=${pageNum}'">
+<input type="button" class="w3-button w3-black " value="답글" onclick="document.location.href='writeForm?num=${num}&ref=${ref}&re_step=${re_step}&re_level=${re_level}&pageNum=${pageNum}&boardid=${boardid}'">
 &nbsp;&nbsp;&nbsp;&nbsp;
-<input type="button" class="w3-button w3-black " value="목록" onclick="document.location.href='list?pageNum=${pageNum}'">
+<input type="button" class="w3-button w3-black " value="목록" onclick="document.location.href='list?pageNum=${pageNum}&boardid=${boardid}'">
 </td></tr><tr><td colspan="4"><b>댓글</b></td></tr>
 <tr><td colspan="4">
  <%-- <jsp:include page="../../reply/list.jsp"></jsp:include> --%></td></tr>
