@@ -17,6 +17,27 @@ create table board(
 
 
 );
+commit;
+alter table board add(commentCount int default 0 not null );
+
+select * from board;
+CREATE TABLE comments(
+  conum NUMBER PRIMARY KEY,
+  id VARCHAR2(20) NOT NULL,
+  cocontent VARCHAR2(200) NOT NULL,
+  codate DATE NOT NULL,
+ articlenum NUMBER NOT NULL,
+  
+CONSTRAINT comment_fk FOREIGN KEY(articlenum)
+REFERENCES board(num) ON DELETE CASCADE);
+ 
+
+CREATE SEQUENCE comser
+ START WITH 1
+INCREMENT BY 1;
+
+
+
 
 create SEQUENCE BoardSer
   START WITH 1
@@ -63,7 +84,7 @@ bdate DATE not NULL,
     email VARCHAR(50) not NULL
 
 );
-ALTER TABLE userlist ADD (ulevel number DEFAULT 1);
+ALTER TABLE userlist ADD (point VARCHAR(10) DEFAULT '1000');
 alter table userlist modify (bdate varchar(20));
 alter table userlist add(cdate DATE default sysdate);
 
@@ -76,7 +97,7 @@ create SEQUENCE userSeq
 SELECT *FROM userlist ORDER BY num;
 
 
-insert into userlist VALUES(1,'0','admin','admin','1234','2018-02-08','admin Address','admin Tel','admin Email',sysdate);
+insert into userlist VALUES(1,'0','admin','admin','admin','2018-02-08','admin Address','admin Tel','admin Email',sysdate);
 
 delete from userlist where ulevel=0;
 commit;
@@ -94,7 +115,14 @@ delete from userlist;
 
 select count(*) from userlist where ulevel like '1';
 
-
+CREATE TABLE guestbook_message(
+ id int primary key not null,
+ guestName Varchar(20) not null,
+ password varchar(20) not null,
+ message varchar(500) not null
+ 
+);
+drop table aproduct;
 
 CREATE TABLE aproduct (
 state varchar(10) not null,
@@ -105,22 +133,36 @@ title	varchar(100) not null,
 name varchar(50) not null,
 category varchar(50) not null,
 height  varchar(10) not null,
-sdate	date not null,
-edate	date not null,
+sdate	varchar(50) not null,
+edate	varchar(50) not null,
 sprice	VARCHAR(10) not null,
 eprice	VARCHAR(10), 
 rdate	date default sysdate ,
 deliv	varchar(10) not null,
 count int default 0,
-imgs varchar(200),
-content	varchar(3000)
+imgs varchar(3000),
+content	varchar(3000) not null,
+readcount int DEFAULT 0
 
 );
 
 
+
+create SEQUENCE aSer 
+   START WITH 1
+  INCREMENT BY 1
+  NOMAXVALUE ;
+  
+  create SEQUENCE pSer
+   START WITH 1
+  INCREMENT BY 1
+  NOMAXVALUE ;
+
+drop table gproduct;
+
+
+
 create table gproduct(
-
-
 state varchar(10) not null,
 process varchar(10) not null,
 re	int default 1,
@@ -130,15 +172,41 @@ title	varchar(100) not null,
 name varchar(50) not null,
 category varchar(50) not null,
 height  varchar(10) not null,
-sdate	date not null,
-edate	date not null,
+sdate	varchar(50) not null,
+edate	varchar(50) not null,
 price	VARCHAR(10) not null,
 goal	int not null,
 count	int default 0,
 rdate	date default sysdate,
 deliv	varchar(10) not null,
-imgs varchar(200),
-content	varchar(3000)
+imgs varchar(3000),
+content	varchar(3000) not null,
+readcount int DEFAULT 0
+);
+commit;
+select * from aproduct ;
+select * from gproduct;
+
+delete from cart ;
+
+drop table cart;
+
+create table cart(
+userid varchar(20),
+pronum varchar(10),
+rdate date default sysdate
+
 );
 
+select * from cart;
+commit;
+select * from (select rownum rum ,
+b.* from (select a.* from cart a 
+where pronum like concat ('a', '%') and userid='admin' ORDER BY rdate desc) b)  
+where rum between 1 and 5;
 
+
+ALTER TABLE cart modify (pronum VARCHAR(10));
+
+
+select * from userlist;
