@@ -123,7 +123,7 @@
  <td  class="w3-center"><b>상품명</b></td>
 <td class="w3-center"><b>진행기간</b></td>
 <td class="w3-center"><b>참여 수량</b></td>
-<td class="w3-center"><b>가격</b></td>
+<td class="w3-center"><b>총 금액</b></td>
 <td class="w3-center"><b>결과</b></td></tr>
 
 

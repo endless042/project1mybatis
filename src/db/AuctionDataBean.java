@@ -8,40 +8,29 @@ public class AuctionDataBean {
 	private String state;
 	private int re;
 	private int num;
-	private String from;
+	private String origin;
 	private String title;
 	private String name;
 	private String category;
-	private String size;
-	private Date sdate;
-	private Date edate;
+	private String height;
+	private String sdate;
+	private String edate;
 	private String sprice;
 	private String eprice;
 	private Date rdate;
 	private String deliv;
-	
-	
-	public int getCount() {
-		return count;
-	}
-	public void setCount(int count) {
-		this.count = count;
-	}
-	private String imgpath;
+	private int count;
+	private String imgs;
 	private String content;
-	private int count;	//참여자수
+	private int readcount; 
 	
-	public String getImgpath() {
-		return imgpath;
+	
+
+	public int getReadcount() {
+		return readcount;
 	}
-	public void setImgpath(String imgpath) {
-		this.imgpath = imgpath;
-	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setReadcount(int readcount) {
+		this.readcount = readcount;
 	}
 	public String getState() {
 		return state;
@@ -61,11 +50,11 @@ public class AuctionDataBean {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public String getFrom() {
-		return from;
+	public String getOrigin() {
+		return origin;
 	}
-	public void setFrom(String from) {
-		this.from = from;
+	public void setOrigin(String origin) {
+		this.origin = origin;
 	}
 	public String getTitle() {
 		return title;
@@ -85,22 +74,24 @@ public class AuctionDataBean {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public String getSize() {
-		return size;
+	public String getHeight() {
+		return height;
 	}
-	public void setSize(String size) {
-		this.size = size;
+	public void setHeight(String height) {
+		this.height = height;
 	}
-	public Date getSdate() {
+	
+	
+	public String getSdate() {
 		return sdate;
 	}
-	public void setSdate(Date sdate) {
+	public void setSdate(String sdate) {
 		this.sdate = sdate;
 	}
-	public Date getEdate() {
+	public String getEdate() {
 		return edate;
 	}
-	public void setEdate(Date edate) {
+	public void setEdate(String edate) {
 		this.edate = edate;
 	}
 	public String getSprice() {
@@ -127,7 +118,35 @@ public class AuctionDataBean {
 	public void setDeliv(String deliv) {
 		this.deliv = deliv;
 	}
-	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public String getImgs() {
+		return imgs;
+	}
+	public void setImgs(String imgs) {
+		this.imgs = imgs;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	@Override
+	public String toString() {
+		return "AuctionDataBean [state=" + state + ", re=" + re + ", num=" + num + ", origin=" + origin + ", title="
+				+ title + ", name=" + name + ", category=" + category + ", height=" + height + ", sdate=" + sdate
+				+ ", edate=" + edate + ", sprice=" + sprice + ", eprice=" + eprice + ", rdate=" + rdate + ", deliv="
+				+ deliv + ", count=" + count + ", imgs=" + imgs + ", content=" + content + ", readcount=" + readcount
+				+ "]";
+	}
 
+	
+	
+	
 
 }

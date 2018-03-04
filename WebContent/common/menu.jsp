@@ -57,9 +57,9 @@ text-decoration: none;
     </a>
     <div id="board" class="w3-bar-block w3-hide w3-padding-large w3-medium">
       <a href="<%= request.getContextPath() %>/board/list?select=notice" class="w3-bar-item w3-button <%= (select!=null&&select.equals("notice"))?"w3-light-grey":"" %>">소식</a>
-      <a href="<%= request.getContextPath() %>/board/list" class="w3-bar-item w3-button <%= (select!=null&&select.equals("review"))?"w3-light-grey":"" %>">후기</a>
+      <a href="<%= request.getContextPath() %>/board/list?boardid=3&select=review" class="w3-bar-item w3-button <%= (select!=null&&select.equals("review"))?"w3-light-grey":"" %>">후기</a>
       <a href="<%= request.getContextPath() %>/board/list?boardid=2&select=qna" class="w3-bar-item w3-button <%= (select!=null&&select.equals("qna"))?"w3-light-grey":"" %>">문의</a>
-      <a href="<%= request.getContextPath() %>/board/list" class="w3-bar-item w3-button <%= (select!=null&&select.equals("community"))?"w3-light-grey":"" %>">커뮤니티</a>
+      <a href="<%= request.getContextPath() %>/board/list?boardid=4&select=community" class="w3-bar-item w3-button <%= (select!=null&&select.equals("community"))?"w3-light-grey":"" %>">커뮤니티</a>
    
     </div>
     
@@ -124,7 +124,7 @@ text-decoration: none;
   <header class="w3-container w3-xlarge">
     <p class="w3-left" id="title">${title}</p>
     <p class="w3-right "><font class="w3-small "><%if(login){%><%=userName %>님 환영합니다.&nbsp;&nbsp;<%} %></font>
-      <i class="fa fa-heart w3-margin-right" style="color:red;cursor:pointer;" onclick="location.href='<%=request.getContextPath()%>/page/cart'" style="cursor:pointer"></i>
+      <i class="fa fa-heart w3-margin-right" style="color:red;cursor:pointer;" onclick="location.href='<%=request.getContextPath()%>/page/cartlist'" style="cursor:pointer"></i>
       <i class="fa fa-search" onclick="document.getElementById('search').style.display='block'" style="cursor:pointer"></i>
     </p>
     

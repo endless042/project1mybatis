@@ -93,3 +93,52 @@ delete from userlist;
 
 
 select count(*) from userlist where ulevel like '1';
+
+
+
+CREATE TABLE aproduct (
+state varchar(10) not null,
+re	int default 1,
+num	int primary KEY ,
+origin varchar(30) not null,
+title	varchar(100) not null,
+name varchar(50) not null,
+category varchar(50) not null,
+height  varchar(10) not null,
+sdate	date not null,
+edate	date not null,
+sprice	VARCHAR(10) not null,
+eprice	VARCHAR(10), 
+rdate	date default sysdate ,
+deliv	varchar(10) not null,
+count int default 0,
+imgs varchar(200),
+content	varchar(3000)
+
+);
+
+
+create table gproduct(
+
+
+state varchar(10) not null,
+process varchar(10) not null,
+re	int default 1,
+num	int primary KEY ,
+origin varchar(30) not null,
+title	varchar(100) not null,
+name varchar(50) not null,
+category varchar(50) not null,
+height  varchar(10) not null,
+sdate	date not null,
+edate	date not null,
+price	VARCHAR(10) not null,
+goal	int not null,
+count	int default 0,
+rdate	date default sysdate,
+deliv	varchar(10) not null,
+imgs varchar(200),
+content	varchar(3000)
+);
+
+

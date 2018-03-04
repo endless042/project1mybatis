@@ -8,29 +8,23 @@ public class GpurcDataBean {
 	private String process;
 	private int re;
 	private int num;
-	private String from;
+	private String origin;
 	private String title;
 	private String name;
 	private String category;
-	private String size;
-	private Date sdate;
-	private Date edate;
+	private String height;
+	private  String sdate;
+	private  String edate;
 	private String price;
 	private int goal;
 	private int count;
 	private Date rdate;
-	private int stock;
 	private String deliv;
-	private String imgpath;
+	private String imgs;
 	private String content;
+	private int readcount;
 	
 	
-	public int getCount() {
-		return count;
-	}
-	public void setCount(int count) {
-		this.count = count;
-	}
 	public String getState() {
 		return state;
 	}
@@ -55,11 +49,11 @@ public class GpurcDataBean {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public String getFrom() {
-		return from;
+	public String getOrigin() {
+		return origin;
 	}
-	public void setFrom(String from) {
-		this.from = from;
+	public void setOrigin(String origin) {
+		this.origin = origin;
 	}
 	public String getTitle() {
 		return title;
@@ -79,22 +73,22 @@ public class GpurcDataBean {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public String getSize() {
-		return size;
+	public String getHeight() {
+		return height;
 	}
-	public void setSize(String size) {
-		this.size = size;
+	public void setHeight(String height) {
+		this.height = height;
 	}
-	public Date getSdate() {
+	public String getSdate() {
 		return sdate;
 	}
-	public void setSdate(Date sdate) {
+	public void setSdate(String sdate) {
 		this.sdate = sdate;
 	}
-	public Date getEdate() {
+	public String getEdate() {
 		return edate;
 	}
-	public void setEdate(Date edate) {
+	public void setEdate(String edate) {
 		this.edate = edate;
 	}
 	public String getPrice() {
@@ -109,30 +103,32 @@ public class GpurcDataBean {
 	public void setGoal(int goal) {
 		this.goal = goal;
 	}
-	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public Date getRdate() {
 		return rdate;
 	}
 	public void setRdate(Date rdate) {
 		this.rdate = rdate;
 	}
-	public int getStock() {
-		return stock;
-	}
-	public void setStock(int stock) {
-		this.stock = stock;
-	}
+	
 	public String getDeliv() {
 		return deliv;
 	}
 	public void setDeliv(String deliv) {
 		this.deliv = deliv;
 	}
-	public String getImgpath() {
-		return imgpath;
+	
+	
+	public String getImgs() {
+		return imgs;
 	}
-	public void setImgpath(String imgpath) {
-		this.imgpath = imgpath;
+	public void setImgs(String imgs) {
+		this.imgs = imgs;
 	}
 	public String getContent() {
 		return content;
@@ -140,6 +136,20 @@ public class GpurcDataBean {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public int getReadcount() {
+		return readcount;
+	}
+	public void setReadcount(int readcount) {
+		this.readcount = readcount;
+	}
+	@Override
+	public String toString() {
+		return "GpurcDataBean [state=" + state + ", process=" + process + ", re=" + re + ", num=" + num + ", origin="
+				+ origin + ", title=" + title + ", name=" + name + ", category=" + category + ", height=" + height
+				+ ", sdate=" + sdate + ", edate=" + edate + ", price=" + price + ", goal=" + goal + ", count=" + count
+				+ ", rdate=" + rdate + ", deliv=" + deliv + ", imgs=" + imgs + ", content="
+				+ content + ", readcount=" + readcount + "]";
+	} 
 	
 	
 

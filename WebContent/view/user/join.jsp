@@ -52,11 +52,15 @@
  
  <p/></td></tr>
 
-<tr ><td valign="top">  <label><b>이메일<font color="red">&nbsp;&nbsp;&nbsp;*</font></b></label></td><td align="left"> <input type="email" class="w3-input w3-hover-light-grey" name="email" value="${param.email }" >
-<c:if test="${errors.email}"><br><label class="w3-red">이메일을 입력하세요.</label></c:if>
+<tr ><td valign="top">  <label><b>이메일<font color="red">&nbsp;&nbsp;&nbsp;*</font></b></label></td>
+<td align="left"> <input type="email" class="w3-input w3-hover-light-grey" name="email" value="${param.email }" >
+<c:if test="${errors.email}"><label class="w3-red">이메일을 입력하세요.</label></c:if>
 <p/></td></tr>
- <tr ><td valign="top"> <label><b>주소</b></label></td><td><input type="text"  class="w3-input w3-hover-light-grey" name="addr" value="${param.addr }" ><p/></td></tr>
- <tr ><td valign="top"><label><b>전화번호</b></label></td><td><input type="text" onKeyDown = "javascript:onlyNumberInput(event)" style='IME-MODE: disabled' class="w3-input w3-hover-light-grey" name="tel" placeholder="숫자만 입력" value="${param.tel}"><p/></td></tr>
+
+ <tr ><td valign="top"> <label><b>주소</b></label></td>
+ <td><input type="text"  class="w3-input w3-hover-light-grey" name="addr" value="${param.addr }" ><p/></td></tr>
+ <tr ><td valign="top"><label><b>전화번호</b></label></td>
+ <td><input type="text" onKeyDown = "javascript:onlyNumberInput(event)" style='IME-MODE: disabled' class="w3-input w3-hover-light-grey" name="tel" placeholder="숫자만 입력" value="${param.tel}"><p/></td></tr>
 
 
   </table>

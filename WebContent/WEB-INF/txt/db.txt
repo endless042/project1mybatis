@@ -4,11 +4,11 @@
 state	진행상황(완료,진행중,진행예정)
 re	회차수
 num	상품코드 a+숫자
-from	원산지
+origin	원산지
 title	상품페이지제목
 name	상품명
 category식물분류 
-size	식물크기
+height	식물크기
 sdate	경매시작일시
 edate	경매종료일시
 sprice	시작가
@@ -19,6 +19,7 @@ count 참여자수
 
 ???
 images		상품이미지
+imgsize 이미지크기
 content		상품설명
 
 -----------------------
@@ -29,11 +30,11 @@ state	진행상황(완료,진행중,진행예정)
 process 수입진행단계(통관 등등)
 re	회차수
 num	상품코드 g+숫자
-from	원산지
+origin	원산지
 title	상품페이지제목
 name	상품명
 category식물분류 (선인장/다육, 양치식물, 난, 기타)
-size	식물크기
+height	식물크기
 sdate	공구시작일
 edate	공구종료일
 price	공구가격
@@ -62,6 +63,16 @@ orderid	주문회원아이디
 state	주문상황
 paystate 결제상황
 date 	주문일시
+
+----------------------------
+cart
+
+userid
+acart
+ardate
+gcart
+grdate
+
 
 
 

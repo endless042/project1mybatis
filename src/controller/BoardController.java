@@ -26,6 +26,10 @@ public class BoardController extends Action {
 		    req.setAttribute("title", "소식");
 		    }else if(boardid.equals("2")) {
 		    	req.setAttribute("title", "문의");
+		    }else if(boardid.equals("3")){
+		    	req.setAttribute("title", "후기");
+		    }else if(boardid.equals("4")){
+		    	req.setAttribute("title", "커뮤니티");
 		    }else {
 		    	req.setAttribute("title", "");
 		    }
