@@ -3,10 +3,18 @@ package db;
 import java.util.Date;
 
 public class ShowCart {
-	String title;
-	Date rdate;
-	String state;
+	private String title;
+	private Date rdate;
+	private String state;
+	private String imgs;
+
 	
+	public String getImgs() {
+		return imgs;
+	}
+	public void setImgs(String imgs) {
+		this.imgs = imgs;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -27,8 +35,10 @@ public class ShowCart {
 	}
 	@Override
 	public String toString() {
-		return "ShowCart [title=" + title + ", rdate=" + rdate + ", state=" + state + "]";
+		return "ShowCart [title=" + title + ", rdate=" + rdate + ", state=" + state + ", imgs=" + imgs + "]";
 	}
+	
+	
 	
 	
 }

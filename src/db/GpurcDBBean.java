@@ -109,6 +109,37 @@ private static GpurcDBBean gpurchase=new GpurcDBBean();
 	}
 	
 
+public int getRemainTime (GpurcDataBean gproduct, String curtime){
+	String sql="select (to_date(?,'yyyymmddhh24miss') - " + 
+			"to_date(?,'yyyymmddhh24miss'))*24*60*60 from dual";
+	Connection con=getConnection();
+	PreparedStatement pstmt=null;
+	ResultSet rs=null;
+	int x=0;
+	
+	try{ pstmt=con.prepareStatement(sql);
+	pstmt.setString(1, gproduct.getEdate());
+	pstmt.setString(2,curtime);
+	
+	rs=pstmt.executeQuery();
+	
+	if(rs.next()) {
+		x=rs.getInt(1);
+	}
+	}catch(Exception e) {
+		e.printStackTrace();
+	}
+	finally {
+		close(con, rs, pstmt);
+	}
+	if(x>0) {
+		return x;
+		}else {
+			return 0;
+		}
+}
+
+	
 public int getGproductCount (){
 	String sql="select count(*) from gproduct";
 	Connection con=getConnection();

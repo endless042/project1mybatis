@@ -138,8 +138,8 @@ public int getAproductCount (){
 
 
 public int getRemainTime (AuctionDataBean aproduct, String curtime){
-	String sql="select abs((to_date(?,'yyyymmddhh24miss') - " + 
-			"to_date(?,'yyyymmddhh24miss')))*24*60*60 from dual";
+	String sql="select (to_date(?,'yyyymmddhh24miss') - " + 
+			"to_date(?,'yyyymmddhh24miss'))*24*60*60 from dual";
 	Connection con=getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
@@ -160,7 +160,12 @@ public int getRemainTime (AuctionDataBean aproduct, String curtime){
 	finally {
 		close(con, rs, pstmt);
 	}
+	
+	if(x>0) {
 	return x;
+	}else {
+		return 0;
+	}
 }
 
 

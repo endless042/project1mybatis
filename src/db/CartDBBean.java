@@ -155,6 +155,7 @@ public List getCarts(int startRow, int endRow, String pcode, String userid) {
 						cartrs.setRdate(rs.getDate("rdate"));
 						cartrs.setState(product.getState());
 						cartrs.setTitle(product.getTitle());
+						cartrs.setImgs(product.getImgs());
 						
 						}else if(pcode.equals("g")) {
 							GpurcDBBean gpro=GpurcDBBean.getInstance();
@@ -163,6 +164,7 @@ public List getCarts(int startRow, int endRow, String pcode, String userid) {
 							cartrs.setRdate(rs.getDate("rdate"));
 							cartrs.setState(product.getState());
 							cartrs.setTitle(product.getTitle());
+							cartrs.setImgs(product.getImgs());
 						
 						}
 						

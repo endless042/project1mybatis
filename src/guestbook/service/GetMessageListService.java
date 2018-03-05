@@ -30,7 +30,7 @@ public class GetMessageListService {
 		try {
 			conn = ConnectionProvider.getConnection();
 			MessageDao messageDao = MessageDao.getInstance();
-			int messageTotalCount = messageDao.selectCount(conn);
+			int messageTotalCount = messageDao.selectCount(conn,pronum);
 			List<Message> messageList = null;
 			int firstRow = 0;
 			int endRow = 0;

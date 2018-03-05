@@ -217,13 +217,24 @@ public class AdminController extends Action{
 					file=multi.getFile(name);
 					
 				}
+				
+				String sdatetime=multi.getParameter("sdatetime");
+				if(sdatetime.length()<2) {
+					sdatetime="0"+sdatetime;
+				}
+				String edatetime=multi.getParameter("edatetime");
+				if(edatetime.length()<2) {
+					edatetime="0"+edatetime;
+				}
+				
+				
+				String sdatestr=multi.getParameter("sdate").replace("-", "")+sdatetime+"0000";
+				String edatestr=multi.getParameter("edate").replace("-", "")+edatetime+"0000";
 			
 			GpurcDBBean gpro=GpurcDBBean.getInstance();
 			GpurcDataBean gproduct=new GpurcDataBean();
 			
-			String sdatestr=multi.getParameter("sdate")+"-"+multi.getParameter("sdatetime");
-			String edatestr=multi.getParameter("edate")+"-"+multi.getParameter("edatetime");
-			
+		
 		
 			gproduct.setName(multi.getParameter("name"));
 			gproduct.setOrigin(multi.getParameter("origin"));

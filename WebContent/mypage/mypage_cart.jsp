@@ -49,7 +49,7 @@ ${anumber }
 
 <td class="w3-center" style="width: 110px;"><span style="width: 100%;">
 <div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<img src="../images/peperomia.PNG" width="100px"></div></span></td>
+<img src="<%= request.getContextPath() %>/fileSave/${cart.imgs}" width="100px"></div></span></td>
 <td><span style="width: 100%;">
 <div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <a href="surveyview.jsp">${cart.title }</a>
@@ -57,7 +57,15 @@ ${anumber }
 
 <td class="w3-center"><span style="width: 100%;">
 <div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <span class="w3-tag w3-blue">${cart.state }</span>
+ <span class="w3-tag w3-blue"><c:if test="${cart.state=='1'}">
+    예정
+    </c:if>
+       <c:if test="${cart.state=='2'}">
+    진행
+    </c:if>
+       <c:if test="${cart.state=='3'}">
+    마감
+    </c:if></span>
 </div></span></td><td class="w3-center">
 <span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
 ${cart.rdate }
@@ -124,7 +132,7 @@ ${gnumber }
 
 <td class="w3-center"  style="width: 110px;"><span style="width: 100%;">
 <div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<img src="../images/peperomia.PNG" width="100px"></div></span></td>
+<img src="<%= request.getContextPath() %>/fileSave/${cart.imgs}" width="100px"></div></span></td>
 <td><span style="width: 100%;">
 <div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <a href="surveyview.jsp">${cart.title}</a>
@@ -132,7 +140,15 @@ ${gnumber }
 
 <td class="w3-center"><span style="width: 100%;">
 <div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <span class="w3-tag w3-blue">${cart.state }</span>
+ <span class="w3-tag w3-blue"><c:if test="${cart.state=='1'}">
+    예정
+    </c:if>
+       <c:if test="${cart.state=='2'}">
+    진행
+    </c:if>
+       <c:if test="${cart.state=='3'}">
+    마감
+    </c:if></span>
 </div></span></td><td class="w3-center">
 <span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
 ${cart.rdate}

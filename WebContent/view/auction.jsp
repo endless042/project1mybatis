@@ -45,7 +45,7 @@
       
       <c:forEach var="aproduct" items="${productList}">
         <div class="w3-third w3-container w3-margin-bottom w3-padding w3-small">
-         <div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${aproduct.imgs}" class="w3-border-top w3-border-left w3-border-right" style="width:100%; ">
+         <div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${aproduct.imgs}" class="w3-border-top w3-border-left w3-border-right" style="height:350px; width:100%;">
        
           <div class="w3-display-middle w3-display-hover">
             <button class="w3-button w3-red" onclick="location.href='acontent?num=${aproduct.num}&pageNum=${currentPage}&part=content';">입찰하기</button>

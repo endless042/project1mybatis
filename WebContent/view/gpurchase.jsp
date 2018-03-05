@@ -38,7 +38,7 @@
     	  <c:forEach var="gproduct" items="${productList}">
     
        <div class="w3-third w3-container w3-margin-bottom w3-padding w3-small">
-        <div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${gproduct.imgs}" class="w3-border-top w3-border-left w3-border-right" style="width:100%; ">
+        <div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${gproduct.imgs}" class="w3-border-top w3-border-left w3-border-right" style="height:350px; width:100%;">
       <span class="w3-tag w3-display-topleft">New</span>
           <div class="w3-display-middle w3-display-hover">
             <button class="w3-button w3-red"  onclick="location.href='gcontent?num=${gproduct.num}&pageNum=${currentPage}&part=content';">참여하기</button>
@@ -47,9 +47,10 @@
       <div class="w3-container w3-border ">
 
        <p>${gproduct.title }</p> 
-                <div class="w3-light-grey" style="margin-bottom:5px; margin-top:10px;">
-  <div class="w3-red" style="height:3px;width:60%; "></div>
-</div><font class="w3-small"><table width="100%"><tr><td>13일 남음  </td><td class="w3-right">60%</td></tr>  </table></font><p>
+                <div class="w3-light-grey" 
+                style="margin-bottom:5px; margin-top:10px;">
+  <div class="w3-red" style="height:3px;width:${gproduct.count/gproduct.goal}%; "></div>
+</div><font class="w3-small"><table width="100%"><tr><td>${gproduct.edate }일 남음  </td><td class="w3-right">${gproduct.count/gproduct.goal}%</td></tr>  </table></font><p>
 <table width="100%"><tr><td><b>공동구매가</b> </td><td class="w3-right"><b>${gproduct.price }원</b></td></tr>  </table>  <p/>
       </div>
     </div>

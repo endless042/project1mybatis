@@ -6,12 +6,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String pageNumberStr = request.getParameter("page");
-	String pronum="g"+request.getParameter("num");
+	String pronum=request.getParameter("pronum");
+	String pcode=pronum.substring(0, 1);
+	
 	System.out.println(pronum);
 	int pageNumber = 1;
 	if (pageNumberStr != null) {
 		pageNumber = Integer.parseInt(pageNumberStr);
 	}
+	request.setAttribute("pcode", pcode);
+	request.setAttribute("pronum", pronum);
+	request.setAttribute("pageNumber",pageNumber);
 	GetMessageListService messageListService = GetMessageListService.getInstance();
 	MessageListView viewData = messageListService.getMessageList(pageNumber, pronum);
 %>
@@ -33,7 +38,11 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 	<div class="w3-container  w3-margin-bottom w3-small"  >
 <c:if test="${viewData.isEmpty() }">
 
-의견이 없습니다.
+<table class="w3-table w3-border w3-hoverable w3-center w3-small w3-margin-top w3-margin-bottom" width="90%">
+    	<tr class="w3-light-grey">
+    	<td class="w3-center">등록된 의견이 없습니다.</td>
+    	
+    	</table>
 </c:if>
 
 		<c:if test="${!viewData.isEmpty() }">
@@ -48,7 +57,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
       <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white   w3-right">&times;</span>
      <span class="w3-small w3-opacity w3-right">${message.rdate }</span>
       <div class="w3-bar-item">
-         <span class="w3-tag w3-white w3-medium w3-margin-bottom">${message.num}</span><span  class="w3-tag w3-medium w3-margin-bottom "><b>${message.userid }</b></span><br>
+         <%-- <span class="w3-tag w3-white w3-medium w3-margin-bottom">${message.num}</span> --%><span  class="w3-tag w3-medium w3-margin-bottom "><b>${message.userid }</b></span><br>
         <span class="w3-margin-left">${message.content }</span>
       </div>
     </li>
@@ -63,8 +72,8 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 			</div>
 	<div class="w3-section  w3-center">
 			
-				<c:forEach var="pageNum" begin="1" end="${viewData.pageTotalCount }">
-					<span class="w3-center"><a href="<%=request.getContextPath() %>/reply/list.jsp?page=${pageNum }" class="w3-bar-item w3-button w3-hover-black">${pageNum}</a></span>
+				<c:forEach var="page" begin="1" end="${viewData.pageTotalCount }">
+					<span class="w3-center"><a href="<%=request.getContextPath() %>/page/${pcode }content?part=reply&pageNum=${ pageNum}&num=${num}&pronum=${ pronum}&page=${page}" class="w3-bar-item w3-button w3-hover-black">${page}</a></span>
 					
 				</c:forEach>
 			

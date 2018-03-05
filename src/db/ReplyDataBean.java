@@ -9,6 +9,14 @@ public class ReplyDataBean {
 	  private String pronum;
 	  private String content;
 	  private String password;
+	  private int num;
+	  
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
 	public String getUserid() {
 		return userid;
 	}
@@ -42,7 +50,7 @@ public class ReplyDataBean {
 	@Override
 	public String toString() {
 		return "ReplyDataBean [userid=" + userid + ", rdate=" + rdate + ", pronum=" + pronum + ", content=" + content
-				+ ", password=" + password + "]";
+				+ ", password=" + password + ", num=" + num + "]";
 	}
 	
 	  

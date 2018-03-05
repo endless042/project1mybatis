@@ -22,18 +22,19 @@ public class MessageDao {
 	private MessageDao() {
 	}
 
-	public int selectCount(Connection conn) throws SQLException {
-		Statement stmt = null;
+	public int selectCount(Connection conn, String pronum) throws SQLException {
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select count(*) from reply");
+			pstmt = conn.prepareStatement("select count(*) from reply where pronum=?");
+			pstmt.setString(1, pronum);
+			rs = pstmt.executeQuery();
 			rs.next();
 			return rs.getInt(1);
 		} finally {
 
 			JdbcUtil.close(rs);
-			JdbcUtil.close(stmt);
+			JdbcUtil.close(pstmt);
 		}
 
 	}
@@ -101,6 +102,7 @@ public class MessageDao {
 		message.setContent(rs.getString("content"));
 		message.setRdate(rs.getTimestamp("rdate"));
 		message.setPronum(rs.getString("pronum"));
+		message.setNum(rs.getInt("num"));
 		
 		return message;
 	}

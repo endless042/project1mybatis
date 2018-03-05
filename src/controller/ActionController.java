@@ -100,7 +100,7 @@ public class ActionController extends Action{
 		if(pageNum==null||pageNum==""){
 			pageNum="1";}
 		
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		
 		
 		try{
 			AuctionDBBean aPro=AuctionDBBean.getInstance();
@@ -119,25 +119,32 @@ public class ActionController extends Action{
 			
 			int timeCount=aPro.getRemainTime(aproduct, curtime);
 		
+			String olddate=aproduct.getSdate();
+			String formatSdate=olddate.substring(0, 4)+"년 "+olddate.substring(4,6)+"월 "+olddate.substring(6,8)+"일 "+olddate.substring(8,10)+"시";
+			olddate=aproduct.getEdate();
+			String formatEdate=olddate.substring(0, 4)+"년 "+olddate.substring(4,6)+"월 "+olddate.substring(6,8)+"일 "+olddate.substring(8,10)+"시";
 			
 			req.setAttribute("num", num);
 			req.setAttribute("pageNum", pageNum);
 			req.setAttribute("part", part);
 			req.setAttribute("aproduct", aproduct);
 			req.setAttribute("timeCount", timeCount);
+			req.setAttribute("formatSdate", formatSdate);
+			req.setAttribute("formatEdate", formatEdate);
 			
 			
 			int rsecond=timeCount%60;
-			int rminutes=timeCount%(60*60);
-			int rhour=timeCount%(60*60*60);
+			int rminutes=timeCount/60%60;
+			int rhour=timeCount/3600%24;
 			int rday=timeCount/24/60/60;
+			
 			
 			req.setAttribute("rsecond", rsecond);
 			req.setAttribute("rminutes", rminutes);
 			req.setAttribute("rhour", rhour);
 			req.setAttribute("rday", rday);
 			
-			http://www.sqler.com/107318
+			
 			 }catch(Exception e){e.printStackTrace();}  
 		
 		
@@ -178,13 +185,26 @@ public class ActionController extends Action{
 		    int endRow=currentPage*pageSize;
 		    int count=0;
 		    int number=0;
+		   
 		    List productList=null;
-		    
 		  GpurcDBBean gpro=GpurcDBBean.getInstance();
 		    count=gpro.getGproductCount();
 		    
 		    if(count>0){
 		    	productList=gpro.getProducts(startRow,endRow);}
+		    
+		    GpurcDataBean tmp=null;
+		    for(int i=0;i<productList.size();i++) {
+		    	tmp=(GpurcDataBean) productList.get(i);
+		    	Date date = new Date();
+				SimpleDateFormat simple = new SimpleDateFormat("yyyyMMddHHmmss");
+				String curtime=simple.format(date);
+				int timeCount=gpro.getRemainTime(tmp, curtime);
+				int rday=timeCount/24/60/60;
+		    	
+				tmp.setEdate(rday+"");
+		    	
+		    }
 		    
 		    number=count-(currentPage-1)*pageSize;
 		    
@@ -236,13 +256,40 @@ public class ActionController extends Action{
 			
 			System.out.println(gproduct);
 		
-		
+			Date date = new Date();
+
+			SimpleDateFormat simple = new SimpleDateFormat("yyyyMMddHHmmss");
+
+			
+			String curtime=simple.format(date);
+
+			
+			int timeCount=gPro.getRemainTime(gproduct, curtime);
+
+			String olddate=gproduct.getSdate();
+			String formatSdate=olddate.substring(0, 4)+"년 "+olddate.substring(4,6)+"월 "+olddate.substring(6,8)+"일 "+olddate.substring(8,10)+"시";
+			olddate=gproduct.getEdate();
+			String formatEdate=olddate.substring(0, 4)+"년 "+olddate.substring(4,6)+"월 "+olddate.substring(6,8)+"일 "+olddate.substring(8,10)+"시";
 			
 			req.setAttribute("num", num);
 			req.setAttribute("pageNum", pageNum);
 			req.setAttribute("part", part);
 			
 			req.setAttribute("gproduct", gproduct);
+			req.setAttribute("timeCount", timeCount);
+			req.setAttribute("formatSdate", formatSdate);
+			req.setAttribute("formatEdate", formatEdate);
+			
+			int rsecond=timeCount%60;
+			int rminutes=timeCount/60%60;
+			int rhour=timeCount/3600%24;
+			int rday=timeCount/24/60/60;
+			
+			
+			req.setAttribute("rsecond", rsecond);
+			req.setAttribute("rminutes", rminutes);
+			req.setAttribute("rhour", rhour);
+			req.setAttribute("rday", rday);
 			
 			
 			 }catch(Exception e){e.printStackTrace();}  

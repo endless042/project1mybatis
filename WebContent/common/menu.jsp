@@ -192,7 +192,7 @@ function myAccFunc(id) {
     }
 }
 
-document.getElementById("boardmenu").click();
+
 
 // Script to open and close sidebar
 function w3_open() {
