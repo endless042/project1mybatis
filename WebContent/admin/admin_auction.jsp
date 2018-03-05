@@ -7,7 +7,7 @@
  <jsp:include page="adminheader.jsp"></jsp:include>
 
   
-  <form class="w3-container w3-section" action="addAproductPro" style="padding-left:50px;">
+  <form class="w3-container w3-section"  method="post" enctype="multipart/form-data" action="addAproductPro" style="padding-left:50px;">
   <h4>경매 상품 등록</h4>
   
    <table class="w3-white w3-small" style="width: 80%;">
@@ -51,29 +51,10 @@
  
   </tr>
   <tr>
-  <td><label><b>사진첨부1</b></label></td>
-  <td><input class="w3-input w3-hover-light-grey" type="file" name="imgs"></td>
+  <td><label><b>사진첨부</b></label></td>
+  <td><input class="w3-input w3-hover-light-grey" type="file" name="uploadfile"></td>
   </tr>
-  <tr>
-  <td><label><b>사진첨부2</b></label></td>
-  <td><input class="w3-input w3-hover-light-grey" type="file" name="imgs"></td>
-  </tr>
-  <tr>
-  <td><label><b>사진첨부3</b></label></td>
-  <td><input class="w3-input w3-hover-light-grey" type="file" name="imgs"></td>
-  </tr>
-  <tr>
-  <td><label><b>사진첨부4</b></label></td>
-  <td><input class="w3-input w3-hover-light-grey" type="file" name="imgs"></td>
-  </tr>
-  <tr>
-  <td><label><b>사진첨부5</b></label></td>
-  <td><input class="w3-input w3-hover-light-grey" type="file" name="imgs"></td>
-  </tr>
-  <tr>
-  <td><label><b>사진첨부6</b></label></td>
-  <td><input class="w3-input w3-hover-light-grey" type="file" name="imgs"></td>
-  </tr>
+
   
   </table>
 

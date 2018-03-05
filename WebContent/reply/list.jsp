@@ -6,13 +6,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String pageNumberStr = request.getParameter("page");
-
+	String pronum="g"+request.getParameter("num");
+	System.out.println(pronum);
 	int pageNumber = 1;
 	if (pageNumberStr != null) {
 		pageNumber = Integer.parseInt(pageNumberStr);
 	}
 	GetMessageListService messageListService = GetMessageListService.getInstance();
-	MessageListView viewData = messageListService.getMessageList(pageNumber);
+	MessageListView viewData = messageListService.getMessageList(pageNumber, pronum);
 %>
 
 <c:set var="viewData" value="<%=viewData%>" />
@@ -30,7 +31,10 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 </head>
 <body>
 	<div class="w3-container  w3-margin-bottom w3-small"  >
+<c:if test="${viewData.isEmpty() }">
 
+의견이 없습니다.
+</c:if>
 
 		<c:if test="${!viewData.isEmpty() }">
 
@@ -42,29 +46,14 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 					  
     <li class="w3-bar">
       <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white   w3-right">&times;</span>
-     <span class="w3-small w3-opacity w3-right">2018-02-27 PM 07:30</span>
+     <span class="w3-small w3-opacity w3-right">${message.rdate }</span>
       <div class="w3-bar-item">
-         <span class="w3-tag w3-white w3-medium w3-margin-bottom">${message.id }</span><span  class="w3-tag w3-medium w3-margin-bottom "><b>${message.guestName }</b></span><br>
-        <span class="w3-margin-left">${message.message }</span>
+         <span class="w3-tag w3-white w3-medium w3-margin-bottom">${message.num}</span><span  class="w3-tag w3-medium w3-margin-bottom "><b>${message.userid }</b></span><br>
+        <span class="w3-margin-left">${message.content }</span>
       </div>
     </li>
 
-  <%-- 
-					
-					<ul class="w3-ul"></ul>
-					
-					<div class="w3-container w3-card w3-white  w3-margin"><br>
-         
-        <span class="w3-right w3-opacity">2018-02-27</span>
-       <b>${message.guestName }</b>
-        <hr >
-        <p>${message.message }</p>
-        <button type="button" class="w3-button w3-green w3-margin-bottom w3-padding-small">Like</button> 
-        <button type="button" class="w3-button  w3-green w3-margin-bottom w3-padding-small">Comment</button> 
-        <button class="w3-button w3-black w3-margin-bottom w3-padding-small" type="submit" onclick="location.href='confirmDeletion.jsp?messageId=${message.id }'">삭제</button>
-      </div>  
-					 --%>
-					
+ 
 					
 					
 				
@@ -87,7 +76,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 				<div class="w3-row-padding" style="margin: 0 -16px 8px -16px">
 					<div class="w3-half">
 						<input class="w3-input w3-border" type="text" placeholder="이름"
-							required name="guestName">
+							required name="userid">
 					</div>
 					<div class="w3-half">
 						<input class="w3-input w3-border" type="password"
@@ -95,8 +84,13 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 					</div>
 				</div>
 				<textarea class="w3-input  w3-border "  placeholder="내용"
-					required name="message"></textarea>
+					required name="content"></textarea>
 					<input type="hidden" name="cururi" value="<%= request.getRequestURI()%>">
+					<input type="hidden" name="pageNum" value="${pageNum }">
+					<input type="hidden" name="num" value="${num }">
+					
+					<input type="hidden" name="pronum" value="<%=pronum%>">
+					
 				<button class="w3-button w3-black w3-section w3-right w3-padding-small" type="submit">전송</button>
 			</form>
 		</div>

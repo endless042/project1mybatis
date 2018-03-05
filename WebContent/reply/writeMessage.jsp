@@ -2,15 +2,17 @@
 
 <%@ page import="guestbook.model.Message" %>
 <%@ page import="guestbook.service.WriteMessageService" %>
-<%
-	request.setCharacterEncoding("utf-8");
-%>
+
 <jsp:useBean id="message" class="guestbook.model.Message">
 	<jsp:setProperty name="message" property="*" />
 </jsp:useBean>
 <%
+String pageNum=request.getParameter("pageNum");
+String num=request.getParameter("num");
+String pronum=request.getParameter("pronum");
 	WriteMessageService writeService = WriteMessageService.getInstance();
 	writeService.write(message);
+	
 %>
 <html>
 <head>
@@ -22,6 +24,6 @@
 <a href="list.jsp">[목록 보기]</a>
 <%
 String preuri=request.getParameter("cururi"); 
-response.sendRedirect(preuri); %>
+response.sendRedirect(request.getContextPath()+"/page/gcontent?part=reply&pageNum="+pageNum+"&num="+num+"&pronum="+pronum); %>
 </body>
 </html>

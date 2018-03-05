@@ -9,7 +9,11 @@
  <jsp:include page="adminheader.jsp"></jsp:include>
     
     
-  <h4>경매 상품 등록</h4>
+  <h4>상품 등록</h4>
   
-  상품등록 완료
+  상품 등록 완료
+  <br>
+  <br>
+  <button onclick="location.href='${cur}'">확인</button>
+  
   </div></div>

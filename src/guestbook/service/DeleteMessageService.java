@@ -15,13 +15,13 @@ public class DeleteMessageService {
 	}
 	private DeleteMessageService() {}
 	
-	public void deleteMessage(int messageId, String password) {
+	public void deleteMessage(int num, String password) {
 		Connection conn=null;
 		try {
 			conn=ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
 			MessageDao messageDao=MessageDao.getInstance();
-			Message message=messageDao.select(conn, messageId);
+			Message message=messageDao.select(conn, num);
 			if(message==null) {
 				throw new MessageNotFoundException("메세지 없음");
 				
@@ -29,7 +29,7 @@ public class DeleteMessageService {
 			if(!message.matchPassword(password)) {
 				throw new InvalidPassowrdException("bad password");
 			}
-			messageDao.delete(conn,messageId);
+			messageDao.delete(conn,num);
 			conn.commit();
 		}catch(SQLException ex) {
 			JdbcUtil.rollback(conn);

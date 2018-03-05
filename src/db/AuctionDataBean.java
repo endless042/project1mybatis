@@ -20,12 +20,20 @@ public class AuctionDataBean {
 	private Date rdate;
 	private String deliv;
 	private int count;
+	
 	private String imgs;
+	private int imgsize;
 	private String content;
 	private int readcount; 
 	
 	
 
+	public int getImgsize() {
+		return imgsize;
+	}
+	public void setImgsize(int imgsize) {
+		this.imgsize = imgsize;
+	}
 	public int getReadcount() {
 		return readcount;
 	}
@@ -141,11 +149,10 @@ public class AuctionDataBean {
 		return "AuctionDataBean [state=" + state + ", re=" + re + ", num=" + num + ", origin=" + origin + ", title="
 				+ title + ", name=" + name + ", category=" + category + ", height=" + height + ", sdate=" + sdate
 				+ ", edate=" + edate + ", sprice=" + sprice + ", eprice=" + eprice + ", rdate=" + rdate + ", deliv="
-				+ deliv + ", count=" + count + ", imgs=" + imgs + ", content=" + content + ", readcount=" + readcount
-				+ "]";
+				+ deliv + ", count=" + count + ", imgs=" + imgs + ", imgsize=" + imgsize + ", content=" + content
+				+ ", readcount=" + readcount + "]";
 	}
 
-	
 	
 	
 

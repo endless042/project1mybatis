@@ -27,7 +27,7 @@ public class MessageDao {
 		ResultSet rs = null;
 		try {
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select count(*) from guestbook_message");
+			rs = stmt.executeQuery("select count(*) from reply");
 			rs.next();
 			return rs.getInt(1);
 		} finally {
@@ -38,14 +38,14 @@ public class MessageDao {
 
 	}
 
-	public Message select(Connection conn, int messageId) throws SQLException {
+	public Message select(Connection conn, int num) throws SQLException {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			pstmt=conn.prepareStatement("select * from guestbook_message where id=?");
+			pstmt=conn.prepareStatement("select * from reply where num=?");
 			
-			pstmt.setInt(1, messageId);
+			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return makeMessageFromResultSet(rs);
@@ -60,19 +60,20 @@ public class MessageDao {
 
 	}
 	
-	public List<Message> selectList(Connection conn,int firstRow, int endRow) throws SQLException{
+	public List<Message> selectList(Connection conn,int firstRow, int endRow, String pronum) throws SQLException{
 		
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		String sql="";
 		try {
-			sql = "select * from (select rownum rnum , a.* from (select id, guestName, password, message from "
-					+"guestbook_message order by id desc) a) where rnum between ? and ?";
+			sql = "select * from (select rownum rnum , a.* from (select num, userid, rdate, pronum, password, content from "
+					+"reply where pronum=? order by rdate desc) a) where rnum between ? and ?";
 			
 			System.out.println(sql);
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, firstRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setString(1, pronum);
+			pstmt.setInt(2, firstRow);
+			pstmt.setInt(3, endRow);
 			rs=pstmt.executeQuery();
 			
 		if(rs.next()) {
@@ -95,10 +96,11 @@ public class MessageDao {
 	private Message makeMessageFromResultSet(ResultSet rs) throws SQLException {
 		
 		Message message=new Message();
-		message.setId(rs.getInt("id"));
-		message.setGuestName(rs.getString("guestname"));
+		message.setUserid(rs.getString("userid"));
 		message.setPassword(rs.getString("password"));
-		message.setMessage(rs.getString("message"));
+		message.setContent(rs.getString("content"));
+		message.setRdate(rs.getTimestamp("rdate"));
+		message.setPronum(rs.getString("pronum"));
 		
 		return message;
 	}
@@ -108,20 +110,22 @@ public class MessageDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs;
 		try {
-			pstmt=conn.prepareStatement("select nvl(max(id),0) from guestbook_message ");
+			
+			pstmt=conn.prepareStatement("select nvl(max(num),0) from reply");
 			rs=pstmt.executeQuery();
 			int max=0;
 			if(rs.next()) {
 				max=rs.getInt(1);
 				
 			}
-			pstmt=conn.prepareStatement("insert into guestbook_message (id,guestName,password,message) values(?,?,?,?)");
 			
-			pstmt.setInt(1, max+1);
-			pstmt.setString(2, message.getGuestName());
-			pstmt.setString(3, message.getPassword());
-			pstmt.setString(4, message.getMessage());
+			pstmt=conn.prepareStatement("insert into reply (userid,rdate,password,pronum,content,num) values(?,sysdate,?,?,?,?)");
 			
+			pstmt.setString(1, message.getUserid());
+			pstmt.setString(2, message.getPassword());
+			pstmt.setString(3, message.getPronum());
+			pstmt.setString(4, message.getContent());
+			pstmt.setInt(5, max+1);
 			return pstmt.executeUpdate();
 		
 		}finally {
@@ -129,11 +133,11 @@ public class MessageDao {
 		}
 	}
 	
-	public int delete(Connection conn, int messageId) throws SQLException{
+	public int delete(Connection conn, int num) throws SQLException{
 		PreparedStatement pstmt=null;
 		try {
-			pstmt=conn.prepareStatement("delete from guestbook_message where id=?");
-			pstmt.setInt(1, messageId);
+			pstmt=conn.prepareStatement("delete from reply where num=?");
+			pstmt.setInt(1, num);
 			return pstmt.executeUpdate();
 		}finally {
 		

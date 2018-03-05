@@ -45,7 +45,7 @@
       
       <c:forEach var="aproduct" items="${productList}">
         <div class="w3-third w3-container w3-margin-bottom w3-padding w3-small">
-         <div class="w3-display-container"><img src="<%= request.getContextPath() %>/images/sample.PNG" class="w3-border-top w3-border-left w3-border-right" style="width:100%; ">
+         <div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${aproduct.imgs}" class="w3-border-top w3-border-left w3-border-right" style="width:100%; ">
        
           <div class="w3-display-middle w3-display-hover">
             <button class="w3-button w3-red" onclick="location.href='acontent?num=${aproduct.num}&pageNum=${currentPage}&part=content';">입찰하기</button>
@@ -53,7 +53,7 @@
         </div>
       <div class="w3-container w3-border ">
 
-       <p>${aproduct.title}</p> 
+       <p>${aproduct.title} </p> 
                <font class="w3-small"><table width="100%" class="w3-light-grey"><tr><td>남은시간  </td><td class="w3-right">3일 15시간 30초</td></tr>  </table></font><p>
                <table width="100%"><tr><td><b>현재가</b> </td><td class="w3-right"><b>${aproduct.eprice}원</b></td></tr>  </table>  <p/>
       </div>

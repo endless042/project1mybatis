@@ -75,8 +75,8 @@ private static GpurcDBBean gpurchase=new GpurcDBBean();
 	
 		
 			sql="insert into gproduct (num,state,origin,title,name,"
-					+ "category,height,sdate,edate,price,goal,deliv,content,process,imgs,rdate) "
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,sysdate)";
+					+ "category,height,sdate,edate,price,goal,deliv,content,process,imgs,rdate,imgsize) "
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,sysdate,?)";
 			pstmt=con.prepareStatement(sql);
 			
 			pstmt.setInt(1, number);
@@ -94,6 +94,7 @@ private static GpurcDBBean gpurchase=new GpurcDBBean();
 			pstmt.setString(13, gproduct.getContent());
 			pstmt.setString(14, gproduct.getProcess());
 			pstmt.setString(15, gproduct.getImgs());
+			pstmt.setInt(16, gproduct.getImgsize());
 			
 			pstmt.executeUpdate();
 			

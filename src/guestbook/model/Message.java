@@ -1,26 +1,39 @@
 package guestbook.model;
 
+import java.util.Date;
+
 public class Message {
 
-	private int id;
-	private String guestName;
+	private int num;
+	private String userid;
 	private String password;
-	private String message;
+	private Date rdate;
+	private String content;
+	private String pronum;
 
-	public int getId() {
-		return id;
+	
+
+
+	@Override
+	public String toString() {
+		return "Message [num=" + num + ", userid=" + userid + ", password=" + password + ", rdate=" + rdate
+				+ ", content=" + content + ", pronum=" + pronum + "]";
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public int getNum() {
+		return num;
 	}
 
-	public String getGuestName() {
-		return guestName;
+	public void setNum(int num) {
+		this.num = num;
 	}
 
-	public void setGuestName(String guestName) {
-		this.guestName = guestName;
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
 	public String getPassword() {
@@ -31,12 +44,28 @@ public class Message {
 		this.password = password;
 	}
 
-	public String getMessage() {
-		return message;
+	public Date getRdate() {
+		return rdate;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setRdate(Date rdate) {
+		this.rdate = rdate;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getPronum() {
+		return pronum;
+	}
+
+	public void setPronum(String pronum) {
+		this.pronum = pronum;
 	}
 
 	public boolean hasPassword() {

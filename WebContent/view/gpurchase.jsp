@@ -38,7 +38,7 @@
     	  <c:forEach var="gproduct" items="${productList}">
     
        <div class="w3-third w3-container w3-margin-bottom w3-padding w3-small">
-        <div class="w3-display-container"><img src="<%= request.getContextPath() %>/images/sample.PNG" class="w3-border-top w3-border-left w3-border-right" style="width:100%; ">
+        <div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${gproduct.imgs}" class="w3-border-top w3-border-left w3-border-right" style="width:100%; ">
       <span class="w3-tag w3-display-topleft">New</span>
           <div class="w3-display-middle w3-display-hover">
             <button class="w3-button w3-red"  onclick="location.href='gcontent?num=${gproduct.num}&pageNum=${currentPage}&part=content';">참여하기</button>

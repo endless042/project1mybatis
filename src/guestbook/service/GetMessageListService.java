@@ -23,7 +23,7 @@ public class GetMessageListService {
 
 	private static final int MESSAGE_COUNT_PER_PAGE = 5;
 
-	public MessageListView getMessageList(int pageNumber) {
+	public MessageListView getMessageList(int pageNumber, String pronum) {
 		Connection conn = null;
 		int currentPageNumber = pageNumber;
 
@@ -38,7 +38,7 @@ public class GetMessageListService {
 			if (messageTotalCount > 0) {
 				firstRow = (pageNumber - 1) * MESSAGE_COUNT_PER_PAGE + 1;
 				endRow = firstRow + MESSAGE_COUNT_PER_PAGE - 1;
-				messageList = messageDao.selectList(conn, firstRow, endRow);
+				messageList = messageDao.selectList(conn, firstRow, endRow, pronum);
 			} else {
 				currentPageNumber = 0;
 				messageList = Collections.emptyList();

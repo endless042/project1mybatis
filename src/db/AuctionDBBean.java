@@ -77,8 +77,8 @@ public class AuctionDBBean {
 	
 		
 			sql="insert into aproduct (num,state,origin,title,name,"
-					+ "category,height,sdate,edate,sprice,eprice,deliv,content,imgs,rdate) "
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,sysdate)";
+					+ "category,height,sdate,edate,sprice,eprice,deliv,content,imgs,rdate,imgsize) "
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,sysdate,?)";
 			pstmt=con.prepareStatement(sql);
 			
 			pstmt.setInt(1, number);
@@ -95,7 +95,7 @@ public class AuctionDBBean {
 			pstmt.setString(12, aproduct.getDeliv());
 			pstmt.setString(13, aproduct.getContent());
 			pstmt.setString(14, aproduct.getImgs());
-		
+			pstmt.setInt(15, aproduct.getImgsize());
 			
 			
 			
@@ -121,6 +121,33 @@ public int getAproductCount (){
 	
 	try{ pstmt=con.prepareStatement(sql);
 	
+	
+	rs=pstmt.executeQuery();
+	
+	if(rs.next()) {
+		x=rs.getInt(1);
+	}
+	}catch(Exception e) {
+		e.printStackTrace();
+	}
+	finally {
+		close(con, rs, pstmt);
+	}
+	return x;
+}
+
+
+public int getRemainTime (AuctionDataBean aproduct, String curtime){
+	String sql="select abs((to_date(?,'yyyymmddhh24miss') - " + 
+			"to_date(?,'yyyymmddhh24miss')))*24*60*60 from dual";
+	Connection con=getConnection();
+	PreparedStatement pstmt=null;
+	ResultSet rs=null;
+	int x=0;
+	
+	try{ pstmt=con.prepareStatement(sql);
+	pstmt.setString(1, aproduct.getEdate());
+	pstmt.setString(2,curtime);
 	
 	rs=pstmt.executeQuery();
 	

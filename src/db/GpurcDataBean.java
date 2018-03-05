@@ -23,8 +23,15 @@ public class GpurcDataBean {
 	private String imgs;
 	private String content;
 	private int readcount;
+	private int imgsize;
 	
 	
+	public int getImgsize() {
+		return imgsize;
+	}
+	public void setImgsize(int imgsize) {
+		this.imgsize = imgsize;
+	}
 	public String getState() {
 		return state;
 	}
@@ -147,9 +154,11 @@ public class GpurcDataBean {
 		return "GpurcDataBean [state=" + state + ", process=" + process + ", re=" + re + ", num=" + num + ", origin="
 				+ origin + ", title=" + title + ", name=" + name + ", category=" + category + ", height=" + height
 				+ ", sdate=" + sdate + ", edate=" + edate + ", price=" + price + ", goal=" + goal + ", count=" + count
-				+ ", rdate=" + rdate + ", deliv=" + deliv + ", imgs=" + imgs + ", content="
-				+ content + ", readcount=" + readcount + "]";
-	} 
+				+ ", rdate=" + rdate + ", deliv=" + deliv + ", imgs=" + imgs + ", content=" + content + ", readcount="
+				+ readcount + ", imgsize=" + imgsize + "]";
+	}
+	
+	
 	
 	
 

@@ -1,6 +1,7 @@
 package controller;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sist.msk.Action;
 
-import board.BoardDBBean;
 import db.AuctionDBBean;
 import db.AuctionDataBean;
 import db.CartDBBean;
@@ -30,6 +30,8 @@ public class ActionController extends Action{
 	public String auction(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 
 		req.setAttribute("title", "경매");
+		
+		
 		
 
 	    String state=req.getParameter("state");
@@ -77,6 +79,7 @@ public class ActionController extends Action{
     		req.setAttribute("pageCount", pageCount);
     		req.setAttribute("number", number);
 	   
+    	
 	
 		return "/view/auction.jsp";
 			} 
@@ -106,19 +109,51 @@ public class ActionController extends Action{
 			
 			System.out.println(aproduct);
 		
+			Date date = new Date();
+
+			SimpleDateFormat simple = new SimpleDateFormat("yyyyMMddHHmmss");
+
+			System.out.println(simple.format(date));
+			String curtime=simple.format(date);
+
+			
+			int timeCount=aPro.getRemainTime(aproduct, curtime);
 		
 			
 			req.setAttribute("num", num);
 			req.setAttribute("pageNum", pageNum);
 			req.setAttribute("part", part);
 			req.setAttribute("aproduct", aproduct);
+			req.setAttribute("timeCount", timeCount);
 			
 			
+			int rsecond=timeCount%60;
+			int rminutes=timeCount%(60*60);
+			int rhour=timeCount%(60*60*60);
+			int rday=timeCount/24/60/60;
+			
+			req.setAttribute("rsecond", rsecond);
+			req.setAttribute("rminutes", rminutes);
+			req.setAttribute("rhour", rhour);
+			req.setAttribute("rday", rday);
+			
+			http://www.sqler.com/107318
 			 }catch(Exception e){e.printStackTrace();}  
 		
 		
 		
 		return "/view/aproductview.jsp?select=auction";
+	}
+	
+	public String gcontent_reply(HttpServletRequest req,
+			 HttpServletResponse res)  throws Throwable {
+		req.setAttribute("title", "경매");
+		
+	
+		
+		
+		
+		return "/view/gproductview.jsp?select=gpurchase&part=reply";
 	}
 	
 	
@@ -179,8 +214,8 @@ public class ActionController extends Action{
 	public String gcontent(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable {
 		req.setAttribute("title", "공동구매");
+		
 		String part=req.getParameter("part");
-
 	    String state=req.getParameter("state");
 	    if(state==null||state==""){
 	    	state="2";}
@@ -230,34 +265,9 @@ public class ActionController extends Action{
 			req.setAttribute("title", "ABOUT US");
 			 return  "/view/contact.jsp"; 
 			} 
-	public String aproductview(HttpServletRequest req,
-			 HttpServletResponse res)  throws Throwable { 
-		req.setAttribute("title", "경매");	 
-		return  "/view/aproductview.jsp"; 
-			} 
-	
-	public String gproductview(HttpServletRequest req,
-			 HttpServletResponse res)  throws Throwable { 
-		req.setAttribute("title", "공동구매");	
-		return  "/view/gproductview.jsp"; 
-			} 
 	
 	
-	public String cart(HttpServletRequest req,
-			 HttpServletResponse res)  throws Throwable { 
-		req.setAttribute("title", "마이페이지");	
-		
-		 try{
-				UserlistDBBean userPro=UserlistDBBean.getInstance();
-				UserlistDataBean user=userPro.getUser((String)req.getSession().getAttribute("loginId")); 
-				
-				req.setAttribute("user", user);
-			
-		 }catch(Exception e){}
-		
-		
-		return  "/mypage/mypage_cart.jsp?select=cart"; 
-			} 
+	
 	
 	public String mypage(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 

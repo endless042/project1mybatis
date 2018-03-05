@@ -26,7 +26,7 @@ font-family: "Montserrat", sans-serif;
  <!-- 사진쪽 div  -->
   <div class="w3-container w3-half w3-cell w3-padding">
   <div class="w3-display-container w3-text-white">
-    <img src="<%=request.getContextPath() %>/images/alocasia.PNG" alt="Lights" style="width:100%">
+    <img src="<%= request.getContextPath() %>/fileSave/${aproduct.imgs}" alt="Lights" style="width:100%">
    <span class="w3-tag w3-display-topleft"> <c:if test="${aproduct.state=='1'}">
     예정
     </c:if>
@@ -65,6 +65,9 @@ font-family: "Montserrat", sans-serif;
       <p><b>진행기간 : </b>${aproduct.sdate } ~ ${aproduct.edate}</p>
  </td><tr><tr><td class="w3-border-bottom">
     <p><label><b>남은시간</b> </label><p/>
+    
+    ${timeCount }<br>
+    ${rday }일 ${rhour }시간 ${rminutes }분 ${rsecond }초<br>
     
     
        <span class="w3-tag w3-padding w3-round-large w3-sand w3-center w3-border"><span class="w3-large">0</span></span>
@@ -107,17 +110,17 @@ font-family: "Montserrat", sans-serif;
 <hr>
 
 <div class="w3-bar w3-border w3-small" >
-  <a href="gcontent?part=content&pageNum=${pageNum }&num=${num}" style="width:25%" class="w3-bar-item w3-button <%=request.getParameter("part").equals("content")?"w3-green":"" %> w3-border-right">정보</a>
-  <a href="gcontent?part=qna&pageNum=${pageNum }&num=${num}" style="width:25%" class="w3-bar-item w3-button w3-hide-small  w3-border-right <%=request.getParameter("part").equals("qna")?"w3-green":"" %> ">문의</a>
-  <a href="gcontent?part=review&pageNum=${pageNum }&num=${num}" style="width:25%" class="w3-bar-item w3-button w3-hide-small  w3-border-right  <%=request.getParameter("part").equals("review")?"w3-green":"" %> ">후기</a>
-  <a href="gcontent?part=reply&pageNum=${pageNum }&num=${num}" style="width:25%" class="w3-bar-item w3-button w3-hide-small  <%=request.getParameter("part").equals("reply")?"w3-green":"" %> ">댓글</a>
+  <a href="acontent?part=content&pageNum=${pageNum }&num=${num}" style="width:25%" class="w3-bar-item w3-button <%=request.getParameter("part").equals("content")?"w3-green":"" %> w3-border-right">정보</a>
+  <a href="acontent?part=qna&pageNum=${pageNum }&num=${num}" style="width:25%" class="w3-bar-item w3-button w3-hide-small  w3-border-right <%=request.getParameter("part").equals("qna")?"w3-green":"" %> ">문의</a>
+  <a href="acontent?part=review&pageNum=${pageNum }&num=${num}" style="width:25%" class="w3-bar-item w3-button w3-hide-small  w3-border-right  <%=request.getParameter("part").equals("review")?"w3-green":"" %> ">후기</a>
+  <a href="acontent?part=reply&pageNum=${pageNum }&num=${num}" style="width:25%" class="w3-bar-item w3-button w3-hide-small  <%=request.getParameter("part").equals("reply")?"w3-green":"" %> ">댓글</a>
   <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="myFunction()">&#9776;</a>
 </div>
 
 <div id="demo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium">
-  <a href="gcontent?part=qna&pageNum=${pageNum }&num=${num}" class="w3-bar-item w3-button">문의</a>
-  <a href="gcontent?part=review&pageNum=${pageNum }&num=${num}" class="w3-bar-item w3-button">후기</a>
-  <a href="gcontent?part=reply&pageNum=${pageNum }&num=${num}" class="w3-bar-item w3-button">댓글</a>
+  <a href="acontent?part=qna&pageNum=${pageNum }&num=${num}" class="w3-bar-item w3-button">문의</a>
+  <a href="acontent?part=review&pageNum=${pageNum }&num=${num}" class="w3-bar-item w3-button">후기</a>
+  <a href="acontent?part=reply&pageNum=${pageNum }&num=${num}&pronum=a${num}" class="w3-bar-item w3-button">댓글</a>
 </div>
 
 <c:if test="${part=='content'}">
@@ -141,7 +144,9 @@ font-family: "Montserrat", sans-serif;
  
   <c:if test="${part=='reply'}">
    <div class="w3-container w3-section" id="reply">
-  <jsp:include page="/list.jsp"></jsp:include>
+   <jsp:include page="/reply/list.jsp">
+   <jsp:param value="${aproduct.num }" name="num"/>
+   </jsp:include>
   </div>
     </c:if>
 

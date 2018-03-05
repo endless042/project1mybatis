@@ -25,7 +25,7 @@ font-family: "Montserrat", sans-serif;
  <!-- 사진쪽 div  -->
   <div class="w3-container w3-half w3-cell w3-padding">
   <div class="w3-display-container w3-text-white">
-    <img src="<%=request.getContextPath() %>/images/alocasia.PNG" alt="Lights" style="width:100%">
+    <img src="<%= request.getContextPath() %>/fileSave/${gproduct.imgs}" alt="Lights" style="width:100%">
    <span class="w3-tag w3-display-topleft">
      <c:if test="${gproduct.state=='1'}">
     예정
@@ -111,7 +111,7 @@ font-family: "Montserrat", sans-serif;
   <a href="gcontent?part=content&pageNum=${pageNum }&num=${num}" style="width:25%" class="w3-bar-item w3-button <%=request.getParameter("part").equals("content")?"w3-green":"" %> w3-border-right">정보</a>
   <a href="gcontent?part=qna&pageNum=${pageNum }&num=${num}" style="width:25%" class="w3-bar-item w3-button w3-hide-small  w3-border-right <%=request.getParameter("part").equals("qna")?"w3-green":"" %> ">문의</a>
   <a href="gcontent?part=review&pageNum=${pageNum }&num=${num}" style="width:25%" class="w3-bar-item w3-button w3-hide-small  w3-border-right  <%=request.getParameter("part").equals("review")?"w3-green":"" %> ">후기</a>
-  <a href="gcontent?part=reply&pageNum=${pageNum }&num=${num}" style="width:25%" class="w3-bar-item w3-button w3-hide-small  <%=request.getParameter("part").equals("reply")?"w3-green":"" %> ">댓글</a>
+  <a href="gcontent?part=reply&pageNum=${pageNum }&num=${num}&pronum=g${num}" style="width:25%" class="w3-bar-item w3-button w3-hide-small  <%=request.getParameter("part").equals("reply")?"w3-green":"" %> ">댓글</a>
   <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="myFunction()">&#9776;</a>
 </div>
 
@@ -143,7 +143,9 @@ font-family: "Montserrat", sans-serif;
  
  <c:if test="${part=='reply'}"> 
    <div class="w3-container w3-section  " id="reply">
-  <jsp:include page="/reply/list.jsp"></jsp:include>
+  <jsp:include page="/reply/list.jsp">
+   <jsp:param value="${gproduct.num }" name="num"/>
+   </jsp:include>
   </div>
     </c:if>
  
