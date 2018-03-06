@@ -83,7 +83,8 @@ where pronum like concat ('a', '%') and userid='admin' ORDER BY rdate desc) b)
 where rum between 1 and 5;
 
 
-ALTER TABLE cart modify (pronum VARCHAR(10));
+ALTER TABLE orderlist add (count int default 0);
+
 select * from board order by num desc;
 
 select * from userlist;
@@ -101,7 +102,7 @@ password varchar(20) not null
 
 
 );
-
+desc reply;
 select * from reply;
 create SEQUENCE rSer 
    START WITH 1
@@ -110,6 +111,55 @@ create SEQUENCE rSer
   
 create table sample (
 ddd timestamp);
+delete from gproduct;
+select * from gproduct;
 
+select * from ahistory;
 
-insert into sample values ('
+delete from ahistory where price='4500';
+
+drop table ahistory;
+create table ahistory(
+num int not null,
+userid varchar(20) not null,
+price varchar(20) not null,
+adate date default sysdate
+);
+desc ahistory;
+
+select * from ahistory;
+delete from ahistory;
+
+select count(*) from aproduct  where num=23 ;
+
+select * from orderlist;
+desc orderlist;
+Create table orderlist(
+num int primary key,
+userid varchar(20),
+pronum varchar(10),
+rdate date default sysdate,
+aprice varchar(10),
+payState varchar(10),
+count int default 0
+);
+
+select * from cart;
+delete from cart;
+
+create SEQUENCE oSer 
+   START WITH 1
+  INCREMENT BY 1
+  NOMAXVALUE ;
+
+commit;
+delete from cart;
+select * from orderlist;
+delete from orderlist;
+delete from aproduct;
+delete from cart where pronum='a1';
+
+delete from orderlist where userid is null;
+select * from orderlist;
+select * from aproduct;
+select * from gproduct;

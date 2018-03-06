@@ -8,6 +8,24 @@ public class CartDataBean {
 	String pronum;
 	Date rdate;
 	
+	AuctionDataBean aproduct;
+	GpurcDataBean gproduct;
+	
+	
+	
+	
+	public AuctionDataBean getAproduct() {
+		return aproduct;
+	}
+	public void setAproduct(AuctionDataBean aproduct) {
+		this.aproduct = aproduct;
+	}
+	public GpurcDataBean getGproduct() {
+		return gproduct;
+	}
+	public void setGproduct(GpurcDataBean gproduct) {
+		this.gproduct = gproduct;
+	}
 	public String getUserid() {
 		return userid;
 	}

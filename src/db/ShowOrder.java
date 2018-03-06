@@ -2,7 +2,7 @@ package db;
 
 import java.util.Date;
 
-public class ShowCart {
+public class ShowOrder {
 	private String title;
 	private Date rdate;
 	private String state;

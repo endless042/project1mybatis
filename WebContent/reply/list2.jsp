@@ -12,7 +12,7 @@
 		pageNumber = Integer.parseInt(pageNumberStr);
 	}
 	GetMessageListService messageListService = GetMessageListService.getInstance();
-	MessageListView viewData = messageListService.getMessageList(pageNumber);
+	MessageListView viewData = messageListService.getMessageList(1, pageNumberStr);
 %>
 
 <c:set var="viewData" value="<%=viewData%>" />

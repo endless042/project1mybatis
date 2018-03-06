@@ -15,7 +15,6 @@ var RemainTime;
 function showCountdown(ExpireTime){
 
 	 var btn=document.getElementById('submitAuction');
-	
 	  function btn_on() {
 	   
 	   btn.disabled = false;
@@ -27,11 +26,12 @@ function showCountdown(ExpireTime){
 	  }
 	  
 	  
-	  
             var day, hour, min, sec, mod
             var CountText
+           
             RemainTime = ExpireTime - 1;
             CountText = ""
+            
             if (RemainTime >= 0){
             		btn_on();
             	
@@ -45,10 +45,14 @@ function showCountdown(ExpireTime){
 
                         sec = mod % 60;
 
-                        CountText = (day > 0) ? day + "일 " : "";
+                        CountText = (day > 0) ? day + "일 " : "0일 ";
                         CountText = (hour > 0) ? CountText + hour + "시간 " : (CountText.length > 0) ? CountText + hour + "시간 " : CountText;
                         CountText = (min > 0) ? CountText + min + "분 " : (CountText.length > 0) ? CountText + min + "분 " : CountText;
                         CountText = CountText + sec + "초"
+            
+            	if(RemainTime <86000){
+            		 window.document.all.Countdown.style.color='red';
+            	}
             }
 
             if (( sec <= 0 && CountText == "0초" ) || ( CountText == "" )){
@@ -61,13 +65,10 @@ function showCountdown(ExpireTime){
             if (CountText != "종료"){
                         setTimeout("showCountdown(RemainTime)", 1000);
             }
+            
+          
+            
 }
-
-
-
-
- 
-
 
 </SCRIPT>
   <style>
@@ -139,7 +140,7 @@ font-family: "Montserrat", sans-serif;
  </td><tr><tr><td class="w3-border-bottom">
     <p><label><b>남은시간</b> </label><p/>
     
-    <body onload="javascript:showCountdown('${timeCount}');">
+    <body onload="javascript:showCountdown('${timeCount}','${startRemain }');">
           <input type="text" class="w3-xlarge " name="Countdown" value="" style="border:0px; max-width:250px;" readonly>
 </body><p/>
     
@@ -166,19 +167,24 @@ font-family: "Montserrat", sans-serif;
 <tr><td>
 
 <div class="w3-bar w3-white w3-section  ">
-<button style="width: 33%;"  id="submitAuction" disabled="disabled" class="w3-button w3-bar-item w3-green w3-right  w3-border-top w3-border-left w3-border-bottom" >입찰하기</button>
+
+<button style="width: 33%;" onclick="document.getElementById('auctionSubmitModal').style.display='block'" id="submitAuction" disabled="disabled" class="w3-button w3-bar-item w3-green w3-right  w3-border-top w3-border-left w3-border-bottom" >입찰하기</button>
 <button  style="width: 33%;" class="w3-button w3-bar-item  w3-white   w3-right w3-border-top w3-border-left w3-border-bottom " onclick="location.href='addCart?num=${aproduct.num}&pcode=a'">찜하기</button>
 <button  style="width: 33%;"  class="w3-button w3-bar-item w3-white   w3-border-top w3-border-left w3-border-bottom w3-right "  >공유</button>
 
- 
    
 </div>
 </td></tr>
 <tr><td class="w3-border w3-padding">
 <b>최근 입찰 내역:</b><br>
-니앟ㄴ이****님(30000원) 2018/03/05/12:58<br>
-니앟ㄴ이****님(30000원) 2018/03/05/12:58<br>
-니앟ㄴ이****님(30000원) 2018/03/05/12:58<br>
+<c:if test="${historycount!=0}">
+<c:forEach var="history" items="${historylist }">
+${history.userid }님&nbsp;&nbsp;(${history.price }원)&nbsp;&nbsp;${history.adate }<br>
+</c:forEach>
+</c:if>
+<c:if test="${historycount==0}">
+입찰 내역이 없습니다.
+</c:if>
 </td></tr>
 </table>
 
@@ -188,6 +194,33 @@ font-family: "Montserrat", sans-serif;
 
   
   </div>
+  
+ <!--   입찰 모달   -->
+  
+  <div id="auctionSubmitModal" class="w3-modal" >
+    <div class="w3-modal-content w3-small" style="max-width:450px;">
+      <header class="w3-container w3-black"> 
+        <span onclick="document.getElementById('auctionSubmitModal').style.display='none'" 
+        class="w3-button w3-display-topright">&times;</span>
+         <h5>입찰가를 입력하세요</h5>
+      </header>
+     <br><div class="w3-padding-32 w3-center w3-margin-left w3-margin-right">
+      
+      <form action="auctionSubmit?num=${ num}&pageNum=${ pageNum}&select=auction&part=content" method="post">
+<input required="required" class="w3-input w3-border w3-margin-top" type="number"  placeholder="가격 입력" name="price">
+<br>
+<input type="hidden" name="num" value="${ num}">
+<input type="hidden" name="pageNum" value="${ pageNum}">
+
+<button class="w3-button w3-black" type="submit" >보내기</button>
+</form>
+</div>
+      
+    </div>
+  </div>
+ <!--   입찰모달끝  -->
+  
+  
 <hr>
 
 <div class="w3-bar w3-border w3-small" >

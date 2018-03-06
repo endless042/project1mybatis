@@ -212,6 +212,7 @@ public List getProducts(int startRow, int endRow) {
 						gproduct.setImgs(rs.getString("imgs"));
 						gproduct.setContent(rs.getString("content"));
 						gproduct.setGoal(rs.getInt("goal"));
+						gproduct.setCount(rs.getInt("count"));
 						
 						
 						productList.add(gproduct);
@@ -294,6 +295,37 @@ public GpurcDataBean getProduct(int num,  String chk) {
 		
 	return gproduct;
 
+}
+
+
+public int updateGproduct(GpurcDataBean gproduct) {
+	
+	String sql="";
+	Connection con=getConnection();
+	PreparedStatement pstmt=null;
+	
+	int chk=0;
+	try {
+
+		sql="update gproduct set "
+				+ "count=?  where num=?";
+		
+		pstmt=con.prepareStatement(sql);
+		pstmt.setInt(1, gproduct.getCount());
+		pstmt.setInt(2, gproduct.getNum());
+		
+		
+		chk=pstmt.executeUpdate(); 	
+		
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(con, null, pstmt);
+			
+			
+		}
+		
+	return chk;
 }
 
 }

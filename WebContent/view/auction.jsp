@@ -7,7 +7,52 @@
 <title>Plant shop</title>
 <meta charset="UTF-8">
 
- 
+ <SCRIPT>
+var RemainTime;
+function showCountdown(ExpireTime){
+	
+            var day, hour, min, sec, mod
+            var CountText
+           
+            RemainTime = ExpireTime - 1;
+            CountText = ""
+            
+            if (RemainTime >= 0){
+            	
+            	
+                        day = Math.floor(ExpireTime / (3600 * 24));
+                        mod = ExpireTime % (24 * 3600);
+
+                        hour = Math.floor(mod / 3600);
+                        mod = mod % 3600;
+
+                        min = Math.floor(mod / 60);
+
+                        sec = mod % 60;
+
+                        CountText = (day > 0) ? day + "일 " : "0일 ";
+                        CountText = (hour > 0) ? CountText + hour + "시간 " : (CountText.length > 0) ? CountText + hour + "시간 " : CountText;
+                        CountText = (min > 0) ? CountText + min + "분 " : (CountText.length > 0) ? CountText + min + "분 " : CountText;
+                        CountText = CountText + sec + "초"
+            
+            	if(RemainTime <86000){
+            		
+            	}
+            }
+
+            if (( sec <= 0 && CountText == "0초" ) || ( CountText == "" )){
+                        CountText = "종료";
+                     
+            }
+            document.getElementById("Countdown").innerHTML=CountText;
+
+            if (CountText != "종료"){
+                        setTimeout("showCountdown(RemainTime)", 1000);
+            }
+}
+
+
+</SCRIPT>
 
  
 
@@ -48,13 +93,14 @@
          <div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${aproduct.imgs}" class="w3-border-top w3-border-left w3-border-right" style="height:350px; width:100%;">
        
           <div class="w3-display-middle w3-display-hover">
+          
             <button class="w3-button w3-red" onclick="location.href='acontent?num=${aproduct.num}&pageNum=${currentPage}&part=content';">입찰하기</button>
           </div>
         </div>
       <div class="w3-container w3-border ">
 
        <p>${aproduct.title} </p> 
-               <font class="w3-small"><table width="100%" class="w3-light-grey"><tr><td>남은시간  </td><td class="w3-right">3일 15시간 30초</td></tr>  </table></font><p>
+               <font class="w3-small"><table width="100%" class="w3-light-grey"><tr><td>남은시간  </td><td class="w3-right"><span onload="javascript:showCountdown('${timeCount}');" id="Countdown"></p></td></tr>  </table></font><p>
                <table width="100%"><tr><td><b>현재가</b> </td><td class="w3-right"><b>${aproduct.eprice}원</b></td></tr>  </table>  <p/>
       </div>
     </div>

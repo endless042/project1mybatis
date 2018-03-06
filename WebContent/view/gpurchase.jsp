@@ -49,8 +49,15 @@
        <p>${gproduct.title }</p> 
                 <div class="w3-light-grey" 
                 style="margin-bottom:5px; margin-top:10px;">
-  <div class="w3-red" style="height:3px;width:${gproduct.count/gproduct.goal}%; "></div>
-</div><font class="w3-small"><table width="100%"><tr><td>${gproduct.edate }일 남음  </td><td class="w3-right">${gproduct.count/gproduct.goal}%</td></tr>  </table></font><p>
+                
+                <c:if test="${((gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1)>=100}">
+                <div class="w3-green" style="height:3px;max-width:${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%; "></div>
+
+                </c:if>
+                  <c:if test="${((gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1)<100}">
+  <div class="w3-red" style="height:3px;max-width:${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%; "></div>
+</c:if></div>
+<font class="w3-small"><table width="100%"><tr><td>${gproduct.edate }일 남음  </td><td class="w3-right">${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%</td></tr>  </table></font><p>
 <table width="100%"><tr><td><b>공동구매가</b> </td><td class="w3-right"><b>${gproduct.price }원</b></td></tr>  </table>  <p/>
       </div>
     </div>

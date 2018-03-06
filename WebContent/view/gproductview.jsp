@@ -8,71 +8,58 @@
 
 <SCRIPT LANGUAGE="JavaScript">
 
-
-/////////////////////////////////////////////////////////////
-// 카운트다운(남은시간) 스크립트입니다.
-// ExpireTime에 [목표시간-현재시간]을 초로 입력하셔야 합니다.
-/////////////////////////////////////////////////////////////
 var RemainTime
 
 function showCountdown(ExpireTime){
 	
 
-	 var btn=document.getElementById('submitGpurc');
-	
-	  function btn_on() {
-	   
-	   btn.disabled = false;
-	  }
-	  
-	  function btn_off() {
-	  
-	   btn.disabled = 'disabled';
-	  }
-	  
-            var day, hour, min, sec, mod
-            var CountText
-            RemainTime = ExpireTime - 1;
+ var btn=document.getElementById('submitGpurc');
 
-            CountText = ""
+  function btn_on() {
+   
+   btn.disabled = false;
+  }
+  
+  function btn_off() {
+  
+   btn.disabled = 'disabled';
+  }
+  
+           var day, hour, min, sec, mod
+           var CountText
+           RemainTime = ExpireTime - 1;
 
-            // 남은시간이 1초보다 클때만 보이게 하자.
-            if (RemainTime >= 0){
-            	btn_on();
-                        // 남은일수
-                        day = Math.floor(ExpireTime / (3600 * 24));
-                        mod = ExpireTime % (24 * 3600);
+           CountText = ""
 
-                        // 남은시간
-                        hour = Math.floor(mod / 3600);
-                        mod = mod % 3600;
+           if (RemainTime >= 0){
+           	btn_on();
+         
+              day = Math.floor(ExpireTime / (3600 * 24));
+              mod = ExpireTime % (24 * 3600);
 
-                        // 남은분
-                        min = Math.floor(mod / 60);
+              hour = Math.floor(mod / 3600);
+              mod = mod % 3600;
 
-                        // 남은초
-                        sec = mod % 60;
+              min = Math.floor(mod / 60);
 
-                        // 보여줄 글자를 셋팅
-                        CountText = (day > 0) ? day + "일 " : "";
-                        CountText = (hour > 0) ? CountText + hour + "시간 " : (CountText.length > 0) ? CountText + hour + "시간 " : CountText;
-                        CountText = (min > 0) ? CountText + min + "분 " : (CountText.length > 0) ? CountText + min + "분 " : CountText;
-                        CountText = CountText + sec + "초"
-            }
+              sec = mod % 60;
 
-            // 목표시간에 도달하게 되면...
-            if (( sec <= 0 && CountText == "0초" ) || ( CountText == "" )){
-                        CountText = "종료";
-                        btn_off();
-            }
+              CountText = (day > 0) ? day + "일 " : "";
+              CountText = (hour > 0) ? CountText + hour + "시간 " : (CountText.length > 0) ? CountText + hour + "시간 " : CountText;
+              CountText = (min > 0) ? CountText + min + "분 " : (CountText.length > 0) ? CountText + min + "분 " : CountText;
+              CountText = CountText + sec + "초"
+           }
 
-            // 화면에 값 뿌려주기...
-            window.document.all.Countdown.value = CountText;
+           if (( sec <= 0 && CountText == "0초" ) || ( CountText == "" )){
+                       CountText = "종료";
+                       btn_off();
+           }
 
-            // 1초마다 남은시간을 보여주자.
-            if (CountText != "종료"){
-                        setTimeout("showCountdown(RemainTime)", 1000);
-            }
+           window.document.all.Countdown.value = CountText;
+
+           if (CountText != "종료"){
+                       setTimeout("showCountdown(RemainTime)", 1000);
+           }
 }
 
 </SCRIPT>
@@ -110,6 +97,10 @@ font-family: "Montserrat", sans-serif;
   </div></div>
 
 <!-- 상세정보쪽 div -->
+<form method="post" action="gpurcSubmit?select=gproduct&part=content">
+  <input type="hidden" name="num" value="${num }">
+  <input type="hidden" name="pageNum" value="${pageNum }">
+  
   <div class="w3-container w3-half w3-cell w3-cell-bottom w3-small " >
     <table style="width: 90%;"><tr><td class="w3-border-bottom">
     
@@ -148,11 +139,16 @@ font-family: "Montserrat", sans-serif;
           <label><b>남은시간 :</b> </label> <input type="text" name="Countdown" value="" style="border:0px; " readonly>
 </body><p/>
  </td><tr><tr><td class="w3-border-bottom">
-    <p><label><b>진행상황</b></label> (${gproduct.count/gproduct.goal}%)<br>
+    <p><label><b>진행상황</b></label> (${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%)<br>
     
      <div class="w3-light-grey" 
                 style="margin-bottom:5px; margin-top:10px;">
-  <div class="w3-red" style="height:15px;width:${gproduct.count/gproduct.goal}%; "></div>
+                 <c:if test="${((gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1)>=100}">
+                <div class="w3-green" style="height:15px;max-width:${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%; "></div>
+                </c:if>
+                 <c:if test="${((gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1)<100}">
+  <div class="w3-red" style="height:15px;max-width:${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%; "></div>
+</c:if>
 </div> <center>목표 수량 ${gproduct.goal }개 중 현재  ${gproduct.count }개 달성</center><br>
 </td></tr><tr><td class="w3-border-bottom" valign="top">
 
@@ -169,7 +165,7 @@ font-family: "Montserrat", sans-serif;
     <span class="w3-tag w3-medium w3-white "
      style="min-width: 200px;"><b>합계 : <span id="totalprice"> 0 </span> 원</b>  |  가격 : ${gproduct.price}원</span>
      <p id="what"></p>
-
+  
 <script>
 function priceCal(price){
 	var x=document.getElementById("quantity").value;
@@ -183,17 +179,20 @@ function priceCal(price){
 </tr>
 <tr><td>
 
-<div class="w3-bar w3-white w3-section  ">
-<button style="width: 33%;" id="submitGpurc" disabled="disabled" class="w3-button w3-bar-item w3-green  w3-right  w3-border-top w3-border-left w3-border-bottom" >참여하기</button>
+<div class="w3-bar w3-white w3-section">
+
+
+<button style="width: 33%;" id="submitGpurc" disabled="disabled" class="w3-button w3-bar-item w3-green  w3-right  w3-border-top w3-border-left w3-border-bottom" type="submit">참여하기</button>
 <button  style="width: 33%;" class="w3-button w3-bar-item  w3-white   w3-right w3-border-top w3-border-left w3-border-bottom " onclick="location.href='addCart?num=${gproduct.num}&pcode=g'">찜하기</button>
 <button  style="width: 33%;"  class="w3-button w3-bar-item w3-white   w3-border-top w3-border-left w3-border-bottom w3-right "  >공유</button>
 
  
    
 </div>
+
 </td></tr>
 </table>
-
+</form>
 </div>
 
 

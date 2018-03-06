@@ -167,6 +167,37 @@ public int getRemainTime (AuctionDataBean aproduct, String curtime){
 		return 0;
 	}
 }
+public int getStartRemain (AuctionDataBean aproduct, String curtime){
+	String sql="select (to_date(?,'yyyymmddhh24miss') - " + 
+			"to_date(?,'yyyymmddhh24miss'))*24*60*60 from dual";
+	Connection con=getConnection();
+	PreparedStatement pstmt=null;
+	ResultSet rs=null;
+	int x=0;
+	
+	try{ pstmt=con.prepareStatement(sql);
+	pstmt.setString(1, aproduct.getSdate());
+	pstmt.setString(2,curtime);
+	
+	rs=pstmt.executeQuery();
+	
+	if(rs.next()) {
+		x=rs.getInt(1);
+	}
+	}catch(Exception e) {
+		e.printStackTrace();
+	}
+	finally {
+		close(con, rs, pstmt);
+	}
+	
+	if(x>0) {
+	return 1;		//아직 시작 안 함
+	}else {
+		return 0;	//시작 됨
+	}
+}
+
 
 
 public List getProducts(int startRow, int endRow) {
@@ -299,6 +330,36 @@ public AuctionDataBean getProduct(int num,  String chk) {
 }
 
 
+public int updateAproduct(AuctionDataBean aproduct) {
+	
+	String sql="";
+	Connection con=getConnection();
+	PreparedStatement pstmt=null;
+	
+	int chk=0;
+	try {
+
+		sql="update aproduct set "
+				+ "eprice=?, count=? where num=?";
+		
+		pstmt=con.prepareStatement(sql);
+		pstmt.setString(1, aproduct.getEprice());
+		pstmt.setInt(2, aproduct.getCount());
+		pstmt.setInt(3, aproduct.getNum());
+		
+		
+		chk=pstmt.executeUpdate(); 	
+		
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(con, null, pstmt);
+			
+			
+		}
+		
+	return chk;
+}
 	
 	
 }

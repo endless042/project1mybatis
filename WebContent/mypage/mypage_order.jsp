@@ -27,7 +27,15 @@
  
   
 <h5><b>경매</b></h5>
-
+<c:if test="${acount==0}">
+    	
+    	<table class="w3-table w3-border w3-hoverable w3-center w3-small " width="90%">
+    	<tr class="w3-light-grey">
+    	<td class="w3-center">입찰한 상품이 없습니다.</td>
+    	
+    	</table>
+    	</c:if>
+    	<c:if test="${acount!=0}">
  <table class="w3-table w3-bordered w3-small">
  <tr class="w3-border-top">
  <td class="w3-center" width="50px;"  ><b>번호</b></td>
@@ -36,28 +44,40 @@
 <td class="w3-center"><b>경매기간</b></td>
 <td class="w3-center"><b>입찰 정보</b></td>
 <td class="w3-center"><b>결과</b></td></tr>
-
+<c:forEach var="order" items="${aList}">
 
 <tr><td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-8
+${anumber }
+<c:set var="anumber" value="${anumber-1 }"/>
 </div></span></td>
 
-<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<div class="w3-display-container"><img src="../images/peperomia.PNG" width="100px"> <span class="w3-tag w3-display-topleft">마감</span></div></div></span></td>
-<td><span style="width: 100%;"><div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <p><a href="surveyview.jsp">요즘 텀블러에서 자주 보이는 이 식물</a><p/>
+
+<td class="w3-center" style="width: 100px;"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+<div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${order.aproduct.imgs}" width="80px" height="100px"> <span class="w3-tag w3-display-topleft"><c:if test="${order.aproduct.state=='1'}">
+    예정
+    </c:if>
+       <c:if test="${order.aproduct.state=='2'}">
+    진행
+    </c:if>
+       <c:if test="${order.aproduct.state=='3'}">
+    마감
+    </c:if></span></div></div></span></td>
+
+
+<td width="35%"><span style="width: 100%;"><div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+ <p><a href="surveyview.jsp">${order.aproduct.title }</a><p/>
 </div></span></td>
 
 
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <p>
- 18/02/22 08:00<p/>
- 18/02/25 08:00
+${order.aproduct.sdate }<p/>
+${order.aproduct.edate }
 </div></span></td>
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <p><b>입찰가</b><br>
- 35,000원<p/>
- <b>현재가</b> <br>35,000원
+ ${order.aprice }<p/>
+ <b>현재가</b> <br>${order.aproduct.eprice}
 </div></span></td>
 
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
@@ -67,55 +87,47 @@
 
 
 </tr>
-<tr><td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-8
-</div></span></td>
-
-<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<div class="w3-display-container"><img src="../images/peperomia.PNG" width="100px"> <span class="w3-tag w3-green w3-display-topleft">진행
-</span></div></div></span></td>
-<td><span style="width: 100%;"><div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <p><a href="surveyview.jsp">요즘 텀블러에서 자주 보이는 이 식물</a><p/>
-</div></span></td>
-
-<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <p>
- 18/02/22 08:00<p/>
- 18/02/25 08:00
-</div></span></td>
-<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <p><b>입찰가</b><br>
- 35,000원<p/>
- <b>현재가</b> <br>35,000원
-</div></span></td>
-
-<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- -
-
-</div></span></td>
-
-
-</tr>
-
+</c:forEach>
  </table>
- 
- <!-- Pagination -->
-  <div class="w3-center w3-padding-32 w3-small">
-    <div class="w3-bar">
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
-      <a href="#" class="w3-bar-item w3-black w3-button">1</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">2</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">3</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">4</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">»</a>
-    </div>
+  </c:if>
+<!-- 하단 페이징  -->
+    	<div class="w3-center w3-section w3-small">
+    	
+    	<c:if test="${astartPage>abottomLine}">
+    		 <a href="orderlist?apageNum=${astartPage-abottomLine}&gpageNum=${gpageNum}" class="w3-bar-item w3-button w3-hover-black">«</a>
+    		</c:if>
+    	
+    		<c:forEach var="i" begin="${astartPage }" end="${aendPage }">
+    		<c:if test="${i!=acurrentPage}">
+    		  <a href="orderlist?apageNum=${i}&gpageNum=${gpageNum}"
+    		 class="w3-bar-item w3-button w3-hover-black">${i}</a> 
+    		 	</c:if>
+
+    		<c:if test="${i==acurrentPage}">
+    		  <a href="orderlist?apageNum=${i}&gpageNum=${gpageNum}" 
+    		  class="w3-bar-item w3-black w3-button">${i}</a> 
+    		</c:if>
+    		</c:forEach>
+    	
+    	
+    	<c:if test="${aendPage<apageCount}">
+    		 <a href="orderlist?apageNum=${ astartPage+bottomLine}&gpageNum=${gpageNum}" class="w3-bar-item w3-button w3-hover-black">»</a>
+</c:if>
   </div>
   
   
 
 <h5><b>공동구매</b></h5>
 
-
+ <c:if test="${gcount==0}">
+    	
+    	<table class="w3-table w3-border w3-hoverable w3-center w3-small " width="90%">
+    	<tr class="w3-light-grey">
+    	<td class="w3-center">참여한 상품이 없습니다.</td>
+    	
+    	</table>
+    	</c:if>
+<c:if test="${gcount!=0}">
  <table class="w3-table w3-bordered w3-small">
  <tr class="w3-border-top">
  <td class="w3-center" width="50px;"  ><b>번호</b></td>
@@ -127,28 +139,38 @@
 <td class="w3-center"><b>결과</b></td></tr>
 
 
-
+<c:forEach var="order" items="${gList}">
 <tr><td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-8
+${gnumber }
+<c:set var="gnumber" value="${gnumber-1 }"/>
 </div></span></td>
 
-<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<div class="w3-display-container"><img src="../images/peperomia.PNG" width="100px"> <span class="w3-tag w3-display-topleft">마감</span></div></div></span></td>
-<td><span style="width: 100%;"><div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <p><a href="surveyview.jsp">요즘 텀블러에서 자주 보이는 이 식물</a><p/>
+<td class="w3-center" style="width: 100px;"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+<div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${order.gproduct.imgs}" width="80px" height="100px"> <span class="w3-tag w3-display-topleft"><c:if test="${order.gproduct.state=='1'}">
+    예정
+    </c:if>
+       <c:if test="${order.gproduct.state=='2'}">
+    진행
+    </c:if>
+       <c:if test="${order.gproduct.state=='3'}">
+    마감
+    </c:if></span></div></div></span></td>
+
+<td width="35%"><span style="width: 100%;"><div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+ <p><a href="surveyview.jsp">${order.gproduct.title }</a><p/>
 </div></span></td>
 
 
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <p>
- 18/02/22 08:00<p/>
- 18/02/25 08:00
+ ${order.gproduct.sdate}<p/>
+ ${order.gproduct.edate}
 </div></span></td>
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- 4
+ ${order.count}
 </div></span></td>
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-120,000원
+${order.gproduct.price*order.count}
 </div></span></td>
 
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
@@ -158,50 +180,46 @@
 
 
 </tr>
-<tr><td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-8
-</div></span></td>
-
-<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<div class="w3-display-container"><img src="../images/peperomia.PNG" width="100px"> <span class="w3-tag w3-display-topleft">마감</span></div></div></span></td>
-<td><span style="width: 100%;"><div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <p><a href="surveyview.jsp">요즘 텀블러에서 자주 보이는 이 식물</a><p/>
-</div></span></td>
-
-
-<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <p>
- 18/02/22 08:00<p/>
- 18/02/25 08:00
-</div></span></td>
-<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- 4
-</div></span></td>
-<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-120,000원
-</div></span></td>
-
-<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <p><span class="w3-tag w3-red">미달</span><p/>
- 
-</div></span></td>
-
-
-</tr>
-
+</c:forEach>
  </table>
- 
- <!-- Pagination -->
-  <div class="w3-center w3-padding-32 w3-small">
-    <div class="w3-bar">
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
-      <a href="#" class="w3-bar-item w3-black w3-button">1</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">2</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">3</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">4</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">»</a>
-    </div>
-  </div>
+  </c:if>
+
+<!-- 하단 페이징  -->
+    	<div class="w3-center w3-section w3-small">
+    	
+    	<c:if test="${gstartPage>gbottomLine}">
+    		
+    		 <a href="orderlist?gpageNum=${gstartPage-gbottomLine}&apageNum=${apageNum}" class="w3-bar-item w3-button w3-hover-black">«</a>
+    	
+    		</c:if>
+    	
+    		<c:forEach var="i" begin="${gstartPage }" end="${gendPage }">
+    		
+    		<c:if test="${i!=gcurrentPage}">
+    		  <a href="orderlist?gpageNum=${i}&apageNum=${apageNum}"
+    		 class="w3-bar-item w3-button w3-hover-black">${i}</a> 
+    		 
+    		 
+    		 	</c:if>
+    		
+    		
+    		<c:if test="${i==gcurrentPage}">
+    		  <a href="orderlist?gpageNum=${i}&apageNum=${apageNum}" 
+    		  class="w3-bar-item w3-black w3-button">${i}</a> 
+    		</c:if>
+    		
+    		</c:forEach>
+    	
+    	
+    	<c:if test="${gendPage<gpageCount}">
+    		
+    		
+    		 <a href="orderlist?gpageNum=${ gstartPage+bottomLine}&apageNum=${apageNum}" class="w3-bar-item w3-button w3-hover-black">»</a>
+    			</c:if>
+    	
+    		 
+    		 
+    	</div>
  </div>
   </div>
  </div>

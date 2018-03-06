@@ -37,7 +37,7 @@
   
     <div class="w3-bar w3-border w3-small w3-section" style="max-width:900px; width:90%;">
     <button style="width:25%" class="w3-bar-item w3-button tablink <%=(select!=null&&select.equals("myinfo"))?"w3-green":"" %>  " onclick="location.href='mypage?select=myinfo';">내 정보</button>
-    <button style="width:25%" class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("order"))?"w3-green":"" %> " onclick="location.href='order?select=order';">주문정보</button>
+    <button style="width:25%" class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("order"))?"w3-green":"" %> " onclick="location.href='orderlist?select=order';">주문정보</button>
 
     <button style="width:25%" class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("cart"))?"w3-green":"" %> " onclick="location.href='cartlist?select=cart';">찜목록</button>
          <button style="width:25%" class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("articles"))?"w3-green":"" %> " onclick="location.href='myarticle';">내가 쓴 글</button>
@@ -48,8 +48,8 @@
   
   
   <div id="demo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium">
-  <a href="#"  onclick="location.href='order?select=aauction';" class="w3-bar-item w3-button">주문정보</a>
-  <a href="#" onclick="location.href='cart?select=agpurchase';" class="w3-bar-item w3-button">장바구니</a>
+  <a href="#"  onclick="location.href='orderlist?select=order';" class="w3-bar-item w3-button">주문정보</a>
+  <a href="#" onclick="location.href='cartlist?select=cart';" class="w3-bar-item w3-button">장바구니</a>
   <a href="#" onclick="location.href='myarticle';" class="w3-bar-item w3-button">내가 쓴 글</a>
 </div>
 

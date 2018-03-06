@@ -36,8 +36,13 @@
     	</c:if>
 <c:if test="${acount!=0}">
  <table class="w3-table w3-bordered w3-small">
- <tr class="w3-border-top"><td class="w3-center" width="50px;"  >번호</td><td class="w3-center">사진</td><td  class="w3-center">상품명</td>
-<td class="w3-center">상태</td><td class="w3-center">찜한 날짜</td></tr>
+ <tr class="w3-border-top"><td class="w3-center" width="50px;"  >번호</td>
+ <td class="w3-center">사진</td>
+ <td  class="w3-center">상품명</td>
+
+<td class="w3-center">현재가</td>
+<td class="w3-center">진행기간</td>
+<td class="w3-center">찜한 날짜</td></tr>
 
 
 <c:forEach var="cart" items="${aList}">
@@ -47,17 +52,8 @@ ${anumber }
 <c:set var="anumber" value="${anumber-1 }"/>
 </div></span></td>
 
-<td class="w3-center" style="width: 110px;"><span style="width: 100%;">
-<div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<img src="<%= request.getContextPath() %>/fileSave/${cart.imgs}" width="100px"></div></span></td>
-<td><span style="width: 100%;">
-<div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <a href="surveyview.jsp">${cart.title }</a>
-</div></span></td>
-
-<td class="w3-center"><span style="width: 100%;">
-<div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <span class="w3-tag w3-blue"><c:if test="${cart.state=='1'}">
+<td class="w3-center" style="width: 100px;"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+<div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${cart.imgs}" width="80px" height="100px"> <span class="w3-tag w3-display-topleft"><c:if test="${cart.state=='1'}">
     예정
     </c:if>
        <c:if test="${cart.state=='2'}">
@@ -65,8 +61,24 @@ ${anumber }
     </c:if>
        <c:if test="${cart.state=='3'}">
     마감
-    </c:if></span>
-</div></span></td><td class="w3-center">
+    </c:if></span></div></div></span></td>
+
+<td style="width: 40%;" ><span style="width: 100%;">
+<div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+ <a href="surveyview.jsp">${cart.title }</a>
+</div></span></td>
+
+<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+ <p>
+ ${cart.aproduct.eprice }<p/>
+ 
+</div></span></td>
+<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+ <p>
+ ${cart.aproduct.sdate }<p/>
+ ${cart.aproduct.edate }
+</div></span></td>
+<td class="w3-center">
 <span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
 ${cart.rdate }
 </div></span></td></tr>
@@ -119,8 +131,12 @@ ${cart.rdate }
     	</c:if>
 <c:if test="${gcount!=0}">
  <table class="w3-table w3-bordered w3-small">
- <tr class="w3-border-top"><td class="w3-center" width="50px;"  >번호</td><td class="w3-center">사진</td><td  class="w3-center">상품명</td>
-<td class="w3-center">상태</td><td class="w3-center">찜한 날짜</td></tr>
+ <tr class="w3-border-top"><td class="w3-center" width="50px;"  >번호</td>
+ <td class="w3-center">사진</td>
+ <td  class="w3-center">상품명</td>
+  <td  class="w3-center">가격</td>
+<td class="w3-center">진행기간</td>
+<td class="w3-center">찜한 날짜</td></tr>
 
 
 <c:forEach var="cart" items="${gList}">
@@ -130,17 +146,9 @@ ${gnumber }
 <c:set var="gnumber" value="${gnumber-1 }"/>
 </div></span></td>
 
-<td class="w3-center"  style="width: 110px;"><span style="width: 100%;">
-<div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<img src="<%= request.getContextPath() %>/fileSave/${cart.imgs}" width="100px"></div></span></td>
-<td><span style="width: 100%;">
-<div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <a href="surveyview.jsp">${cart.title}</a>
-</div></span></td>
 
-<td class="w3-center"><span style="width: 100%;">
-<div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <span class="w3-tag w3-blue"><c:if test="${cart.state=='1'}">
+<td class="w3-center" style="width: 100px;"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+<div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${cart.imgs}" width="80px" height="100px"> <span class="w3-tag w3-display-topleft"><c:if test="${cart.state=='1'}">
     예정
     </c:if>
        <c:if test="${cart.state=='2'}">
@@ -148,8 +156,24 @@ ${gnumber }
     </c:if>
        <c:if test="${cart.state=='3'}">
     마감
-    </c:if></span>
-</div></span></td><td class="w3-center">
+    </c:if></span></div></div></span></td>
+<td style="width: 40%;"><span style="width: 100%;">
+<div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+ <a href="surveyview.jsp">${cart.title}</a>
+</div></span></td>
+
+<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+ <p>
+ ${cart.gproduct.price }<p/>
+
+</div></span></td>
+<td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+ <p>
+ ${cart.gproduct.sdate }<p/>
+ ${cart.gproduct.edate }
+</div></span></td>
+
+<td class="w3-center">
 <span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
 ${cart.rdate}
 </div></span></td></tr>
