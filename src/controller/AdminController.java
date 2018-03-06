@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -152,16 +153,39 @@ public class AdminController extends Action{
 			String sdatestr=multi.getParameter("sdate").replace("-", "")+sdatetime+"0000";
 			String edatestr=multi.getParameter("edate").replace("-", "")+edatetime+"0000";
 			
+			aproduct.setSdate(sdatestr);
+			aproduct.setEdate(edatestr);
+			
+			Date date = new Date();
+
+			SimpleDateFormat simple = new SimpleDateFormat("yyyyMMddHHmmss");
+
+			System.out.println(simple.format(date));
+			String curtime=simple.format(date);
+
+			
+			int timeCount=apro.getRemainTime(aproduct, curtime);
+			int startRemain=apro.getStartRemain(aproduct, curtime);	//1이면 아직시작안함
+			
+			System.out.println("================"+timeCount);
+			if(startRemain==1) {
+				aproduct.setState("1");
+			}else if(timeCount==0) {
+				aproduct.setState("3");
+			}else if(timeCount>0) {
+				aproduct.setState("2");
+			}
+			
+			
 			
 			aproduct.setName(multi.getParameter("name"));
 			aproduct.setOrigin(multi.getParameter("origin"));
 			aproduct.setCategory(multi.getParameter("category"));
 			aproduct.setHeight(multi.getParameter("height"));
-			aproduct.setSdate(sdatestr);
-			aproduct.setEdate(edatestr);
+			
 			aproduct.setSprice(multi.getParameter("sprice"));
 			aproduct.setDeliv(multi.getParameter("deliv"));
-			aproduct.setState(multi.getParameter("state"));
+			
 			aproduct.setTitle(multi.getParameter("title"));
 			aproduct.setContent(multi.getParameter("content"));
 			
@@ -173,16 +197,7 @@ public class AdminController extends Action{
 			    	 aproduct.setImgsize(0);
 			     }
 			
-			/*if(multi.getParameter("imgs")!=null) {
-				
-				String[] allimg=req.getParameterValues("imgs");
-				String allpath="";
-				for(int i=0;i<allimg.length;i++) {
-					allpath+=allimg[i]+",";
-				}
-				
-				aproduct.setImgs(allpath);
-			}*/
+			
 			
 			apro.addAproduct(aproduct);
 			
@@ -234,17 +249,38 @@ public class AdminController extends Action{
 			GpurcDBBean gpro=GpurcDBBean.getInstance();
 			GpurcDataBean gproduct=new GpurcDataBean();
 			
+			gproduct.setSdate(sdatestr);
+			gproduct.setEdate(edatestr);
+			
 		
+			
 		
+			Date date = new Date();
+
+			SimpleDateFormat simple = new SimpleDateFormat("yyyyMMddHHmmss");
+
+			System.out.println(simple.format(date));
+			String curtime=simple.format(date);
+
+			
+			int timeCount=gpro.getRemainTime(gproduct, curtime);
+			int startRemain=gpro.getStartRemain(gproduct, curtime);
+			
+			if(startRemain==1) {
+				gproduct.setState("1");
+			}else if(timeCount==0) {
+				gproduct.setState("3");
+			}else if(timeCount>0) {
+				gproduct.setState("2");
+			}
+			
 			gproduct.setName(multi.getParameter("name"));
 			gproduct.setOrigin(multi.getParameter("origin"));
 			gproduct.setCategory(multi.getParameter("category"));
 			gproduct.setHeight(multi.getParameter("height"));
-			gproduct.setSdate(sdatestr);
-			gproduct.setEdate(edatestr);
 			gproduct.setPrice(multi.getParameter("price"));
 			gproduct.setDeliv(multi.getParameter("deliv"));
-			gproduct.setState(multi.getParameter("state"));
+			
 			gproduct.setTitle(multi.getParameter("title"));
 			gproduct.setContent(multi.getParameter("content"));
 			gproduct.setGoal(Integer.parseInt(multi.getParameter("goal")));
@@ -259,17 +295,7 @@ public class AdminController extends Action{
 			    	 gproduct.setImgsize(0);
 			     }
 			
-		/*	if(req.getParameter("imgs")!=null) {
-				
-				String[] allimg=req.getParameterValues("imgs");
-				String allpath="";
-				for(int i=0;i<allimg.length;i++) {
-					allpath+=allimg[i]+",";
-				}
-				
-				gproduct.setImgs(allpath);
-			}*/
-			
+	
 			gpro.addGproduct(gproduct);
 			
 			

@@ -148,15 +148,18 @@ ${gnumber }
 
 
 <td class="w3-center" style="width: 100px;"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${cart.imgs}" width="80px" height="100px"> <span class="w3-tag w3-display-topleft"><c:if test="${cart.state=='1'}">
-    예정
+<div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${cart.imgs}" width="80px" height="100px">
+
+<c:if test="${cart.state=='1'}">
+   <span class="w3-tag w3-display-topleft">예정</span>
     </c:if>
        <c:if test="${cart.state=='2'}">
-    진행
+  <span class="w3-tag w3-green w3-display-topleft">진행</span>
     </c:if>
        <c:if test="${cart.state=='3'}">
-    마감
-    </c:if></span></div></div></span></td>
+  <span class="w3-tag w3-display-topleft">마감</span>
+    </c:if></div></div></span></td>
+ 
 <td style="width: 40%;"><span style="width: 100%;">
 <div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <a href="surveyview.jsp">${cart.title}</a>

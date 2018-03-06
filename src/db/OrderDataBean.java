@@ -3,18 +3,25 @@ package db;
 import java.util.Date;
 
 public class OrderDataBean {
-	int num;
-	String  userid;
-	String pronum;
-	Date rdate;
-	String aprice;
-	String payState;
-	AuctionDataBean aproduct;
-	GpurcDataBean gproduct;
-	int count;
+	private int num;
+	private String  userid;
+	private String pronum;
+	private Date rdate;
+	private String aprice;
+	private String payState;
+	private AuctionDataBean aproduct;
+	private GpurcDataBean gproduct;
+	private int remainTime;
+	private int count;
 	
 	
 	
+	public int getRemainTime() {
+		return remainTime;
+	}
+	public void setRemainTime(int remainTime) {
+		this.remainTime = remainTime;
+	}
 	public int getCount() {
 		return count;
 	}
@@ -73,8 +80,9 @@ public class OrderDataBean {
 	public String toString() {
 		return "OrderDataBean [num=" + num + ", userid=" + userid + ", pronum=" + pronum + ", rdate=" + rdate
 				+ ", aprice=" + aprice + ", payState=" + payState + ", aproduct=" + aproduct + ", gproduct=" + gproduct
-				+ ", count=" + count + "]";
+				+ ", remainTime=" + remainTime + ", count=" + count + "]";
 	}
+	
 	
 	
 	

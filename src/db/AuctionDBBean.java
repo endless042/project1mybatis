@@ -1,15 +1,14 @@
 package db;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import board.BoardDataBean;
 
 public class AuctionDBBean {
 	private static AuctionDBBean auction=new AuctionDBBean();
@@ -66,7 +65,7 @@ public class AuctionDBBean {
 		ResultSet rs=null;
 		
 		int number=0;
-		Date bd=null;
+		
 	
 	try {
 		pstmt=con.prepareStatement("select aSer.nextval from dual");
@@ -199,6 +198,37 @@ public int getStartRemain (AuctionDataBean aproduct, String curtime){
 }
 
 
+public void stateManage(List<AuctionDataBean> products) {
+	AuctionDBBean apro=AuctionDBBean.getInstance();	
+	AuctionDataBean product=new AuctionDataBean();
+	Date date = new Date();
+
+	SimpleDateFormat simple = new SimpleDateFormat("yyyyMMddHHmmss");
+
+	
+	String curtime=simple.format(date);
+	int timeCount;
+	int startRemain;
+	for(int i=0;i<products.size();i++) {
+		
+		product=(AuctionDataBean)products.get(i);
+		timeCount=apro.getRemainTime(product, curtime);
+		startRemain=apro.getStartRemain(product, curtime);	
+		if(startRemain==1) {
+			product.setState("1");
+		}else if(timeCount==0) {
+			product.setState("3");
+		}else if(timeCount>0) {
+			product.setState("2");
+		}
+		
+		apro.updateAproduct(product);
+		
+			
+		}
+	
+		
+	}
 
 public List getProducts(int startRow, int endRow) {
 		
@@ -252,6 +282,8 @@ public List getProducts(int startRow, int endRow) {
 					
 					}while(rs.next());
 				}
+				AuctionDBBean apro=AuctionDBBean.getInstance();
+				apro.stateManage(productList);
 			}catch(Exception ex) {
 					ex.printStackTrace();
 			}finally {close(con, rs, pstmt);}
@@ -340,12 +372,13 @@ public int updateAproduct(AuctionDataBean aproduct) {
 	try {
 
 		sql="update aproduct set "
-				+ "eprice=?, count=? where num=?";
+				+ "eprice=?, count=?, state=? where num=?";
 		
 		pstmt=con.prepareStatement(sql);
 		pstmt.setString(1, aproduct.getEprice());
 		pstmt.setInt(2, aproduct.getCount());
-		pstmt.setInt(3, aproduct.getNum());
+		pstmt.setString(3, aproduct.getState());
+		pstmt.setInt(4, aproduct.getNum());
 		
 		
 		chk=pstmt.executeUpdate(); 	

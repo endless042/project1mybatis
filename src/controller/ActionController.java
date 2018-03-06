@@ -73,6 +73,7 @@ public class ActionController extends Action{
     		if(endPage>pageCount)endPage=pageCount;
     	
     		
+    	
     		req.setAttribute("state", state); 	//나중에쓸거
     		req.setAttribute("count", count);
     		req.setAttribute("productList", productList);
@@ -429,21 +430,7 @@ public class ActionController extends Action{
 		return  "/mypage/mypage.jsp?select=myinfo"; 
 			} 
 	
-	public String order(HttpServletRequest req,
-			 HttpServletResponse res)  throws Throwable { 
-		req.setAttribute("title", "마이페이지");	
-		
-		 try{
-				UserlistDBBean userPro=UserlistDBBean.getInstance();
-				UserlistDataBean user=userPro.getUser((String)req.getSession().getAttribute("loginId")); 
-				
-				req.setAttribute("user", user);
-			
-		 }catch(Exception e){}
-		
-		
-		return  "/mypage/mypage_order.jsp?select=order"; 
-			} 
+
 	
 	public String myarticle(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 
@@ -691,6 +678,11 @@ public class ActionController extends Action{
 			
 	    	} 
 	
+	public String payPage(HttpServletRequest req,
+			 HttpServletResponse res)  throws Throwable { 
+		req.setAttribute("title", "결제");
 		
+		return  "/mypage/mypage_pay.jsp?select=order"; 
+			} 
 	
 }

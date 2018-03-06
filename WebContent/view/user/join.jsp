@@ -60,7 +60,7 @@
  <tr ><td valign="top"> <label><b>주소</b></label></td>
  <td><input type="text"  class="w3-input w3-hover-light-grey" name="addr" value="${param.addr }" ><p/></td></tr>
  <tr ><td valign="top"><label><b>전화번호</b></label></td>
- <td><input type="text" onKeyDown = "javascript:onlyNumberInput(event)" style='IME-MODE: disabled' class="w3-input w3-hover-light-grey" name="tel" placeholder="숫자만 입력" value="${param.tel}"><p/></td></tr>
+ <td><input type="tel" onKeyDown = "javascript:onlyNumberInput(event)" style='IME-MODE: disabled' class="w3-input w3-hover-light-grey" name="tel" placeholder="숫자만 입력" value="${param.tel}"><p/></td></tr>
 
 
   </table>

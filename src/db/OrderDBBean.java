@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class OrderDBBean {
@@ -165,6 +167,14 @@ public List getOrders(int startRow, int endRow, String pcode, String userid) {
 						order.setUserid(userid);
 						order.setAprice(rs.getString("aprice"));
 						
+						Date date = new Date();
+
+						SimpleDateFormat simple = new SimpleDateFormat("yyyyMMddHHmmss");
+
+						System.out.println(simple.format(date));
+						String curtime=simple.format(date);
+						
+						order.setRemainTime(apro.getRemainTime(product, curtime));
 						
 						
 						
@@ -178,6 +188,16 @@ public List getOrders(int startRow, int endRow, String pcode, String userid) {
 							order.setRdate(rs.getTimestamp("rdate"));
 							order.setUserid(userid);
 							order.setCount(rs.getInt("count"));
+							
+							Date date = new Date();
+
+							SimpleDateFormat simple = new SimpleDateFormat("yyyyMMddHHmmss");
+
+							System.out.println(simple.format(date));
+							String curtime=simple.format(date);
+							
+							order.setRemainTime(gpro.getRemainTime(product, curtime));
+							
 						}
 						
 						

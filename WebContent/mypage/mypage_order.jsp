@@ -53,15 +53,16 @@ ${anumber }
 
 
 <td class="w3-center" style="width: 100px;"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${order.aproduct.imgs}" width="80px" height="100px"> <span class="w3-tag w3-display-topleft"><c:if test="${order.aproduct.state=='1'}">
-    예정
-    </c:if>
-       <c:if test="${order.aproduct.state=='2'}">
-    진행
-    </c:if>
-       <c:if test="${order.aproduct.state=='3'}">
-    마감
-    </c:if></span></div></div></span></td>
+<div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${order.aproduct.imgs}" width="80px" height="100px">
+<c:if test="${order.aproduct.state=='1'}">
+<span class="w3-tag w3-display-topleft">예정</span>
+</c:if>
+<c:if test="${order.aproduct.state=='2'}">
+<span class="w3-tag w3-green w3-display-topleft">진행</span>
+</c:if>
+<c:if test="${order.aproduct.state=='3'}">
+<span class="w3-tag w3-display-topleft">마감</span>
+</c:if></span></div></div></span></td>
 
 
 <td width="35%"><span style="width: 100%;"><div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
@@ -72,7 +73,8 @@ ${anumber }
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <p>
 ${order.aproduct.sdate }<p/>
-${order.aproduct.edate }
+${order.aproduct.edate }<br>
+
 </div></span></td>
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <p><b>입찰가</b><br>
@@ -81,8 +83,17 @@ ${order.aproduct.edate }
 </div></span></td>
 
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <p><span class="w3-tag w3-blue">낙찰</span><p/>
- <span class="w3-tag w3-green">결제하기</span>
+ <p><c:if test="${(order.remainTime==0) && (order.aprice==order.aproduct.eprice)}">
+ <span class="w3-tag w3-blue">낙찰</span><p/>
+  <a href="payPage"><span class="w3-tag w3-green">결제하기</span></a>
+ </c:if>
+ <c:if test="${(order.remainTime==0) && (order.aprice!=order.aproduct.eprice)}">
+ <span class="w3-tag w3-white w3-border">종료</span><p/>
+ </c:if>
+  <c:if test="${order.remainTime!=0}">
+ <span class="w3-tag w3-white w3-border">대기</span><p/>
+ </c:if>
+
 </div></span></td>
 
 
@@ -146,15 +157,16 @@ ${gnumber }
 </div></span></td>
 
 <td class="w3-center" style="width: 100px;"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${order.gproduct.imgs}" width="80px" height="100px"> <span class="w3-tag w3-display-topleft"><c:if test="${order.gproduct.state=='1'}">
-    예정
-    </c:if>
-       <c:if test="${order.gproduct.state=='2'}">
-    진행
-    </c:if>
-       <c:if test="${order.gproduct.state=='3'}">
-    마감
-    </c:if></span></div></div></span></td>
+<div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${order.gproduct.imgs}" width="80px" height="100px">
+<c:if test="${order.gproduct.state=='1'}">
+<span class="w3-tag w3-display-topleft">예정</span>
+</c:if>
+<c:if test="${order.gproduct.state=='2'}">
+<span class="w3-tag w3-green w3-display-topleft">진행</span>
+</c:if>
+<c:if test="${order.gproduct.state=='3'}">
+<span class="w3-tag w3-display-topleft">마감</span>
+</c:if></div></div></span></td>
 
 <td width="35%"><span style="width: 100%;"><div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <p><a href="surveyview.jsp">${order.gproduct.title }</a><p/>
@@ -174,8 +186,18 @@ ${order.gproduct.price*order.count}
 </div></span></td>
 
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <p><span class="w3-tag w3-blue">달성</span><p/>
- <span class="w3-tag w3-green">결제하기</span>
+<p><c:if test="${order.gproduct.goal<=order.gproduct.count}">
+ <span class="w3-tag w3-blue">달성</span><p/>
+  <span class="w3-tag w3-green">결제하기</span>
+ </c:if>
+ <c:if test="${(order.remainTime==0) && (order.gproduct.goal>order.gproduct.count)}">
+ <span class="w3-tag w3-red">미달</span><p/>
+ (${order.gproduct.count }/${order.gproduct.goal })
+ </c:if>
+  <c:if test="${(order.remainTime!=0)&&(order.gproduct.goal>order.gproduct.count)}">
+  <span class="w3-tag w3-white w3-border">모집중</span><p/>
+  (${order.gproduct.count }/${order.gproduct.goal })
+ </c:if>
 </div></span></td>
 
 
