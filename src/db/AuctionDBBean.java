@@ -272,6 +272,71 @@ public List getProducts(int startRow, int endRow) {
 						aproduct.setSprice(rs.getString("sprice"));
 						aproduct.setEprice(rs.getString("eprice"));
 						aproduct.setRe(rs.getInt("re"));
+						aproduct.setCount(rs.getInt("count"));
+						aproduct.setRdate(rs.getDate("rdate"));
+						aproduct.setDeliv(rs.getString("deliv"));
+						aproduct.setImgs(rs.getString("imgs"));
+						aproduct.setContent(rs.getString("content"));
+						
+						
+						productList.add(aproduct);
+					
+					}while(rs.next());
+				}
+				AuctionDBBean apro=AuctionDBBean.getInstance();
+				apro.stateManage(productList);
+			}catch(Exception ex) {
+					ex.printStackTrace();
+			}finally {close(con, rs, pstmt);}
+		
+		return productList;
+		
+	}
+
+
+public List getTopProducts(int startRow, int endRow) {
+		
+		
+		Connection con=getConnection();
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List productList=null;
+		String sql="";
+		
+		try {
+			con=getConnection();
+			sql="select * from (" + 
+					"select rownum rum , b.* from (" + 
+					"select a.* from aproduct a  ) b)" + 
+					"where rum between ? and ? ORDER BY  readcount desc";
+			
+			
+				pstmt=con.prepareStatement(sql);
+				
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				
+				rs=pstmt.executeQuery();
+			
+				if(rs.next()) {
+					productList=new ArrayList();
+					do {
+						
+						AuctionDataBean aproduct=new AuctionDataBean();
+						
+						aproduct.setNum(rs.getInt("num"));
+						aproduct.setState(rs.getString("state"));
+						aproduct.setOrigin(rs.getString("origin"));
+						aproduct.setTitle(rs.getString("title"));
+						aproduct.setName(rs.getString("name"));
+						aproduct.setCategory(rs.getString("category"));
+						aproduct.setHeight(rs.getString("height"));
+						aproduct.setSdate(rs.getString("sdate"));
+						aproduct.setEdate(rs.getString("edate"));
+						aproduct.setSprice(rs.getString("sprice"));
+						aproduct.setEprice(rs.getString("eprice"));
+						aproduct.setRe(rs.getInt("re"));
+						aproduct.setCount(rs.getInt("count"));
 						aproduct.setRdate(rs.getDate("rdate"));
 						aproduct.setDeliv(rs.getString("deliv"));
 						aproduct.setImgs(rs.getString("imgs"));

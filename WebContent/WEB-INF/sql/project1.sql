@@ -153,13 +153,40 @@ create SEQUENCE oSer
   NOMAXVALUE ;
 
 commit;
+select * from cart;
 delete from cart;
 select * from orderlist;
 delete from orderlist;
-delete from aproduct;
+delete from gproduct;
+delete from ahistory;
+delete from reply;
 delete from cart where pronum='a1';
 
 delete from orderlist where userid is null;
-select * from orderlist;
+select * from orderlist order by rdate desc;
 select * from aproduct;
 select * from gproduct;
+
+select count(*) from orderlist where pronum like 'a%' and paystate is not null;
+
+
+create table paylist(
+num int primary key,
+pronum varchar(10),
+userid varchar(20),
+rdate date default sysdate,
+price varchar(10),
+name varchar(20),
+addr varchar(100),
+tel varchar(15),
+deliv varchar(10)
+);
+
+create SEQUENCE paySer 
+   START WITH 1
+  INCREMENT BY 1
+  NOMAXVALUE ;
+  
+  select * from (select rownum rum , b.* from (
+		select a.* from aproduct a  ) b) 
+		where rum between 1 and 3 ORDER BY  num desc ,readcount desc;

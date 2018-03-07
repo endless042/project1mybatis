@@ -97,10 +97,7 @@ font-family: "Montserrat", sans-serif;
   </div></div>
 
 <!-- 상세정보쪽 div -->
-<form method="post" action="gpurcSubmit?select=gproduct&part=content">
-  <input type="hidden" name="num" value="${num }">
-  <input type="hidden" name="pageNum" value="${pageNum }">
-  
+
   <div class="w3-container w3-half w3-cell w3-cell-bottom w3-small " >
     <table style="width: 90%;"><tr><td class="w3-border-bottom">
     
@@ -141,12 +138,19 @@ font-family: "Montserrat", sans-serif;
  </td><tr><tr><td class="w3-border-bottom">
     <p><label><b>진행상황</b></label> (${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%)<br>
     
-     <div class="w3-light-grey" 
-                style="margin-bottom:5px; margin-top:10px;">
-                 <c:if test="${((gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1)>=100}">
-                <div class="w3-green" style="height:15px;max-width:${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%; "></div>
-                </c:if>
-                 <c:if test="${((gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1)<100}">
+ <div class="w3-light-grey" 
+   style="margin-bottom:5px; margin-top:10px;">
+    <c:if test="${((gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1)>=100}">
+   <div class="w3-green" style="height:15px;max-width:${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%; "></div>
+   </c:if>
+   
+     <c:if test="${(((gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1)<100)&&((gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1)>=80}">
+  <div class="w3-orange" style="height:15px;max-width:${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%; "></div>
+</c:if>
+
+    
+    
+    <c:if test="${((gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1)<80}">
   <div class="w3-red" style="height:15px;max-width:${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%; "></div>
 </c:if>
 </div> <center>목표 수량 ${gproduct.goal }개 중 현재  ${gproduct.count }개 달성</center><br>
@@ -164,7 +168,7 @@ font-family: "Montserrat", sans-serif;
     </select>
     <span class="w3-tag w3-medium w3-white "
      style="min-width: 200px;"><b>합계 : <span id="totalprice"> 0 </span> 원</b>  |  가격 : ${gproduct.price}원</span>
-     <p id="what"></p>
+
   
 <script>
 function priceCal(price){
@@ -181,8 +185,12 @@ function priceCal(price){
 
 <div class="w3-bar w3-white w3-section">
 
-
-<button style="width: 33%;" id="submitGpurc" disabled="disabled" class="w3-button w3-bar-item w3-green  w3-right  w3-border-top w3-border-left w3-border-bottom" type="submit">참여하기</button>
+<form method="post" action="gpurcSubmit?select=gproduct&part=content">
+  <input type="hidden" name="num" value="${num }">
+  <input type="hidden" name="pageNum" value="${pageNum }">
+  
+<input  style="width: 33%; display: inline-block;" id="submitGpurc" disabled="disabled" class="w3-button w3-bar-item w3-green  w3-right  w3-border-top w3-border-left w3-border-bottom" type="submit" value="참여하기">
+</form>
 <button  style="width: 33%;" class="w3-button w3-bar-item  w3-white   w3-right w3-border-top w3-border-left w3-border-bottom " onclick="location.href='addCart?num=${gproduct.num}&pcode=g'">찜하기</button>
 <button  style="width: 33%;"  class="w3-button w3-bar-item w3-white   w3-border-top w3-border-left w3-border-bottom w3-right "  >공유</button>
 
@@ -192,7 +200,7 @@ function priceCal(price){
 
 </td></tr>
 </table>
-</form>
+
 </div>
 
 

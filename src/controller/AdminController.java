@@ -18,6 +18,7 @@ import db.AuctionDBBean;
 import db.AuctionDataBean;
 import db.GpurcDBBean;
 import db.GpurcDataBean;
+import db.OrderDBBean;
 import db.UserlistDBBean;
 
 public class AdminController extends Action{
@@ -67,6 +68,209 @@ public class AdminController extends Action{
 
 			 return  "/admin/admin_userlist.jsp"; 
 			} 
+	public String alist(HttpServletRequest req,
+			 HttpServletResponse res)  throws Throwable {
+			req.setAttribute("title", "관리자페이지");
+			
+	 int pageSize=10;
+	    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+	    String pageNum=req.getParameter("pageNum");
+	    if(pageNum==null||pageNum==""){
+	    	pageNum="1";}
+	    
+	    int currentPage=Integer.parseInt(pageNum);
+	    int startRow=(currentPage -1 )*pageSize+1;
+	    int endRow=currentPage*pageSize;
+	    int count=0;
+	    int number=0;
+	    List aList=null;
+	    AuctionDBBean aPro=AuctionDBBean.getInstance();
+	    
+	   count=aPro.getAproductCount();
+	   
+	   int bottomLine=5;
+	    if(count>0){
+	    	aList=aPro.getProducts(startRow, endRow);
+	    number=count-(currentPage-1)*pageSize;
+	    
+	   
+
+   		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+   		int startPage=1+(currentPage-1)/bottomLine*bottomLine;
+   		int endPage=startPage+bottomLine-1;
+   	
+   		if(endPage>pageCount)endPage=pageCount;
+   		
+   		 
+   	    req.setAttribute("count", count);
+   	    req.setAttribute("aList", aList);
+   	    req.setAttribute("pageNum", pageNum);
+   	    req.setAttribute("bottomLine", bottomLine);
+   	    req.setAttribute("startPage", startPage);
+   	    req.setAttribute("currentPage", currentPage);
+   	    req.setAttribute("pageCount", pageCount);
+   	    req.setAttribute("endPage", endPage);
+
+	    }
+	   
+
+			 return  "/admin/admin_alist.jsp"; 
+			} 
+	
+	public String glist(HttpServletRequest req,
+			 HttpServletResponse res)  throws Throwable {
+			req.setAttribute("title", "관리자페이지");
+			
+	 int pageSize=10;
+	    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+	    String pageNum=req.getParameter("pageNum");
+	    if(pageNum==null||pageNum==""){
+	    	pageNum="1";}
+	    
+	    int currentPage=Integer.parseInt(pageNum);
+	    int startRow=(currentPage -1 )*pageSize+1;
+	    int endRow=currentPage*pageSize;
+	    int count=0;
+	    int number=0;
+	    List gList=null;
+	    GpurcDBBean gPro=GpurcDBBean.getInstance();
+	    
+	   count=gPro.getGproductCount();
+	   
+	   int bottomLine=5;
+	    if(count>0){
+	    	gList=gPro.getProducts(startRow, endRow);
+	    number=count-(currentPage-1)*pageSize;
+	    
+	   
+
+  		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+  		int startPage=1+(currentPage-1)/bottomLine*bottomLine;
+  		int endPage=startPage+bottomLine-1;
+  	
+  		if(endPage>pageCount)endPage=pageCount;
+  		
+  		 
+  	    req.setAttribute("count", count);
+  	    req.setAttribute("gList", gList);
+  	    req.setAttribute("pageNum", pageNum);
+  	    req.setAttribute("bottomLine", bottomLine);
+  	    req.setAttribute("startPage", startPage);
+  	    req.setAttribute("currentPage", currentPage);
+  	    req.setAttribute("pageCount", pageCount);
+  	    req.setAttribute("endPage", endPage);
+
+	    }
+	   
+
+			 return  "/admin/admin_glist.jsp"; 
+			} 
+	
+	public String olist(HttpServletRequest req,
+			 HttpServletResponse res)  throws Throwable {
+			req.setAttribute("title", "관리자페이지");
+			String pcode=req.getParameter("pcode");
+			if(pcode==null||pcode==""){
+				pcode="a";}
+			
+	 int pageSize=10;
+	    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+	    String pageNum=req.getParameter("pageNum");
+	    if(pageNum==null||pageNum==""){
+	    	pageNum="1";}
+	    
+	    int currentPage=Integer.parseInt(pageNum);
+	    int startRow=(currentPage -1 )*pageSize+1;
+	    int endRow=currentPage*pageSize;
+	    int count=0;
+	    int number=0;
+	    List oList=null;
+	    OrderDBBean oPro=OrderDBBean.getInstance();
+	    
+	   count=oPro.getTotalOrderCount(pcode);
+	   
+	   int bottomLine=5;
+	    if(count>0){
+	    	oList=oPro.getOrdersAdmin(startRow, endRow, pcode);
+	    number=count-(currentPage-1)*pageSize;
+	    
+	   
+
+ 		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+ 		int startPage=1+(currentPage-1)/bottomLine*bottomLine;
+ 		int endPage=startPage+bottomLine-1;
+ 	
+ 		if(endPage>pageCount)endPage=pageCount;
+ 		
+ 		 
+ 	    req.setAttribute("count", count);
+ 	    req.setAttribute("oList", oList);
+ 	    req.setAttribute("pageNum", pageNum);
+ 	    req.setAttribute("bottomLine", bottomLine);
+ 	    req.setAttribute("startPage", startPage);
+ 	    req.setAttribute("currentPage", currentPage);
+ 	    req.setAttribute("pageCount", pageCount);
+ 	    req.setAttribute("endPage", endPage);
+
+	    }
+	   
+
+			 return  "/admin/admin_orderlist.jsp?pcode="+pcode; 
+			} 
+	
+	public String plist(HttpServletRequest req,
+			 HttpServletResponse res)  throws Throwable {
+			req.setAttribute("title", "관리자페이지");
+			String pcode=req.getParameter("pcode");
+			if(pcode==null||pcode==""){
+				pcode="a";}
+			
+	 int pageSize=10;
+	    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+	    String pageNum=req.getParameter("pageNum");
+	    if(pageNum==null||pageNum==""){
+	    	pageNum="1";}
+	    
+	    int currentPage=Integer.parseInt(pageNum);
+	    int startRow=(currentPage -1 )*pageSize+1;
+	    int endRow=currentPage*pageSize;
+	    int count=0;
+	    int number=0;
+	    List pList=null;
+	    OrderDBBean oPro=OrderDBBean.getInstance();
+	    
+	   count=oPro.getPayOrderCount(pcode);
+	   System.out.println("==============="+count);
+	   int bottomLine=5;
+	    if(count>0){
+	    	pList=oPro.getPayOrders(startRow, endRow, pcode);
+	    number=count-(currentPage-1)*pageSize;
+	    
+	   
+
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+		int startPage=1+(currentPage-1)/bottomLine*bottomLine;
+		int endPage=startPage+bottomLine-1;
+	
+		if(endPage>pageCount)endPage=pageCount;
+		
+		 
+	    req.setAttribute("count", count);
+	    req.setAttribute("pList", pList);
+	    req.setAttribute("pageNum", pageNum);
+	    req.setAttribute("bottomLine", bottomLine);
+	    req.setAttribute("startPage", startPage);
+	    req.setAttribute("currentPage", currentPage);
+	    req.setAttribute("pageCount", pageCount);
+	    req.setAttribute("endPage", endPage);
+
+	    }
+	   
+
+			 return  "/admin/admin_pay.jsp?pcode="+pcode; 
+			} 
+	
+	
 	
 	public String gpurchase(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable {

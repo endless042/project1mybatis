@@ -13,9 +13,38 @@ public class OrderDataBean {
 	private GpurcDataBean gproduct;
 	private int remainTime;
 	private int count;
+	private int startRemain;
+	
+	private String deliv;
+	private String payPrice;
+	private UserlistDataBean user;
 	
 	
 	
+	public String getPayPrice() {
+		return payPrice;
+	}
+	public void setPayPrice(String payPrice) {
+		this.payPrice = payPrice;
+	}
+	public String getDeliv() {
+		return deliv;
+	}
+	public void setDeliv(String deliv) {
+		this.deliv = deliv;
+	}
+	public UserlistDataBean getUser() {
+		UserlistDBBean upro=UserlistDBBean.getInstance();
+		upro.getUser(userid);
+		return user;
+	}
+	
+	public int getStartRemain() {
+		return startRemain;
+	}
+	public void setStartRemain(int startRemain) {
+		this.startRemain = startRemain;
+	}
 	public int getRemainTime() {
 		return remainTime;
 	}

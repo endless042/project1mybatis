@@ -100,8 +100,14 @@ function showCountdown(ExpireTime){
       <div class="w3-container w3-border ">
 
        <p>${aproduct.title} </p> 
-               <font class="w3-small"><table width="100%" class="w3-light-grey"><tr><td>남은시간  </td><td class="w3-right"><span onload="javascript:showCountdown('${timeCount}');" id="Countdown"></p></td></tr>  </table></font><p>
-               <table width="100%"><tr><td><b>현재가</b> </td><td class="w3-right"><b>${aproduct.eprice}원</b></td></tr>  </table>  <p/>
+               <font class="w3-small"><table width="100%" class="w3-light-grey">
+               <tr><td><b>진행기간</b></td>
+               <td class="w3-right">
+              ${aproduct.sdate } 부터<br>
+              ${aproduct.edate } 까지
+              
+              </td></tr>  </table></font><p>
+               <table width="100%"><tr><td><b>현재가</b> </td><td class="w3-right"><b>${aproduct.eprice}원(${aproduct.count }명 참여)</b></td></tr>  </table>  <p/>
       </div>
     </div>
 

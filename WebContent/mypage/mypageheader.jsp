@@ -36,11 +36,11 @@
 
   
     <div class="w3-bar w3-border w3-small w3-section" style="max-width:900px; width:90%;">
-    <button style="width:25%" class="w3-bar-item w3-button tablink <%=(select!=null&&select.equals("myinfo"))?"w3-green":"" %>  " onclick="location.href='mypage?select=myinfo';">내 정보</button>
-    <button style="width:25%" class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("order"))?"w3-green":"" %> " onclick="location.href='orderlist?select=order';">주문정보</button>
-
-    <button style="width:25%" class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("cart"))?"w3-green":"" %> " onclick="location.href='cartlist?select=cart';">찜목록</button>
-         <button style="width:25%" class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("articles"))?"w3-green":"" %> " onclick="location.href='myarticle';">내가 쓴 글</button>
+    <button class="w3-bar-item w3-button tablink <%=(select!=null&&select.equals("myinfo"))?"w3-green":"" %>  " onclick="location.href='mypage?select=myinfo';">내 정보</button>
+    <button  class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("order"))?"w3-green":"" %> " onclick="location.href='orderlist?select=order';">주문정보</button>
+    <button  class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("pay"))?"w3-green":"" %> " onclick="location.href='paylist?select=pay';">결제완료</button>
+    <button  class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("cart"))?"w3-green":"" %> " onclick="location.href='cartlist?select=cart';">찜목록</button>
+         <button  class="w3-bar-item w3-button tablink w3-hide-small <%=(select!=null&&select.equals("articles"))?"w3-green":"" %> " onclick="location.href='myarticle';">내가 쓴 글</button>
         <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="myFunction()">&#9776;</a>
   </div>
   

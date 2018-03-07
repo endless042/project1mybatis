@@ -19,6 +19,8 @@ import db.GpurcDBBean;
 import db.GpurcDataBean;
 import db.OrderDBBean;
 import db.OrderDataBean;
+import db.PaylistDBBean;
+import db.PaylistDataBean;
 import db.UserlistDBBean;
 import db.UserlistDataBean;
 
@@ -28,6 +30,21 @@ public class ActionController extends Action{
 			 HttpServletResponse res)  throws Throwable {
 		  
 			req.setAttribute("title", "메인");
+			
+			
+			
+			List aTopProduct=null;
+			List gTopProduct=null;
+			AuctionDBBean apro=AuctionDBBean.getInstance();
+			aTopProduct = apro.getTopProducts(1, 3);
+			GpurcDBBean gpro=GpurcDBBean.getInstance();
+			gTopProduct = gpro.getTopProducts(1, 3);
+			int i=1;
+					int j=1;
+			req.setAttribute("aTopProduct", aTopProduct);
+			req.setAttribute("gTopProduct", gTopProduct);
+			req.setAttribute("i", i);
+			req.setAttribute("j", j);
 			 return  "/view/main.jsp"; 
 			} 
 	
@@ -72,7 +89,20 @@ public class ActionController extends Action{
     	
     		if(endPage>pageCount)endPage=pageCount;
     	
-    		
+    		AuctionDataBean tmp=new AuctionDataBean();
+    		String olddate="";
+    		String formatSdate="";
+    		String formatEdate="";
+    		for(int i=0;i<productList.size();i++) {
+    			tmp=(AuctionDataBean)productList.get(i);
+    			olddate=tmp.getSdate();
+    			formatSdate=olddate.substring(0, 4)+"년 "+olddate.substring(4,6)+"월 "+olddate.substring(6,8)+"일 "+olddate.substring(8,10)+"시";
+    			olddate=tmp.getEdate();
+    			formatEdate=olddate.substring(0, 4)+"년 "+olddate.substring(4,6)+"월 "+olddate.substring(6,8)+"일 "+olddate.substring(8,10)+"시";
+    			tmp.setSdate(formatSdate);
+    			tmp.setEdate(formatEdate);
+    			
+    		}
     	
     		req.setAttribute("state", state); 	//나중에쓸거
     		req.setAttribute("count", count);
@@ -203,9 +233,15 @@ public class ActionController extends Action{
 		AuctionDataBean aproduct=apro.getProduct(num, "");
 		
 		aproduct.setEprice(price);
-		aproduct.setCount(aproduct.getCount()+1);
+		
+		int c=aproduct.getCount();
+		
+		System.out.println("==========="+c);
+		aproduct.setCount(c+1);
+		System.out.println("============="+(c+1));
 		
 		apro.updateAproduct(aproduct);
+		System.out.println(aproduct);
 		
 		OrderDBBean opro=OrderDBBean.getInstance();
 		OrderDataBean order=new OrderDataBean();
@@ -231,6 +267,9 @@ public class ActionController extends Action{
 			pageNum="1";}
 		
 		String quantity=req.getParameter("quantity");
+		if (quantity==null||quantity=="") {
+			quantity="0";
+		}
 		int selectquantity=Integer.parseInt(quantity);
 	 System.out.println(quantity);
 	 
@@ -678,11 +717,183 @@ public class ActionController extends Action{
 			
 	    	} 
 	
-	public String payPage(HttpServletRequest req,
+	public String payPro(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 
 		req.setAttribute("title", "결제");
 		
+		String ordernum=req.getParameter("ordernum");
+		int pronum=Integer.parseInt(req.getParameter("pronum"));
+		
+		try {
+		AuctionDBBean apro=AuctionDBBean.getInstance();
+		AuctionDataBean product=apro.getProduct(pronum, "");
+		
+		UserlistDBBean upro=UserlistDBBean.getInstance();
+		UserlistDataBean user=upro.getUser((String)req.getSession().getAttribute("loginId"));
+		
+		PaylistDBBean paypro=PaylistDBBean.getInstance();
+		PaylistDataBean pay=new PaylistDataBean();
+		
+		pay.setAddr(req.getParameter("addr"));
+		pay.setDeliv(req.getParameter("deliv"));
+		pay.setName(req.getParameter("name"));
+		
+		pay.setPronum(req.getParameter("pronum"));
+		pay.setTel(req.getParameter("tel"));
+		pay.setUserid((String)req.getSession().getAttribute("loginId"));
+		
+		
+		
+		System.out.println(pay);
+		
+		int price=Integer.parseInt(req.getParameter("price"));
+		int point=Integer.parseInt(req.getParameter("point"));
+		int afterprice=price-point;
+		
+		pay.setPrice(req.getParameter("price"));
+		paypro.addPay(pay);
+		
+		int userpoint=Integer.parseInt(user.getPoint());
+		
+		
+		user.setPoint((((userpoint-point)+Math.round(afterprice*0.05)))+"");
+		
+		upro.updateUser(user);
+		
+		
+		OrderDBBean opro=OrderDBBean.getInstance();
+		OrderDataBean order=null;
+		order=opro.getOrder(Integer.parseInt(ordernum));
+		order.setPayState("1"); //결제완료
+		
+		opro.updateOrder(order);
+		
+		
+		req.setAttribute("product", product);
+		req.setAttribute("user", user);
+		
+		}catch(Exception e) {e.printStackTrace();}
+		
+		return  "/mypage/mypage_payComp.jsp?select=order"; 
+			} 
+	
+	public String mypagePay(HttpServletRequest req,
+			 HttpServletResponse res)  throws Throwable { 
+			req.setAttribute("title", "결제");
+		
+		String apageNum=req.getParameter("apageNum");
+		int num=Integer.parseInt(req.getParameter("num"));
+		AuctionDBBean apro=AuctionDBBean.getInstance();
+		AuctionDataBean product=apro.getProduct(num, "");
+		
+		UserlistDBBean upro=UserlistDBBean.getInstance();
+		UserlistDataBean user=upro.getUser((String)req.getSession().getAttribute("loginId"));
+		
+		String ordernum=req.getParameter("ordernum");
+		req.setAttribute("num", num);
+		req.setAttribute("apageNum", apageNum);
+		req.setAttribute("product", product);
+		req.setAttribute("user", user);
+		req.setAttribute("ordernum", ordernum);
+		
 		return  "/mypage/mypage_pay.jsp?select=order"; 
 			} 
+	
+	public String paylist(HttpServletRequest req,
+			 HttpServletResponse res)  throws Throwable { 
+		
+			req.setAttribute("title", "마이페이지");
+		
+		     int pageSize=4;
+		  
+		    String apageNum=req.getParameter("apageNum");
+		    if(apageNum==null||apageNum==""){
+		    	apageNum="1";}
+		    String gpageNum=req.getParameter("gpageNum");
+		    if(gpageNum==null||gpageNum==""){
+		    	gpageNum="1";}
+		    
+		    String userid=(String)req.getSession().getAttribute("loginId");
+		    
+		    int acurrentPage=Integer.parseInt(apageNum);
+		    int gcurrentPage=Integer.parseInt(gpageNum);
+		    int astartRow=(acurrentPage -1 )*pageSize+1;
+		    int aendRow=acurrentPage*pageSize;
+		    int gstartRow=(gcurrentPage -1 )*pageSize+1;
+		    int gendRow=gcurrentPage*pageSize;
+		    
+		    int acount=0;
+		    int gcount=0;
+		    
+		    int anumber=0;
+		    int gnumber=0;
+		    
+		    List aList=null;
+		    List gList=null;
+		    
+		    OrderDBBean oPro=OrderDBBean.getInstance();
+		    acount=oPro.getOrderCount("a",userid);
+		    
+		   // System.out.println("acount:"+acount);
+		    
+		    gcount=oPro.getOrderCount("g",userid);
+		    
+		    int bottomLine=5;
+		    try {
+		    if(acount>0){
+		    	aList=oPro.getOrders(astartRow,aendRow,"a", userid);}
+		    
+		    anumber=acount-(acurrentPage-1)*pageSize;
+
+	    		int apageCount=acount/pageSize+(acount%pageSize==0?0:1);
+	    		int astartPage=1+(acurrentPage-1)/bottomLine*bottomLine;
+	    		int aendPage=astartPage+bottomLine-1;
+	    	
+	    		if(aendPage>apageCount)aendPage=apageCount;
+	    		
+	    		
+	    		
+	    		if(gcount>0){
+			    	gList=oPro.getOrders(gstartRow,gendRow,"g", userid);}
+			    
+			    gnumber=gcount-(gcurrentPage-1)*pageSize;
+
+		    		int gpageCount=gcount/pageSize+(gcount%pageSize==0?0:1);
+		    		int gstartPage=1+(gcurrentPage-1)/bottomLine*bottomLine;
+		    		int gendPage=gstartPage+bottomLine-1;
+		    	
+		    		if(gendPage>gpageCount)gendPage=gpageCount;
+	    	
+		  
+	    	
+	    		req.setAttribute("acount", acount);
+	    		req.setAttribute("gcount", gcount);
+	    		
+	    		req.setAttribute("aList", aList);
+	    		req.setAttribute("gList", gList);
+	    		
+	    		req.setAttribute("astartPage", astartPage);
+	    		req.setAttribute("bottomLine", bottomLine);
+	    		req.setAttribute("acurrentPage", acurrentPage);
+	    		req.setAttribute("aendPage", aendPage);
+	    		req.setAttribute("apageCount", apageCount);
+	    		req.setAttribute("anumber", anumber);
+	    		req.setAttribute("apageNum", apageNum);
+	    		req.setAttribute("gpageNum", gpageNum);
+	    		
+	    		req.setAttribute("gstartPage", gstartPage);
+	    		req.setAttribute("userid", userid);
+	    		req.setAttribute("gcurrentPage", gcurrentPage);
+	    		req.setAttribute("gendPage", gendPage);
+	    		req.setAttribute("gpageCount", gpageCount);
+	    		req.setAttribute("gnumber", gnumber);
+		   
+		    }catch(Exception e) {
+		    	e.printStackTrace();
+		    }
+		
+		return "/mypage/mypage_order.jsp?select=order";
+			
+	    	} 
 	
 }

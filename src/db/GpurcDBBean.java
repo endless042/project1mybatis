@@ -294,6 +294,72 @@ public List getProducts(int startRow, int endRow) {
 		
 	}
 
+
+public List getTopProducts(int startRow, int endRow) {
+		
+		
+		Connection con=getConnection();
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List productList=null;
+		String sql="";
+		
+		try {
+			con=getConnection();
+			sql="select * from (" + 
+					"select rownum rum , b.* from (" + 
+					"select a.* from gproduct a  ) b)" + 
+					"where rum between ? and ? ORDER BY  readcount desc";
+			
+			
+				pstmt=con.prepareStatement(sql);
+				
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				
+				rs=pstmt.executeQuery();
+			
+				if(rs.next()) {
+					productList=new ArrayList();
+					do {
+						
+						GpurcDataBean gproduct=new GpurcDataBean();
+						
+						gproduct.setNum(rs.getInt("num"));
+						gproduct.setState(rs.getString("state"));
+						gproduct.setOrigin(rs.getString("origin"));
+						gproduct.setTitle(rs.getString("title"));
+						gproduct.setName(rs.getString("name"));
+						gproduct.setCategory(rs.getString("category"));
+						gproduct.setHeight(rs.getString("height"));
+						gproduct.setSdate(rs.getString("sdate"));
+						gproduct.setEdate(rs.getString("edate"));
+						gproduct.setProcess(rs.getString("process"));
+						gproduct.setPrice(rs.getString("price"));
+						gproduct.setRe(rs.getInt("re"));
+						gproduct.setRdate(rs.getDate("rdate"));
+						gproduct.setDeliv(rs.getString("deliv"));
+						gproduct.setImgs(rs.getString("imgs"));
+						gproduct.setContent(rs.getString("content"));
+						gproduct.setGoal(rs.getInt("goal"));
+						gproduct.setCount(rs.getInt("count"));
+						
+						
+						productList.add(gproduct);
+					
+					}while(rs.next());
+				}
+				
+				GpurcDBBean gpro=GpurcDBBean.getInstance();
+				gpro.stateManage(productList);
+			}catch(Exception ex) {
+					ex.printStackTrace();
+			}finally {close(con, rs, pstmt);}
+		
+		return productList;
+		
+	}
+
 public GpurcDataBean getProduct(int num,  String chk) {
 	
 	

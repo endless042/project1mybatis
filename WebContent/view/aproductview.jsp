@@ -12,7 +12,7 @@
 <SCRIPT>
 var RemainTime;
 
-function showCountdown(ExpireTime){
+function showCountdown(ExpireTime,startRemain){
 
 	 var btn=document.getElementById('submitAuction');
 	  function btn_on() {
@@ -32,6 +32,7 @@ function showCountdown(ExpireTime){
             RemainTime = ExpireTime - 1;
             CountText = ""
             
+           
             if (RemainTime >= 0){
             		btn_on();
             	
@@ -66,7 +67,7 @@ function showCountdown(ExpireTime){
                         setTimeout("showCountdown(RemainTime)", 1000);
             }
             
-          
+           
             
 }
 

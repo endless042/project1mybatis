@@ -22,64 +22,111 @@
 	
  <jsp:include page="mypageheader.jsp"></jsp:include>
 <div class="w3-container w3-center"   >
+ <h4>주문 정보</h4><br><br>
  <table align="center" class="w3-table w3-bordered w3-small"  style="width: 80%;">
  <tr class="w3-border-top">
  
- <td class="w3-center"><b>사진</b></td>
- <td  class="w3-center"><b>상품명</b></td>
-
-
-<td class="w3-center"><b>가격</b></td></tr>
-<c:forEach var="order" items="${aList}">
+ <td class="w3-center" style="width: 15%;"><b>사진</b></td>
+ <td  class="w3-center" style="width: 55%;"><b>상품명</b></td>
+<td  class="w3-center" style="width: 15%;"><b>수량</b></td>
+<td class="w3-center" style="width: 15%;"><b>가격</b></td></tr>
 
 <tr>
 
 
 <td class="w3-center" style="width: 100px;"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${order.aproduct.imgs}" width="80px" height="100px">
-<c:if test="${order.aproduct.state=='1'}">
-<span class="w3-tag w3-display-topleft">예정</span>
-</c:if>
-<c:if test="${order.aproduct.state=='2'}">
-<span class="w3-tag w3-green w3-display-topleft">진행</span>
-</c:if>
-<c:if test="${order.aproduct.state=='3'}">
-<span class="w3-tag w3-display-topleft">마감</span>
-</c:if></span></div></div></span></td>
+<div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${product.imgs}" width="80px" height="100px">
+
+</div></div></span></td>
 
 
-<td width="35%"><span style="width: 100%;"><div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <p><a href="surveyview.jsp">${order.aproduct.title }</a><p/>
+<td ><span style="width: 100%;"><div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+ <p><a href="surveyview.jsp">${product.title }</a><p/>
+</div></span></td>
+<td  align="right"><span style="width: 100%;"><div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+ <p><a href="surveyview.jsp">1</a><p/>
 </div></span></td>
 
-
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <p><b>입찰가</b><br>
- ${order.aprice }<p/>
- <b>현재가</b> <br>${order.aproduct.eprice}
+ ${product.eprice}
 </div></span></td>
 
 
 </tr>
-</c:forEach>
+
  </table>
+ <br><br>
       </div>
 
-<form class="w3-container w3-section" method="post" action="../user/userModifyPro" style="padding-left:50px;">
-  <h4>주문 정보</h4>
+<form  class="w3-container w3-section" method="post" action="payPro" style="padding-left:50px;">
  
-   <table class="w3-white w3-small" style="width: 80%;" >
-  
+ 
+   <table class="w3-white w3-small w3-margin-left" style="width: 80%;" >
+   <c:if test="${product.deliv=='3'}">
+<tr ><td > <label><b>배송방법</b><p/></label></td>
+ <td align="left">
+   <c:if test="${product.deliv=='2'}">
+&nbsp;&nbsp;&nbsp;택배
+ </c:if>
+ <c:if test="${product.deliv=='1'}">
+&nbsp;&nbsp;&nbsp;직접 픽업
+ </c:if>
+ <c:if test="${product.deliv=='3'}">
+<select id="delevselect" onchange="delivSel();"  class="w3-select w3-border " required="required" style="width: 120px; display: inline-block;" name="quantity">
+	<option  selected="selected" disabled="disabled" >배송 방법 선택</option>
+	<option value="1">픽업</option>
+    <option value="2">택배</option>
+   
+    </select>
+   
 
+ </c:if><p/></td></tr>
+ <tr><td><b>주소</b><p/></td><td align="left"><div id="userselect">먼저 배송방법을 선택해주세요.</div></td></tr></c:if>
+ 
+ 
+ 
+ 
  <tr><td>
-  <label><b>이름</b></label></td><td><input class="w3-input w3-hover-light-grey" type="text" name="name" value="${user.name}"><p/></td></tr>
+  <label><b>이름</b><p/></label></td><td><input class="w3-input w3-hover-light-grey" type="text" name="name" value="${user.name}"><p/></td></tr>
+
+ <c:if test="${product.deliv=='2'}">
+  
+ <tr ><td> <label><b>주소</b><p/></label></td>
+ <td><input type="text"  class="w3-input w3-hover-light-grey" name="addr" value="${user.addr}"><p/></td></tr>
+ <input type="hidden" name="deliv" value="2">
+ </c:if>
+ 
+ 
+ <tr ><td><label><b>전화번호</b><p/></label></td>
+ <td><input type="text"  class="w3-input w3-hover-light-grey" name="tel" value="${user.tel}"><p/></td></tr>
+ <tr ><td><label><b>가격</b><p/></label></td>
+ <td align="left">
+ 
+  <c:if test="${product.deliv=='2'}">
+ <b>&nbsp;&nbsp;&nbsp;${product.eprice+3000 } 원</b> (${product.eprice} 원 + 배송비 3000원)<p/>
+ <input type="hidden" name="price" value="${product.eprice+3000 }">
+ 
+ </c:if>
+ <c:if test="${product.deliv=='1' }">
+ <b>&nbsp;&nbsp;&nbsp;${product.eprice} 원</b> <p/>
+  <input type="hidden" name="price" value="${product.eprice}">
+ </c:if>
+ <c:if test="${product.deliv=='3' }">
+ <span id="totalprice">&nbsp;&nbsp;&nbsp;<b>${product.eprice} 원</b><p/></span>
+ </c:if> </td></tr>
+ 
 
  
- <tr ><td> <label><b>주소</b></label></td><td><input type="text"  class="w3-input w3-hover-light-grey" name="addr" value="${user.addr}"><p/></td></tr>
- <tr ><td><label><b>전화번호</b></label></td><td><input type="text"  class="w3-input w3-hover-light-grey" name="tel" value="${user.tel}"><p/></td></tr>
-<tr><td><label><b>적립금 사용</b></label></td><td align="left">&nbsp;&nbsp;&nbsp;${user.point}<p/></td></tr>
-<tr><td><label><b>비밀번호</b></label></td><td align="left">
-<input type="password" placeholder="결제를 완료하려면 비밀번호를 입력하세요." class="w3-input w3-hover-light-grey" name="pwd" required="required"><p/></td></tr>
+ </td></tr>
+ 
+<tr><td><label><b>적립금 사용</b><p/></label></td>
+<td align="left"><input type="number" placeholder="사용할 적립금 입력" style="display: inline-block;" class="w3-input w3-half w3-hover-light-grey" name="point"> (보유 포인트 : ${user.point })<p/></td></tr>
+
+
+<tr><td><label><b>비밀번호</b><p/></label></td>
+
+<td align="left">
+<input type="password" placeholder="결제를 완료하려면 비밀번호를 입력하세요." class="w3-input w3-twothird w3-hover-light-grey" name="pwd" required="required"><p/></td></tr>
 
   </table>
 
@@ -87,18 +134,37 @@
 
    <div class="w3-row-padding">
   <div class="w3-bar">
-   <button class="w3-button w3-black w3-margin-right w3-small" type="button" onclick="location.href='<%=request.getContextPath()%>/view/main.jsp'">취소</button>
-	<input type="hidden" name="id" value="${user.id}">
-	<input type="hidden" name="point" value="${user.point}">
-	<input type="hidden" name="ulevel" value="${user.ulevel}">
+   <button class="w3-button w3-black w3-margin-right w3-small" type="button" onclick="location.href='orderlist'">취소</button>
+	
 
    <input type="submit" class="w3-button w3-black w3-margin-right w3-small" value="결제"> <br><br></p>
   </div>
   </div>
+  <input type="hidden" name="pronum" value="${product.num }">
   
- 
+ <input type="hidden" name="ordernum" value="${ordernum }">
 </form>
+ <script>
+function delivSel(){
+	var x=document.getElementById("delevselect").value;
+	
+	if(x=='1'){
+		document.getElementById("userselect").innerHTML='직접 픽업 오시면 됩니다.<input type="hidden" name="deliv" value="1">';
+		document.getElementById("totalprice").innerHTML='&nbsp;&nbsp;&nbsp;<b>${product.eprice} 원</b><p/>'+'<input type="hidden" name="price" value="${product.eprice}">';
+	}
+	else if(x=='2'){
+		document.getElementById("userselect").innerHTML='<input type="text" placeholder="주소 입력" class="w3-input" name="addr" value="${user.addr}">'
+		+'<input type="hidden" name="price" value="${product.eprice+3000}">'+'<input type="hidden" name="deliv" value="1">';
+		document.getElementById("totalprice").innerHTML='<b>&nbsp;&nbsp;&nbsp;${product.eprice+3000}  원</b> (${product.eprice} 원 + 배송비 3000원)<p/>';
+		
+	}
+	
+	
+	
+	
+};
 
+</script>
 
 
 

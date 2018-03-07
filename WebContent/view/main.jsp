@@ -1,6 +1,8 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+   
  <!DOCTYPE html>
 <html>
 <title>Plant shop</title>
@@ -24,7 +26,7 @@
 <!-- category -->
     <div class="w3-container" id="gg">
     <div class=" w3-section w3-row-padding " style="padding-top: 6px; padding-bottom:6px;">
-      <span class="w3-margin-right"><b>진행 중 경매 ▶</b></span> 
+  <span class="w3-margin-right"><b>인기 경매 ▶</b></span> 
     
     </div>
     
@@ -32,118 +34,75 @@
  
   <!-- Product grid -->
   <div class="w3-row-padding ">
-     
+     <c:forEach var="aproduct" items="${aTopProduct }">
       
-        <div class="w3-third w3-container w3-margin-bottom w3-padding w3-small">
-         <div class="w3-display-container"><img src="<%= request.getContextPath() %>/images/sample.PNG" class="w3-border-top w3-border-left w3-border-right" style="width:100%; ">
-       
+         <div class="w3-third w3-container w3-margin-bottom w3-padding w3-small">
+       <div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${aproduct.imgs}" class="w3-border-top w3-border-left w3-border-right" style="height:350px; width:100%;">
+      <span class="w3-tag w3-display-topleft">${i }위</span>
+       	<c:set var="i" value="${i+1 }"/>
           <div class="w3-display-middle w3-display-hover">
-            <button class="w3-button w3-red">입찰하기</button>
+            <button class="w3-button w3-red"  onclick="location.href='acontent?num=${aproduct.num}&pageNum=${currentPage}&part=content';">입찰하기</button>
           </div>
         </div>
       <div class="w3-container w3-border ">
 
-      <p> 코브라아비스 30cm 중품</p>
-               <font class="w3-small"><table width="100%" class="w3-light-grey"><tr><td>남은시간  </td><td class="w3-right">3일 15시간 30초</td></tr>  </table></font><p>
-               <table width="100%"><tr><td><b>현재가</b> </td><td class="w3-right"><b>34,000원</b></td></tr>  </table>  <p/>
+       <p>${aproduct.title} </p> 
+               <font class="w3-small"><table width="100%" class="w3-light-grey">
+               <tr><td><b>진행기간</b></td>
+               <td class="w3-right">
+              ${aproduct.sdate } 부터<br>
+              ${aproduct.edate } 까지
+              
+              </td></tr>  </table></font><p>
+               <table width="100%"><tr><td><b>현재가</b> </td><td class="w3-right"><b>${aproduct.eprice}원(${aproduct.count }명 참여)</b></td></tr>  </table>  <p/>
       </div>
     </div>
-    
- <div class="w3-third w3-container w3-margin-bottom w3-padding w3-small">
-        <div class="w3-display-container"><img src="<%= request.getContextPath() %>/images/sample.PNG" class="w3-border-top w3-border-left w3-border-right" style="width:100%; ">
-      <span class="w3-tag w3-display-topleft">New</span>
-          <div class="w3-display-middle w3-display-hover">
-            <button class="w3-button w3-red">입찰하기</button>
-          </div>
-        </div><div class="w3-container w3-border ">
-
-       <p>코브라아비스 30cm 중품</p> 
-                <font class="w3-small"><table width="100%" class="w3-light-grey"><tr><td>남은시간  </td><td class="w3-right">3일 15시간 30초</td></tr>  </table></font><p>
-                
-                <table width="100%"><tr><td><b>현재가</b> </td><td class="w3-right"><b>34,000원</b></td></tr>  </table>  <p/>
-      </div>
-    </div>
-    
-   <div class="w3-third w3-container w3-margin-bottom w3-padding w3-small">
-       <div class="w3-display-container"><img src="<%= request.getContextPath() %>/images/sample.PNG" class="w3-border-top w3-border-left w3-border-right" style="width:100%; ">
-       
-          <div class="w3-display-middle w3-display-hover">
-            <button class="w3-button w3-red">입찰하기</button>
-          </div>
-        </div>
-      <div class="w3-container w3-border ">
-
-       <p>코브라아비스 30cm 중품</p> 
-                <font class="w3-small"><table width="100%" class="w3-light-grey"><tr><td>남은시간  </td><td class="w3-right"><font color="red">0일 5시간 30초</font></td></tr>  </table></font><p>
-      <table width="100%"><tr><td><b>현재가</b> </td><td class="w3-right"><b>34,000원</b></td></tr>  </table>  <p/>
-      </div>
-    </div>
-     </div>
+     </c:forEach>
+ 
  
   <!-- category -->
     <div class="w3-container" >
-   <div class=" w3-section w3-row-padding " style="padding-top: 6px; padding-bottom:6px;">
-      <span class="w3-margin-right"><b>진행 중 공동구매 ▶</b></span> 
+  <div class=" w3-section w3-row-padding " style="padding-top: 6px; padding-bottom:6px;">
+  <span class="w3-margin-right"><b>인기 공동구매 ▶</b></span> 
     
     </div>
     </div>
  
   <!-- Product grid -->
   <div class="w3-row-padding ">
-    
+      <c:forEach var="gproduct" items="${gTopProduct}">
+    	
        <div class="w3-third w3-container w3-margin-bottom w3-padding w3-small">
-        <div class="w3-display-container"><img src="<%= request.getContextPath() %>/images/sample.PNG" class="w3-border-top w3-border-left w3-border-right" style="width:100%; ">
-      <span class="w3-tag w3-display-topleft">New</span>
+        <div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${gproduct.imgs}" class="w3-border-top w3-border-left w3-border-right" style="height:350px; width:100%;">
+       <span class="w3-tag w3-display-topleft">${j }위</span>
+       	<c:set var="j" value="${j+1 }"/>
           <div class="w3-display-middle w3-display-hover">
-            <button class="w3-button w3-red">참여하기</button>
+            <button class="w3-button w3-red"  onclick="location.href='gcontent?num=${gproduct.num}&pageNum=${currentPage}&part=content';">참여하기</button>
           </div>
         </div>
       <div class="w3-container w3-border ">
 
-       <p>코브라아비스 30cm 중품</p> 
-                <div class="w3-light-grey" style="margin-bottom:5px; margin-top:10px;">
-  <div class="w3-red" style="height:3px;width:60%; "></div>
-</div><font class="w3-small"><table width="100%"><tr><td>13일 남음  </td><td class="w3-right">60%</td></tr>  </table></font><p>
-<table width="100%"><tr><td><b>공동구매가</b> </td><td class="w3-right"><b>34,000원</b></td></tr>  </table>  <p/>
+       <p>${gproduct.title }</p> 
+                <div class="w3-light-grey" 
+                style="margin-bottom:5px; margin-top:10px;">
+                
+ <c:if test="${((gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1)>=100}">
+ <div class="w3-green" style="height:3px;max-width:${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%; "></div>
+  </c:if>
+  <c:if test="${(((gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1)<100)&&((gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1)>=80}">
+  <div class="w3-orange" style="height:3px;max-width:${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%; "></div>
+
+</c:if>
+<c:if test="${((gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1)<80}">
+  <div class="w3-red" style="height:3px;max-width:${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%; "></div>
+</c:if></div>
+<font class="w3-small"><table width="100%"><tr><td>${gproduct.edate }일 남음  </td><td class="w3-right">${(gproduct.count/gproduct.goal*100)-(gproduct.count/gproduct.goal*100)%1}%</td></tr>  </table></font><p>
+<table width="100%"><tr><td><b>공동구매가</b> </td><td class="w3-right"><b>${gproduct.price }원</b></td></tr>  </table>  <p/>
       </div>
     </div>
       
         
-    
-       <div class="w3-third w3-container w3-margin-bottom w3-padding w3-small">
-       <div class="w3-display-container"><img src="<%= request.getContextPath() %>/images/sample.PNG" class="w3-border-top w3-border-left w3-border-right" style="width:100%; ">
-       
-          <div class="w3-display-middle w3-display-hover">
-            <button class="w3-button w3-red">참여하기</button>
-          </div>
-        </div>
-      <div class="w3-container w3-border ">
-
-       <p>코브라아비스 30cm 중품</p> 
-                <div class="w3-light-grey" style="margin-bottom:5px; margin-top:10px;">
-  <div class="w3-orange" style="height:3px;width:90%; "></div>
-</div><font class="w3-small"><table width="100%"><tr><td>13일 남음  </td><td class="w3-right">90%</td></tr>  </table></font><p>
-<table width="100%"><tr><td><b>공동구매가</b> </td><td class="w3-right"><b>34,000원</b></td></tr>  </table>  <p/>
-      </div>
-    </div>
-      
-       
-       <div class="w3-third w3-container w3-margin-bottom w3-padding w3-small">
-        <div class="w3-display-container"><img src="<%= request.getContextPath() %>/images/sample.PNG" class="w3-border-top w3-border-left w3-border-right  " style="width:100%;">
-      <span class="w3-tag w3-display-topleft">달성</span>
-          <div class="w3-display-middle w3-display-hover">
-            <button class="w3-button w3-red">참여하기</button>
-          </div>
-        </div>
-      <div class="w3-container w3-border ">
-
-       <p>코브라아비스 30cm 중품</p> 
-                <div class="w3-light-grey" style="margin-bottom:5px; margin-top:10px;">
-  <div class="w3-green" style="height:3px;width:100%; "></div>
-</div><font class="w3-small"><table width="100%"><tr><td>13일 남음  </td><td class="w3-right">130%</td></tr>  </table></font><p>
-<table width="100%"><tr><td><b>공동구매가</b> </td><td class="w3-right"><b>34,000원</b></td></tr>  </table>  <p/>
-      </div>
-    </div>
+</c:forEach>
   </div>
   
   
