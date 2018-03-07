@@ -45,7 +45,7 @@
 <td class="w3-center">배송방법</td></tr>
 
 
-<c:forEach var="cart" items="${aList}">
+<c:forEach var="pay" items="${aList}">
 <tr><td class="w3-center"><span style="width: 100%;">
 <div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
 ${anumber }
@@ -53,34 +53,32 @@ ${anumber }
 </div></span></td>
 
 <td class="w3-center" style="width: 100px;"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${cart.imgs}" width="80px" height="100px"> <span class="w3-tag w3-display-topleft"><c:if test="${cart.state=='1'}">
-    예정
-    </c:if>
-       <c:if test="${cart.state=='2'}">
-    진행
-    </c:if>
-       <c:if test="${cart.state=='3'}">
-    마감
-    </c:if></span></div></div></span></td>
+<div class="w3-display-container">
+<img src="<%= request.getContextPath() %>/fileSave/${pay.aproduct.imgs}" width="80px" height="100px"></div> </td>
 
 <td style="width: 40%;" ><span style="width: 100%;">
 <div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <a href="surveyview.jsp">${cart.title }</a>
+ <a href="surveyview.jsp">${pay.aproduct.title }</a>
 </div></span></td>
 
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <p>
- ${cart.aproduct.eprice }<p/>
+${pay.price }<p/>
  
 </div></span></td>
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <p>
-결제일시표시<p/>
+${pay.rdate}<p/>
 
 </div></span></td>
 <td class="w3-center">
 <span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-배송방법
+<c:if test="${pay.deliv=='1' }">
+픽업
+</c:if>
+<c:if test="${pay.deliv=='2' }">
+택배
+</c:if>
 </div></span></td></tr>
 </c:forEach>
 
@@ -125,21 +123,23 @@ ${anumber }
     	
     	<table class="w3-table w3-border w3-hoverable w3-center w3-small " width="90%">
     	<tr class="w3-light-grey">
-    	<td class="w3-center">담긴 상품이 없습니다.</td>
+    	<td class="w3-center">결제한 상품이 없습니다.</td>
     	
     	</table>
     	</c:if>
 <c:if test="${gcount!=0}">
  <table class="w3-table w3-bordered w3-small">
  <tr class="w3-border-top"><td class="w3-center" width="50px;"  >번호</td>
+
  <td class="w3-center">사진</td>
  <td  class="w3-center">상품명</td>
-  <td  class="w3-center">가격</td>
-<td class="w3-center">진행기간</td>
-<td class="w3-center">찜한 날짜</td></tr>
+
+<td class="w3-center">가격</td>
+<td class="w3-center">결제일시</td>
+<td class="w3-center">배송방법</td></tr>
 
 
-<c:forEach var="cart" items="${gList}">
+<c:forEach var="pay" items="${gList}">
 <tr><td class="w3-center"><span style="width: 100%;">
 <div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
 ${gnumber }
@@ -148,37 +148,35 @@ ${gnumber }
 
 
 <td class="w3-center" style="width: 100px;"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${cart.imgs}" width="80px" height="100px">
+<div class="w3-display-container">
+<img src="<%= request.getContextPath() %>/fileSave/${pay.gproduct.imgs}" width="80px" height="100px">
 
-<c:if test="${cart.state=='1'}">
-   <span class="w3-tag w3-display-topleft">예정</span>
-    </c:if>
-       <c:if test="${cart.state=='2'}">
-  <span class="w3-tag w3-green w3-display-topleft">진행</span>
-    </c:if>
-       <c:if test="${cart.state=='3'}">
-  <span class="w3-tag w3-display-topleft">마감</span>
-    </c:if></div></div></span></td>
+</td>
  
 <td style="width: 40%;"><span style="width: 100%;">
 <div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <a href="surveyview.jsp">${cart.title}</a>
+ <a href="surveyview.jsp">${pay.gproduct.title}</a>
 </div></span></td>
 
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <p>
- ${cart.gproduct.price }<p/>
+ ${pay.price }<p/>
 
 </div></span></td>
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <p>
- ${cart.gproduct.sdate }<p/>
- ${cart.gproduct.edate }
+ ${pay.rdate }<p/>
+
 </div></span></td>
 
 <td class="w3-center">
 <span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-${cart.rdate}
+<c:if test="${pay.deliv=='1' }">
+픽업
+</c:if>
+<c:if test="${pay.deliv=='2' }">
+택배
+</c:if>
 </div></span></td></tr>
 </c:forEach>
 
@@ -191,14 +189,14 @@ ${cart.rdate}
     	
     	<c:if test="${gstartPage>gbottomLine}">
     		
-    		 <a href="cartlist?gpageNum=${gstartPage-gbottomLine}&apageNum=${apageNum}" class="w3-bar-item w3-button w3-hover-black">«</a>
+    		 <a href="paylist?gpageNum=${gstartPage-gbottomLine}&apageNum=${apageNum}" class="w3-bar-item w3-button w3-hover-black">«</a>
     	
     		</c:if>
     	
     		<c:forEach var="i" begin="${gstartPage }" end="${gendPage }">
     		
     		<c:if test="${i!=gcurrentPage}">
-    		  <a href="cartlist?gpageNum=${i}&apageNum=${apageNum}"
+    		  <a href="paylist?gpageNum=${i}&apageNum=${apageNum}"
     		 class="w3-bar-item w3-button w3-hover-black">${i}</a> 
     		 
     		 
@@ -206,7 +204,7 @@ ${cart.rdate}
     		
     		
     		<c:if test="${i==gcurrentPage}">
-    		  <a href="cartlist?gpageNum=${i}&apageNum=${apageNum}" 
+    		  <a href="paylist?gpageNum=${i}&apageNum=${apageNum}" 
     		  class="w3-bar-item w3-black w3-button">${i}</a> 
     		</c:if>
     		
@@ -216,7 +214,7 @@ ${cart.rdate}
     	<c:if test="${gendPage<gpageCount}">
     		
     		
-    		 <a href="cartlist?gpageNum=${ gstartPage+bottomLine}&apageNum=${apageNum}" class="w3-bar-item w3-button w3-hover-black">»</a>
+    		 <a href="paylist?gpageNum=${ gstartPage+bottomLine}&apageNum=${apageNum}" class="w3-bar-item w3-button w3-hover-black">»</a>
     			</c:if>
     	
     		 

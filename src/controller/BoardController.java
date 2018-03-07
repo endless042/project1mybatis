@@ -72,7 +72,7 @@ public class BoardController extends Action {
 	    		req.setAttribute("endPage", endPage);
 	    		req.setAttribute("pageCount", pageCount);
 	    		req.setAttribute("number", number);
-		   
+	    		req.setAttribute("userLevel", req.getSession().getAttribute("userLevel") );
 		
 		
 		return "/view/board/list.jsp?bdck=on";
@@ -282,8 +282,8 @@ public class BoardController extends Action {
 			 HttpServletResponse res)  throws Throwable { 
 		
 		
-		   
-		
+		   req.setAttribute("userName", req.getSession().getAttribute("userName"));
+
 	     int num=0,ref=0, re_step=0, re_level=0;
 	    String boardid=req.getParameter("boardid");
 	    

@@ -35,8 +35,19 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     
     <div class="w3-container w3-padding-64">
  
+ 	
     	<p class="w3-right w3-padding-right-large">
+    	<c:if test="${boardid=='1'}">
+    	
+    		<c:if test="${userLevel=='0'}">
     	<a href="writeForm?boardid=${boardid }"><button class="w3-button w3-green w3-small">글쓰기</button></a>
+    		</c:if>
+    	
+    	</c:if>
+    	<c:if test="${boardid!='1' }">
+    	<a href="writeForm?boardid=${boardid }"><button class="w3-button w3-green w3-small">글쓰기</button></a>
+    	</c:if>
+    	
     	</p>
     	
     	
@@ -51,7 +62,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     	
     	<c:if test="${count!=0}">
     	
-    	<span class="w3-small">(전체글:${count})</span>
+    	<span class="w3-small">(전체글:${count})<p/></span>
     	<table class="w3-table  w3-border-top w3-border-bottom w3-small" width="80%">
     	<tr class="  w3-border-bottom">
     	<td class="w3-center" width="50"><b>번호</b></td>

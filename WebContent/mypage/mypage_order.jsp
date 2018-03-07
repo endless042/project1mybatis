@@ -95,6 +95,7 @@ ${order.aproduct.edate }<br>
   <input type="hidden" name="num" value="${order.aproduct.num}">
   <input type="hidden" name="apageNum" value="${apageNum }">
   <input type="hidden" name="ordernum" value="${order.num}">
+  <input type="hidden" name="pcode" value="a">
   </form> </c:if>
     <c:if test="${order.payState=='1' }">
  
@@ -209,8 +210,16 @@ ${order.gproduct.price*order.count}
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
 <p><c:if test="${order.gproduct.goal<=order.gproduct.count}">
  <span class="w3-tag w3-blue">달성</span><p/>
-  	<c:if test="${(order.remainTime==0) && (order.startRemain==0) }">
-  <span class="w3-tag w3-green">결제하기</span></c:if>
+  <%-- 	<c:if test="${(order.remainTime==0) && (order.startRemain==0) }"> --%>
+  <form method="post" action="mypagePay">
+  <button type="submit"
+   class="w3-button w3-padding-small w3-small w3-black">결제하기</button>
+  <input type="hidden" name="num" value="${order.gproduct.num}">
+  <input type="hidden" name="apageNum" value="${gpageNum }">
+  <input type="hidden" name="ordernum" value="${order.num}">
+  <input type="hidden" name="count" value="${order.count}">
+  <input type="hidden" name="pcode" value="g">
+  </form> <%-- </c:if> --%>
  </c:if>
  <c:if test="${(order.remainTime==0) && (order.gproduct.goal>order.gproduct.count)}">
  <span class="w3-tag w3-red">미달</span><p/>

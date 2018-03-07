@@ -135,7 +135,7 @@ public class UserController extends Action{
 			req.getSession().setAttribute("levelCk", user.getUlevel());
 			req.getSession().setAttribute("userName", user.getName());
 			req.getSession().setAttribute("userLevel", user.getUlevel());
-			req.getSession().setAttribute("user", user);
+		
 			
 			
 		}

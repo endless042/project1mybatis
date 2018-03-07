@@ -13,7 +13,24 @@ public class PaylistDataBean {
 	private String addr;
 	private String tel;
 	private String deliv;
-
+	private AuctionDataBean aproduct;
+	private GpurcDataBean gproduct;
+	
+	
+	
+	
+	public AuctionDataBean getAproduct() {
+		return aproduct;
+	}
+	public void setAproduct(AuctionDataBean aproduct) {
+		this.aproduct = aproduct;
+	}
+	public GpurcDataBean getGproduct() {
+		return gproduct;
+	}
+	public void setGproduct(GpurcDataBean gproduct) {
+		this.gproduct = gproduct;
+	}
 	public int getNum() {
 		return num;
 	}

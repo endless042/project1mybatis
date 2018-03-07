@@ -39,6 +39,22 @@ public class ActionController extends Action{
 			aTopProduct = apro.getTopProducts(1, 3);
 			GpurcDBBean gpro=GpurcDBBean.getInstance();
 			gTopProduct = gpro.getTopProducts(1, 3);
+			
+			
+			
+			 GpurcDataBean tmp=null;
+			    for(int i=0;i<gTopProduct.size();i++) {
+			    	tmp=(GpurcDataBean) gTopProduct.get(i);
+			    	Date date = new Date();
+					SimpleDateFormat simple = new SimpleDateFormat("yyyyMMddHHmmss");
+					String curtime=simple.format(date);
+					int timeCount=gpro.getRemainTime(tmp, curtime);
+					int rday=timeCount/24/60/60;
+			    	
+					tmp.setEdate(rday+"");
+			    	
+			    }
+			
 			int i=1;
 					int j=1;
 			req.setAttribute("aTopProduct", aTopProduct);
@@ -720,7 +736,7 @@ public class ActionController extends Action{
 	public String payPro(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 
 		req.setAttribute("title", "결제");
-		
+		String pcode=req.getParameter("pcode");
 		String ordernum=req.getParameter("ordernum");
 		int pronum=Integer.parseInt(req.getParameter("pronum"));
 		
@@ -738,7 +754,14 @@ public class ActionController extends Action{
 		pay.setDeliv(req.getParameter("deliv"));
 		pay.setName(req.getParameter("name"));
 		
-		pay.setPronum(req.getParameter("pronum"));
+		
+		if(pcode.equals("a")) {
+		pay.setPronum("a"+req.getParameter("pronum"));
+		}else if(pcode.equals("g")) {
+			pay.setPronum("g"+req.getParameter("pronum"));
+		}
+		
+		
 		pay.setTel(req.getParameter("tel"));
 		pay.setUserid((String)req.getSession().getAttribute("loginId"));
 		
@@ -750,13 +773,13 @@ public class ActionController extends Action{
 		int point=Integer.parseInt(req.getParameter("point"));
 		int afterprice=price-point;
 		
-		pay.setPrice(req.getParameter("price"));
+		pay.setPrice(afterprice+"");
 		paypro.addPay(pay);
 		
 		int userpoint=Integer.parseInt(user.getPoint());
 		
-		
-		user.setPoint((((userpoint-point)+Math.round(afterprice*0.05)))+"");
+		int changePoint=(int) ((userpoint-point)+Math.round(afterprice*0.03));
+		user.setPoint(changePoint+"");
 		
 		upro.updateUser(user);
 		
@@ -780,11 +803,24 @@ public class ActionController extends Action{
 	public String mypagePay(HttpServletRequest req,
 			 HttpServletResponse res)  throws Throwable { 
 			req.setAttribute("title", "결제");
-		
+		String pcode=req.getParameter("pcode");
 		String apageNum=req.getParameter("apageNum");
+		String gpageNum=req.getParameter("gpageNum");
 		int num=Integer.parseInt(req.getParameter("num"));
+		String count=req.getParameter("count");
+		if(count==null||count.equals("")) {
+			count="1";
+		}
+		
+		if(pcode.equals("a")) {
 		AuctionDBBean apro=AuctionDBBean.getInstance();
 		AuctionDataBean product=apro.getProduct(num, "");
+		req.setAttribute("product", product);}
+		else if(pcode.equals("g")) {
+			GpurcDBBean gpro=GpurcDBBean.getInstance();
+			GpurcDataBean product=gpro.getProduct(num, "");
+			req.setAttribute("product", product);
+		}
 		
 		UserlistDBBean upro=UserlistDBBean.getInstance();
 		UserlistDataBean user=upro.getUser((String)req.getSession().getAttribute("loginId"));
@@ -792,10 +828,11 @@ public class ActionController extends Action{
 		String ordernum=req.getParameter("ordernum");
 		req.setAttribute("num", num);
 		req.setAttribute("apageNum", apageNum);
-		req.setAttribute("product", product);
+		req.setAttribute("gpageNum", gpageNum);
+		req.setAttribute("pcode", pcode);
 		req.setAttribute("user", user);
 		req.setAttribute("ordernum", ordernum);
-		
+		req.setAttribute("count", count);
 		return  "/mypage/mypage_pay.jsp?select=order"; 
 			} 
 	
@@ -831,17 +868,18 @@ public class ActionController extends Action{
 		    List aList=null;
 		    List gList=null;
 		    
-		    OrderDBBean oPro=OrderDBBean.getInstance();
-		    acount=oPro.getOrderCount("a",userid);
+		    PaylistDBBean payPro=PaylistDBBean.getInstance();
+		    acount=payPro.getPayCountUser("a", userid);
+		    gcount=payPro.getPayCountUser("g", userid);
+		  System.out.println("=================="+acount);
+		  System.out.println("==================="+gcount);
 		    
-		   // System.out.println("acount:"+acount);
-		    
-		    gcount=oPro.getOrderCount("g",userid);
+		  
 		    
 		    int bottomLine=5;
 		    try {
 		    if(acount>0){
-		    	aList=oPro.getOrders(astartRow,aendRow,"a", userid);}
+		    	aList=payPro.getPaylistUser(astartRow, aendRow, "a", userid);}
 		    
 		    anumber=acount-(acurrentPage-1)*pageSize;
 
@@ -854,7 +892,7 @@ public class ActionController extends Action{
 	    		
 	    		
 	    		if(gcount>0){
-			    	gList=oPro.getOrders(gstartRow,gendRow,"g", userid);}
+			    	gList=payPro.getPaylistUser(gstartRow, gendRow, "g", userid);}
 			    
 			    gnumber=gcount-(gcurrentPage-1)*pageSize;
 
@@ -892,7 +930,7 @@ public class ActionController extends Action{
 		    	e.printStackTrace();
 		    }
 		
-		return "/mypage/mypage_order.jsp?select=order";
+		return "/mypage/mypage_complist.jsp?select=pay";
 			
 	    	} 
 	

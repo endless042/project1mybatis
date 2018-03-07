@@ -205,6 +205,16 @@ if(rs.next()) {
 	pay.setTel(rs.getString("tel"));
 	pay.setUserid(rs.getString("userid"));
 	
+	if(pcode.equals("a")) {
+		AuctionDBBean apro=AuctionDBBean.getInstance();
+		AuctionDataBean atmp=apro.getProduct(Integer.parseInt(rs.getString("pronum").substring(1)), "");
+		
+		pay.setAproduct(atmp);
+	}else if(pcode.equals("g")) {
+		GpurcDBBean gpro=GpurcDBBean.getInstance();
+		GpurcDataBean gtmp=gpro.getProduct(Integer.parseInt(rs.getString("pronum").substring(1)), "");
+		pay.setGproduct(gtmp);	
+	}
 	
 				
 				paylist.add(pay);

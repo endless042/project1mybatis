@@ -157,7 +157,7 @@ font-family: "Montserrat", sans-serif;
 </td></tr><tr><td class="w3-border-bottom" valign="top">
 
 <p>
-
+<form method="post" action="gpurcSubmit?select=gproduct&part=content">
 <select id="quantity" onchange="priceCal(${gproduct.price});"  class="w3-select w3-border " required="required" style="width: 80px; display: inline-block;" name="quantity">
 	<option  selected="selected" disabled="disabled" >수량 선택</option>
 	<option value="1">1</option>
@@ -167,7 +167,7 @@ font-family: "Montserrat", sans-serif;
     <option value="5">5</option>
     </select>
     <span class="w3-tag w3-medium w3-white "
-     style="min-width: 200px;"><b>합계 : <span id="totalprice"> 0 </span> 원</b>  |  가격 : ${gproduct.price}원</span>
+     style="min-width: 200px;"><b>합계 : <span id="totalprice"> 0 </span> 원</b>  |  가격 : ${gproduct.price}원<p/></span>
 
   
 <script>
@@ -185,7 +185,7 @@ function priceCal(price){
 
 <div class="w3-bar w3-white w3-section">
 
-<form method="post" action="gpurcSubmit?select=gproduct&part=content">
+
   <input type="hidden" name="num" value="${num }">
   <input type="hidden" name="pageNum" value="${pageNum }">
   
