@@ -83,7 +83,7 @@ where pronum like concat ('a', '%') and userid='admin' ORDER BY rdate desc) b)
 where rum between 1 and 5;
 
 
-ALTER TABLE orderlist add (count int default 0);
+ALTER TABLE orderlist modify (count int default 1);
 
 select * from board order by num desc;
 
@@ -190,3 +190,5 @@ create SEQUENCE paySer
   select * from (select rownum rum , b.* from (
 		select a.* from aproduct a  ) b) 
 		where rum between 1 and 3 ORDER BY  num desc ,readcount desc;
+
+select * from paylist;
