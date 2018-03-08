@@ -7,7 +7,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
    
  <jsp:include page="adminheader.jsp"></jsp:include>
-    
+    <h4>경매 상품 관리</h4>
       <span class="w3-small"> <p>(전체 상품수:${count})</p></span>
    
  
@@ -44,10 +44,10 @@
     			<td class="w3-center" >
     			
     			
-    			<form method="post" action="admin_userModify" style="display: inline-block;">
-    			<%-- <input type="hidden" name="pageNum" value="${pageNum}">
-    			<input type="hidden" name="id" value="${user.id}">
-    			<input type="hidden" name="pwd" value="${user.pwd}"> --%>
+    			<form method="post" action="admin_aproductModify" style="display: inline-block;">
+    			<input type="hidden" name="pageNum" value="${pageNum}">
+    			<input type="hidden" name="num" value="${product.num}">
+    			
     			<input type="hidden" name="select" value="auserlist">
     			<button class="w3-button w3-padding-small w3-black tablink w3-hover-green w3-small w3-padding-small" 
     			type="submit" onclick="openAdminPage(event,'userModify')"  >수정</button></form>
@@ -55,9 +55,9 @@
     			
     			<form method="post" action="deleteUserPro" style="display: inline-block;"><button class="w3-padding-small w3-hover-red
     			 w3-button w3-small w3-black w3-padding-small" type="submit"  >삭제</button>
-    			 <%-- <input type="hidden" name="pageNum" value="${pageNum}">
-    			<input type="hidden" name="id" value="${user.id}">
-    			<input type="hidden" name="pwd" value="${user.pwd}"> --%></form></td>
+    			<input type="hidden" name="pageNum" value="${pageNum}">
+    			<input type="hidden" name="num" value="${product.num}">
+    			</form></td>
 
     		</tr>
     		</c:forEach>

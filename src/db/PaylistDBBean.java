@@ -32,24 +32,7 @@ public class PaylistDBBean {
 		return pay;
 	}
 	
-	public static Connection getConnection(){
-		
-		Connection con=null;
-		try {
-			String jdbcUrl="jdbc:oracle:thin:@localhost:1521:orcl";
-			String dbId="scott";
-			String dbPass="tiger";
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			con=DriverManager.getConnection(jdbcUrl,dbId,dbPass);
-			
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return con;
-	}
-	
+
 	public void close(Connection con, ResultSet rs,PreparedStatement pstmt) {
 		if(rs!=null)
 			try {
@@ -70,7 +53,7 @@ public class PaylistDBBean {
 	public void addPay(PaylistDataBean pay) {
 		
 		String sql="";
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
@@ -86,8 +69,8 @@ public class PaylistDBBean {
 	
 		
 			sql="insert into paylist"
-					+ " (num,pronum,userid,price,name,addr,tel,deliv)"
-					+ " values(?,?,?,?,?,?,?,?)";
+					+ " (num,pronum,userid,price,name,addr,tel,deliv,count,point)"
+					+ " values(?,?,?,?,?,?,?,?,?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, number);
 			pstmt.setString(2, (pay.getPronum()));
@@ -97,7 +80,8 @@ public class PaylistDBBean {
 			pstmt.setString(6, pay.getAddr());
 			pstmt.setString(7, pay.getTel());
 			pstmt.setString(8, pay.getDeliv());
-			
+			pstmt.setInt(9, pay.getCount());
+			pstmt.setString(10, pay.getPoint());
 			pstmt.executeUpdate();
 			
 		
@@ -113,7 +97,7 @@ public class PaylistDBBean {
 
 public int getPayCountUser (String pcode, String userid){
 	String sql="select count(*) from paylist where pronum like concat (?, '%') and userid=?";
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	int x=0;
@@ -138,7 +122,7 @@ public int getPayCountUser (String pcode, String userid){
 
 public int getPayCountAdmin (String pcode){
 	String sql="select count(*) from paylist where pronum like concat (?, '%')";
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	int x=0;
@@ -165,14 +149,14 @@ public int getPayCountAdmin (String pcode){
 public List getPaylistUser(int startRow, int endRow, String pcode, String userid) {
 		
 
-Connection con=getConnection();
+Connection con=DBcontrol.getConnection();
 PreparedStatement pstmt=null;
 ResultSet rs=null;
 List paylist=null;
 String sql="";
 
 try {
-	con=getConnection();
+	con=DBcontrol.getConnection();
 	sql="select * from (" + 
 		"select rownum rum , b.* from (" + 
 		"select a.* from paylist a  where pronum like concat (?, '%') and userid=? ORDER BY rdate desc) b) " + 
@@ -204,6 +188,7 @@ if(rs.next()) {
 	pay.setRdate(rs.getTimestamp("rdate"));
 	pay.setTel(rs.getString("tel"));
 	pay.setUserid(rs.getString("userid"));
+	pay.setCount(rs.getInt("count"));
 	
 	if(pcode.equals("a")) {
 		AuctionDBBean apro=AuctionDBBean.getInstance();
@@ -234,14 +219,14 @@ return paylist;
 public List getPaylistAdmin(int startRow, int endRow, String pcode) {
 		
 
-Connection con=getConnection();
+Connection con=DBcontrol.getConnection();
 PreparedStatement pstmt=null;
 ResultSet rs=null;
 List paylist=null;
 String sql="";
 
 try {
-	con=getConnection();
+	con=DBcontrol.getConnection();
 	sql="select * from (" + 
 		"select rownum rum , b.* from (" + 
 		"select a.* from paylist a  where pronum like concat (?, '%')  ORDER BY rdate desc) b) " + 
@@ -272,7 +257,7 @@ if(rs.next()) {
 	pay.setRdate(rs.getTimestamp("rdate"));
 	pay.setTel(rs.getString("tel"));
 	pay.setUserid(rs.getString("userid"));
-	
+	pay.setCount(rs.getInt("count"));
 	
 				
 				paylist.add(pay);
@@ -286,6 +271,70 @@ if(rs.next()) {
 return paylist;
 
 	}
+
+
+public PaylistDataBean getPay(int num) {
+	
+	
+	Connection con=DBcontrol.getConnection();
+	PreparedStatement pstmt=null;
+	ResultSet rs=null;
+	String sql="";
+	PaylistDataBean pay=null;
+	
+	try {
+		con=DBcontrol.getConnection();
+		
+		
+		
+		sql="Select * from paylist where num=?";
+		
+		pstmt=con.prepareStatement(sql);	
+		
+		pstmt.setInt(1, num);
+		
+		rs=pstmt.executeQuery();
+		
+		if(rs.next()) {
+			pay=new PaylistDataBean();
+			
+			pay.setAddr(rs.getString("addr"));
+			pay.setCount(rs.getInt("count"));
+			pay.setDeliv(rs.getString("deliv"));
+			pay.setName(rs.getString("name"));
+			pay.setNum(rs.getInt("num"));
+			pay.setPrice(rs.getString("price"));
+			pay.setPronum(rs.getString("pronum"));
+			pay.setRdate(rs.getTimestamp("rdate"));
+			pay.setTel(rs.getString("tel"));
+			pay.setPoint(rs.getString("point"));
+			
+			if(rs.getString("pronum").substring(1).equals("a")) {
+				AuctionDBBean apro=AuctionDBBean.getInstance();
+				AuctionDataBean aproduct=apro.getProduct(Integer.parseInt(rs.getString("pronum").substring(1)), "");
+			
+				pay.setAproduct(aproduct);
+			}
+			if(rs.getString("pronum").substring(1).equals("g")) {
+				GpurcDBBean gpro=GpurcDBBean.getInstance();
+				GpurcDataBean gproduct=
+						gpro.getProduct(Integer.parseInt(rs.getString("pronum").substring(1)), "");
+			
+				pay.setGproduct(gproduct);
+			}
+
+		}
+		
+		
+	}catch(Exception e) {
+		e.printStackTrace();
+	}finally {
+		close(con, rs, pstmt);
+	}
+		
+	return pay;
+
+}
 
 
 

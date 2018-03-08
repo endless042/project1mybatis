@@ -22,24 +22,7 @@ private static GpurcDBBean gpurchase=new GpurcDBBean();
 		return gpurchase;
 	}
 	
-	public static Connection getConnection(){
-		
-		Connection con=null;
-		try {
-			String jdbcUrl="jdbc:oracle:thin:@localhost:1521:orcl";
-			String dbId="scott";
-			String dbPass="tiger";
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			con=DriverManager.getConnection(jdbcUrl,dbId,dbPass);
-			
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return con;
-	}
-	
+
 	public void close(Connection con, ResultSet rs,PreparedStatement pstmt) {
 		if(rs!=null)
 			try {
@@ -60,7 +43,7 @@ private static GpurcDBBean gpurchase=new GpurcDBBean();
 	public void addGproduct(GpurcDataBean gproduct) {
 		
 		String sql="";
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
@@ -113,7 +96,7 @@ private static GpurcDBBean gpurchase=new GpurcDBBean();
 public int getRemainTime (GpurcDataBean gproduct, String curtime){
 	String sql="select (to_date(?,'yyyymmddhh24miss') - " + 
 			"to_date(?,'yyyymmddhh24miss'))*24*60*60 from dual";
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	int x=0;
@@ -143,7 +126,7 @@ public int getRemainTime (GpurcDataBean gproduct, String curtime){
 public int getStartRemain (GpurcDataBean gproduct, String curtime){
 	String sql="select (to_date(?,'yyyymmddhh24miss') - " + 
 			"to_date(?,'yyyymmddhh24miss'))*24*60*60 from dual";
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	int x=0;
@@ -204,9 +187,20 @@ public void stateManage(List<GpurcDataBean> products) {
 		
 	}
 	
-public int getGproductCount (){
-	String sql="select count(*) from gproduct";
-	Connection con=getConnection();
+public int getGproductCount (String stateSelect){
+	String sql="";
+	
+	if(stateSelect.equals("all")||stateSelect.equals("top")) {
+	sql="select count(*) from gproduct";}
+	else if(stateSelect.equals("1")) {
+		sql="select count(*) from gproduct where state='1'";
+	}else if(stateSelect.equals("2")) {
+		sql="select count(*) from gproduct where state='2'";
+	}else if(stateSelect.equals("3")) {
+		sql="select count(*) from gproduct where state='3'";
+	}
+	
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	int x=0;
@@ -229,21 +223,47 @@ public int getGproductCount (){
 }
 
 
-public List getProducts(int startRow, int endRow) {
+public List getProducts(int startRow, int endRow, String stateSelect) {
 		
 		
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List productList=null;
 		String sql="";
 		
 		try {
-			con=getConnection();
+			con=DBcontrol.getConnection();
+			
+			if(stateSelect.equals("all")) {
 			sql="select * from (" + 
 					"select rownum rum , b.* from (" + 
 					"select a.* from gproduct a  ORDER BY rdate DESC) b)" + 
 					"where rum between ? and ? ORDER BY  num desc";
+			}else if(stateSelect.equals("top")) {
+				sql="select * from (" + 
+						"select rownum rum , b.* from (" + 
+						"select a.* from gproduct a  ) b)" + 
+						"where rum between ? and ? ORDER BY  readcount desc";
+				
+			}else if(stateSelect.equals("1")) {
+				sql="select * from (" + 
+						"select rownum rum , b.* from (" + 
+						"select a.* from gproduct a where state='1' ORDER BY rdate DESC) b)" + 
+						"where rum between ? and ? ORDER BY  num desc";
+			}else if(stateSelect.equals("2")) {
+				sql="select * from (" + 
+						"select rownum rum , b.* from (" + 
+						"select a.* from gproduct a where state='2' ORDER BY rdate DESC) b)" + 
+						"where rum between ? and ? ORDER BY  num desc";
+			}else if(stateSelect.equals("3")) {
+				sql="select * from (" + 
+						"select rownum rum , b.* from (" + 
+						"select a.* from gproduct a where state='3' ORDER BY rdate DESC) b)" + 
+						"where rum between ? and ? ORDER BY  num desc";
+			}
+			
+				
 			
 			
 				pstmt=con.prepareStatement(sql);
@@ -285,7 +305,7 @@ public List getProducts(int startRow, int endRow) {
 				}
 				
 				GpurcDBBean gpro=GpurcDBBean.getInstance();
-				gpro.stateManage(productList);
+				if(productList!=null) {gpro.stateManage(productList);}
 			}catch(Exception ex) {
 					ex.printStackTrace();
 			}finally {close(con, rs, pstmt);}
@@ -298,14 +318,14 @@ public List getProducts(int startRow, int endRow) {
 public List getTopProducts(int startRow, int endRow) {
 		
 		
-		Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List productList=null;
 		String sql="";
 		
 		try {
-			con=getConnection();
+			con=DBcontrol.getConnection();
 			sql="select * from (" + 
 					"select rownum rum , b.* from (" + 
 					"select a.* from gproduct a  ) b)" + 
@@ -363,14 +383,14 @@ public List getTopProducts(int startRow, int endRow) {
 public GpurcDataBean getProduct(int num,  String chk) {
 	
 	
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	String sql="";
 	GpurcDataBean gproduct=null;
 	
 	try {
-		con=getConnection();
+		con=DBcontrol.getConnection();
 		
 		if(chk.equals("content")) {
 		sql="Update gproduct set readcount=readcount+1 where num=?";
@@ -434,19 +454,39 @@ public GpurcDataBean getProduct(int num,  String chk) {
 public int updateGproduct(GpurcDataBean gproduct) {
 	
 	String sql="";
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	
 	int chk=0;
 	try {
 
 		sql="update gproduct set "
-				+ "count=?, state=?  where num=?";
+				+ "count=?, state=?, process=?, origin=?, title=?, name=?, category=?,"
+				+ "height=?, sdate=?, edate=?, price=?,"
+				+ " goal=?, deliv=?, imgs=?, content=?, imgsize=? where num=?";
 		
 		pstmt=con.prepareStatement(sql);
 		pstmt.setInt(1, gproduct.getCount());
 		pstmt.setString(2, gproduct.getState());
-		pstmt.setInt(3, gproduct.getNum());
+		pstmt.setString(3, gproduct.getProcess());
+		pstmt.setString(4, gproduct.getOrigin());
+		pstmt.setString(5, gproduct.getTitle());
+		pstmt.setString(6, gproduct.getName());
+		pstmt.setString(7, gproduct.getCategory());
+		pstmt.setString(8, gproduct.getHeight());
+		pstmt.setString(9, gproduct.getSdate());
+		pstmt.setString(10, gproduct.getEdate());
+		pstmt.setString(11, gproduct.getPrice());
+		pstmt.setInt(12, gproduct.getGoal());
+		pstmt.setString(13, gproduct.getDeliv());
+		pstmt.setString(14, gproduct.getImgs());
+		pstmt.setString(15, gproduct.getContent());
+		pstmt.setInt(16, gproduct.getImgsize());
+		
+		
+		
+		pstmt.setInt(17, gproduct.getNum());
+		
 		
 		
 		chk=pstmt.executeUpdate(); 	

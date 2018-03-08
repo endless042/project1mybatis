@@ -20,24 +20,6 @@ public class ReplyDBBean {
 	public static ReplyDBBean getInstance() {
 		return reply;
 	}
-public static Connection getConnection(){
-		
-		Connection con=null;
-		try {
-			String jdbcUrl="jdbc:oracle:thin:@localhost:1521:orcl";
-			String dbId="scott";
-			String dbPass="tiger";
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			con=DriverManager.getConnection(jdbcUrl,dbId,dbPass);
-			
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return con;
-	}
-	
 	public void close(Connection con, ResultSet rs,PreparedStatement pstmt) {
 		if(rs!=null)
 			try {
@@ -58,7 +40,7 @@ public static Connection getConnection(){
 public void addReply(ReplyDataBean reply) {
 		
 		String sql="";
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
@@ -91,7 +73,7 @@ public void addReply(ReplyDataBean reply) {
 
 public int getReplyCount (String pronum){
 	String sql="select count(*) from reply where pronum=?";
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	int x=0;
@@ -118,14 +100,14 @@ public int getReplyCount (String pronum){
 public List getReplys(int startRow, int endRow, String pronum) {
 		
 		
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List replys=null;
 		String sql="";
 		
 		try {
-			con=getConnection();
+			con=DBcontrol.getConnection();
 			sql="select * from (" + 
 					"select rownum rum , b.* from (" + 
 					"select a.* from reply a  where pronum=? ORDER BY rdate desc) b) " + 
@@ -177,14 +159,14 @@ public List getReplys(int startRow, int endRow, String pronum) {
 public ReplyDataBean getReply(String pronum) {
 	
 	
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	String sql="";
 	ReplyDataBean reply=null;
 	
 	try {
-		con=getConnection();
+		con=DBcontrol.getConnection();
 		
 	
 		sql="select * from reply where pronum=?";

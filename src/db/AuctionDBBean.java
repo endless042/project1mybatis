@@ -21,24 +21,7 @@ public class AuctionDBBean {
 		
 		return auction;
 	}
-	
-	public static Connection getConnection(){
-		
-		Connection con=null;
-		try {
-			String jdbcUrl="jdbc:oracle:thin:@localhost:1521:orcl";
-			String dbId="scott";
-			String dbPass="tiger";
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			con=DriverManager.getConnection(jdbcUrl,dbId,dbPass);
-			
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return con;
-	}
+
 	
 	public void close(Connection con, ResultSet rs,PreparedStatement pstmt) {
 		if(rs!=null)
@@ -57,10 +40,12 @@ public class AuctionDBBean {
 		
 	}
 	
+	
+	
 	public void addAproduct(AuctionDataBean aproduct) {
 		
 		String sql="";
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
@@ -111,9 +96,20 @@ public class AuctionDBBean {
 	}
 	
 
-public int getAproductCount (){
-	String sql="select count(*) from aproduct";
-	Connection con=getConnection();
+public int getAproductCount (String stateSelect){
+	String sql="";
+	
+	if(stateSelect.equals("all")||stateSelect.equals("top")) {
+	sql="select count(*) from aproduct";}
+	else if(stateSelect.equals("1")) {
+		sql="select count(*) from aproduct where state='1'";
+	}else if(stateSelect.equals("2")) {
+		sql="select count(*) from aproduct where state='2'";
+	}else if(stateSelect.equals("3")) {
+		sql="select count(*) from aproduct where state='3'";
+	}
+	
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	int x=0;
@@ -139,7 +135,7 @@ public int getAproductCount (){
 public int getRemainTime (AuctionDataBean aproduct, String curtime){
 	String sql="select (to_date(?,'yyyymmddhh24miss') - " + 
 			"to_date(?,'yyyymmddhh24miss'))*24*60*60 from dual";
-	Connection con=getConnection();
+	Connection con=con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	int x=0;
@@ -169,7 +165,7 @@ public int getRemainTime (AuctionDataBean aproduct, String curtime){
 public int getStartRemain (AuctionDataBean aproduct, String curtime){
 	String sql="select (to_date(?,'yyyymmddhh24miss') - " + 
 			"to_date(?,'yyyymmddhh24miss'))*24*60*60 from dual";
-	Connection con=getConnection();
+	Connection con=con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	int x=0;
@@ -230,23 +226,45 @@ public void stateManage(List<AuctionDataBean> products) {
 		
 	}
 
-public List getProducts(int startRow, int endRow) {
+public List getProducts(int startRow, int endRow, String stateSelect) {
 		
-		
-		Connection con=getConnection();
+	
+		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List productList=null;
 		String sql="";
 		
 		try {
-			con=getConnection();
+			con=DBcontrol.getConnection();
+
+			if(stateSelect.equals("all")) {
 			sql="select * from (" + 
 					"select rownum rum , b.* from (" + 
 					"select a.* from aproduct a  ORDER BY rdate DESC) b)" + 
 					"where rum between ? and ? ORDER BY  num desc";
-			
-			
+			}else if(stateSelect.equals("top")) {
+				sql="select * from (" + 
+						"select rownum rum , b.* from (" + 
+						"select a.* from aproduct a  ) b)" + 
+						"where rum between ? and ? ORDER BY  readcount desc";
+				
+			}else if(stateSelect.equals("1")) {
+				sql="select * from (" + 
+						"select rownum rum , b.* from (" + 
+						"select a.* from aproduct a where state='1' ORDER BY rdate DESC) b)" + 
+						"where rum between ? and ? ORDER BY  num desc";
+			}else if(stateSelect.equals("2")) {
+				sql="select * from (" + 
+						"select rownum rum , b.* from (" + 
+						"select a.* from aproduct a where state='2' ORDER BY rdate DESC) b)" + 
+						"where rum between ? and ? ORDER BY  num desc";
+			}else if(stateSelect.equals("3")) {
+				sql="select * from (" + 
+						"select rownum rum , b.* from (" + 
+						"select a.* from aproduct a where state='3' ORDER BY rdate DESC) b)" + 
+						"where rum between ? and ? ORDER BY  num desc";
+			}
 				pstmt=con.prepareStatement(sql);
 				
 				pstmt.setInt(1, startRow);
@@ -297,14 +315,14 @@ public List getProducts(int startRow, int endRow) {
 public List getTopProducts(int startRow, int endRow) {
 		
 		
-		Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List productList=null;
 		String sql="";
 		
 		try {
-			con=getConnection();
+			con=DBcontrol.getConnection();
 			sql="select * from (" + 
 					"select rownum rum , b.* from (" + 
 					"select a.* from aproduct a  ) b)" + 
@@ -348,7 +366,7 @@ public List getTopProducts(int startRow, int endRow) {
 					}while(rs.next());
 				}
 				AuctionDBBean apro=AuctionDBBean.getInstance();
-				apro.stateManage(productList);
+				if(productList!=null) {apro.stateManage(productList);}
 			}catch(Exception ex) {
 					ex.printStackTrace();
 			}finally {close(con, rs, pstmt);}
@@ -360,14 +378,14 @@ public List getTopProducts(int startRow, int endRow) {
 public AuctionDataBean getProduct(int num,  String chk) {
 	
 	
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	String sql="";
 	AuctionDataBean aproduct=null;
 	
 	try {
-		con=getConnection();
+		con=DBcontrol.getConnection();
 		
 		if(chk.equals("content")) {
 		sql="Update aproduct set readcount=readcount+1 where num=?";
@@ -430,21 +448,38 @@ public AuctionDataBean getProduct(int num,  String chk) {
 public int updateAproduct(AuctionDataBean aproduct) {
 	
 	String sql="";
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	
 	int chk=0;
 	try {
 
 		sql="update aproduct set "
-				+ "eprice=?, count=?, state=? where num=?";
+				+ "sprice=?, count=?, state=?, name=?, origin=?,"
+				+ "category=?, height=?, sdate=?, edate=?,"
+				+ "eprice=?, deliv=?, content=?, imgs=?, imgsize=? where num=?";
+		
 		
 		pstmt=con.prepareStatement(sql);
-		pstmt.setString(1, aproduct.getEprice());
+		pstmt.setString(1, aproduct.getSprice());
 		pstmt.setInt(2, aproduct.getCount());
 		pstmt.setString(3, aproduct.getState());
-		pstmt.setInt(4, aproduct.getNum());
+		pstmt.setString(4, aproduct.getName());
+		pstmt.setString(5, aproduct.getOrigin());
+		pstmt.setString(6, aproduct.getCategory());
+		pstmt.setString(7, aproduct.getHeight());
+		pstmt.setString(8, aproduct.getSdate());
+		pstmt.setString(9, aproduct.getEdate());
+		if(Integer.parseInt(aproduct.getSprice())>Integer.parseInt(aproduct.getEprice())) {
+			pstmt.setString(10, aproduct.getSprice());
+		}
+		pstmt.setString(10, aproduct.getEprice());
 		
+		pstmt.setString(11, aproduct.getDeliv());
+		pstmt.setString(12, aproduct.getContent());
+		pstmt.setString(13, aproduct.getImgs());
+		pstmt.setInt(14, aproduct.getImgsize());
+		pstmt.setInt(15, aproduct.getNum());
 		
 		chk=pstmt.executeUpdate(); 	
 		

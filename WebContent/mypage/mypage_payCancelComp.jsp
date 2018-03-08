@@ -25,9 +25,9 @@
   
 
  
-  <h4>주문 완료</h4>
+  <h4>주문 취소 완료</h4>
   
-  주문이 완료되었습니다.
+  주문이 취소되었습니다.
   <br>
   <br>
   <button class="w3-button" onclick="location.href='${cur}'">확인</button>

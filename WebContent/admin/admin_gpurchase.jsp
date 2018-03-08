@@ -59,6 +59,8 @@ class="w3-select w3-hover-light-grey w3-border w3-small" name="process">
     <option value="3">통관/검역</option>
     <option value="4">국내이동</option>
     <option value="5">순화 중</option>
+    <option value="6">배송시작</option>
+    
     
   </select></td></tr>
   

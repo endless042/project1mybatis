@@ -36,13 +36,13 @@
     	</c:if>
 <c:if test="${acount!=0}">
  <table class="w3-table w3-bordered w3-small">
- <tr class="w3-border-top"><td class="w3-center" width="50px;"  >번호</td>
- <td class="w3-center">사진</td>
- <td  class="w3-center">상품명</td>
+ <tr class="w3-border-top"><td class="w3-center" width="50px;"  ><b>번호</b></td>
+ <td class="w3-center"><b>사진</b></td>
+ <td  class="w3-center"><b>상품명</b></td>
 
-<td class="w3-center">현재가</td>
-<td class="w3-center">진행기간</td>
-<td class="w3-center">찜한 날짜</td></tr>
+<td class="w3-center"><b>현재가</b></td>
+<td class="w3-center"><b>진행기간</b></td>
+<td class="w3-center"><b>찜한 날짜</b></td></tr>
 
 
 <c:forEach var="cart" items="${aList}">
@@ -65,7 +65,7 @@ ${anumber }
 
 <td style="width: 40%;" ><span style="width: 100%;">
 <div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <a href="surveyview.jsp">${cart.title }</a>
+ <a href="acontent?num=${cart.aproduct.num}&part=content">${cart.title }</a>
 </div></span></td>
 
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
@@ -131,12 +131,12 @@ ${cart.rdate }
     	</c:if>
 <c:if test="${gcount!=0}">
  <table class="w3-table w3-bordered w3-small">
- <tr class="w3-border-top"><td class="w3-center" width="50px;"  >번호</td>
- <td class="w3-center">사진</td>
- <td  class="w3-center">상품명</td>
-  <td  class="w3-center">가격</td>
-<td class="w3-center">진행기간</td>
-<td class="w3-center">찜한 날짜</td></tr>
+ <tr class="w3-border-top"><td class="w3-center" width="50px;"  ><b>번호</b></td>
+ <td class="w3-center"><b>사진</b></td>
+ <td  class="w3-center"><b>상품명</b></td>
+  <td  class="w3-center"><b>가격</b></td>
+<td class="w3-center"><b>진행기간</b></td>
+<td class="w3-center"><b>찜한 날짜</b></td></tr>
 
 
 <c:forEach var="cart" items="${gList}">
@@ -162,7 +162,7 @@ ${gnumber }
  
 <td style="width: 40%;"><span style="width: 100%;">
 <div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <a href="surveyview.jsp">${cart.title}</a>
+ <a href="gcontent?num=${cart.gproduct.num}&part=content">${cart.title}</a>
 </div></span></td>
 
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">

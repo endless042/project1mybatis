@@ -21,7 +21,7 @@ public class AhistoryDBBean {
 		return ahistory;
 	}
 	
-
+	Connection con=getConnection();
 
 	public static Connection getConnection(){
 		

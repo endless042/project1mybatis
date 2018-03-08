@@ -23,23 +23,6 @@ public class UserlistDBBean {
 			return user;
 		}
 		
-		public static Connection getConnection(){
-			
-			Connection con=null;
-			try {
-				String jdbcUrl="jdbc:oracle:thin:@localhost:1521:orcl";
-				String dbId="scott";
-				String dbPass="tiger";
-				Class.forName("oracle.jdbc.driver.OracleDriver");
-				con=DriverManager.getConnection(jdbcUrl,dbId,dbPass);
-				
-				
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-			
-			return con;
-		}
 		
 		public void close(Connection con, ResultSet rs,PreparedStatement pstmt) {
 			if(rs!=null)
@@ -61,7 +44,7 @@ public class UserlistDBBean {
 		public void addUser(UserlistDataBean user) {
 			
 			String sql="";
-			Connection con=getConnection();
+			Connection con=DBcontrol.getConnection();
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;
 			
@@ -102,14 +85,14 @@ public class UserlistDBBean {
 	public UserlistDataBean getUser(String id, String pwd) {
 			
 			
-			Connection con=getConnection();
+			Connection con=DBcontrol.getConnection();
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;
 			String sql="";
 			UserlistDataBean user=null;
 			
 			try {
-				con=getConnection();
+				con=DBcontrol.getConnection();
 				
 			
 				sql="select * from userlist where id=? and pwd=?";
@@ -151,14 +134,14 @@ public class UserlistDBBean {
 	public UserlistDataBean getUser(String id) {
 		
 		
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		String sql="";
 		UserlistDataBean user=null;
 		
 		try {
-			con=getConnection();
+			con=DBcontrol.getConnection();
 			
 		
 			sql="select * from userlist where id=?";
@@ -201,14 +184,14 @@ public class UserlistDBBean {
 	public int loginCheck(String id,String pwd) {
 		int ck=-1;
 		
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		String sql="";
 		UserlistDataBean user=null;
 		
 		try {
-			con=getConnection();
+			con=DBcontrol.getConnection();
 			
 		
 			sql="select * from userlist where id=? and pwd=?";
@@ -243,14 +226,14 @@ public class UserlistDBBean {
 public List getUsers(int startRow, int endRow) {
 		
 		
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List users=null;
 		String sql="";
 		
 		try {
-			con=getConnection();
+			con=DBcontrol.getConnection();
 			sql="select * from (" + 
 					"select rownum rum , b.* from (" + 
 					"select a.* from userlist a  ORDER BY cdate DESC, ulevel asc) b)" + 
@@ -297,7 +280,7 @@ public List getUsers(int startRow, int endRow) {
 
 public int getUserCount (String ulevel){
 	String sql="select nvl(count(*),0) from userlist where ulevel like ?";
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	int x=0;
@@ -331,7 +314,7 @@ public int deleteUser(String id, String pwd) throws Exception {
 	int x=-1;
 	try {
 
-		con=getConnection();
+		con=DBcontrol.getConnection();
 		
 		pstmt=con.prepareStatement(sql);
 		
@@ -355,7 +338,7 @@ public int deleteUser(String id, String pwd) throws Exception {
 public int updateUser(UserlistDataBean user) {
 	
 	String sql="";
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	
 	int chk=0;

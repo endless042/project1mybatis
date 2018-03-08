@@ -15,10 +15,32 @@ public class PaylistDataBean {
 	private String deliv;
 	private AuctionDataBean aproduct;
 	private GpurcDataBean gproduct;
+	private int  count;
+	private String point;
+	private String ordernum;
 	
 	
+
 	
 	
+	public String getOrdernum() {
+		return ordernum;
+	}
+	public void setOrdernum(String ordernum) {
+		this.ordernum = ordernum;
+	}
+	public String getPoint() {
+		return point;
+	}
+	public void setPoint(String point) {
+		this.point = point;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public AuctionDataBean getAproduct() {
 		return aproduct;
 	}
@@ -88,7 +110,14 @@ public class PaylistDataBean {
 	@Override
 	public String toString() {
 		return "PaylistDataBean [num=" + num + ", pronum=" + pronum + ", userid=" + userid + ", rdate=" + rdate
-				+ ", price=" + price + ", name=" + name + ", addr=" + addr + ", tel=" + tel + ", deliv=" + deliv + "]";
+				+ ", price=" + price + ", name=" + name + ", addr=" + addr + ", tel=" + tel + ", deliv=" + deliv
+				+ ", aproduct=" + aproduct + ", gproduct=" + gproduct + ", count=" + count + ", point=" + point
+				+ ", ordernum=" + ordernum + "]";
 	}
+
+	
+	
+	
+	
 	
 }

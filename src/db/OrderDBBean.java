@@ -21,23 +21,6 @@ public class OrderDBBean {
 		return order;
 	}
 	
-public static Connection getConnection(){
-		
-		Connection con=null;
-		try {
-			String jdbcUrl="jdbc:oracle:thin:@localhost:1521:orcl";
-			String dbId="scott";
-			String dbPass="tiger";
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			con=DriverManager.getConnection(jdbcUrl,dbId,dbPass);
-			
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return con;
-	}
 	
 	public void close(Connection con, ResultSet rs,PreparedStatement pstmt) {
 		if(rs!=null)
@@ -61,14 +44,14 @@ public static Connection getConnection(){
 public OrderDataBean getOrder(int num) {
 	
 	
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	String sql="";
 	OrderDataBean order=null;
 	
 	try {
-		con=getConnection();
+		con=DBcontrol.getConnection();
 		
 	
 		
@@ -112,7 +95,7 @@ public OrderDataBean getOrder(int num) {
 public int updateOrder(OrderDataBean order) {
 	
 	String sql="";
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	
 	int chk=0;
@@ -143,7 +126,7 @@ public int updateOrder(OrderDataBean order) {
 public void addOrder(OrderDataBean order) {
 		
 		String sql="";
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
@@ -179,7 +162,7 @@ public void addOrder(OrderDataBean order) {
 
 public int getOrderCount (String pcode, String userid){
 	String sql="select count(*) from orderlist where pronum like concat (?, '%') and userid=?";
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	int x=0;
@@ -205,7 +188,7 @@ public int getOrderCount (String pcode, String userid){
 
 public int getTotalOrderCount (String pcode){
 	String sql="select count(*) from orderlist where pronum like concat (?, '%')";
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	int x=0;
@@ -230,7 +213,7 @@ public int getTotalOrderCount (String pcode){
 
 public int getPayOrderCount (String pcode){
 	String sql="select count(*) from orderlist where pronum like concat (?, '%') and paystate is not null";
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	int x=0;
@@ -257,14 +240,14 @@ public int getPayOrderCount (String pcode){
 public List getOrders(int startRow, int endRow, String pcode, String userid) {
 		
 		
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List orders=null;
 		String sql="";
 		
 		try {
-			con=getConnection();
+			con=DBcontrol.getConnection();
 			sql="select * from (" + 
 					"select rownum rum , b.* from (" + 
 					"select a.* from orderlist a  where pronum like concat (?, '%') and userid=? ORDER BY rdate desc) b) " + 
@@ -357,14 +340,14 @@ public List getOrders(int startRow, int endRow, String pcode, String userid) {
 public List getOrdersAdmin(int startRow, int endRow, String pcode) {
 		
 		
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List orders=null;
 		String sql="";
 		
 		try {
-			con=getConnection();
+			con=DBcontrol.getConnection();
 			sql="select * from (" + 
 					"select rownum rum , b.* from (" + 
 					"select a.* from orderlist a  where pronum like concat (?, '%') ORDER BY rdate desc) b) " + 
@@ -399,7 +382,7 @@ public List getOrdersAdmin(int startRow, int endRow, String pcode) {
 						order.setRdate(rs.getTimestamp("rdate"));
 						order.setUserid(rs.getString("userid"));
 						order.setAprice(rs.getString("aprice"));
-						
+						order.setCount(1);
 						Date date = new Date();
 
 						SimpleDateFormat simple = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -455,14 +438,14 @@ public List getOrdersAdmin(int startRow, int endRow, String pcode) {
 public List getPayOrders(int startRow, int endRow, String pcode) {
 		
 		
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List orders=null;
 		String sql="";
 		
 		try {
-			con=getConnection();
+			con=DBcontrol.getConnection();
 			sql="select * from (" + 
 					"select rownum rum , b.* from (" + 
 					"select a.* from orderlist a  where pronum like concat (?, '%') and paystate is not null ORDER BY rdate desc) b) " + 

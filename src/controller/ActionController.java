@@ -68,7 +68,10 @@ public class ActionController extends Action{
 			 HttpServletResponse res)  throws Throwable { 
 		req.setAttribute("title", "경매");
 		
-		
+		 String stateSelect=req.getParameter("stateSelect");
+		    if(stateSelect==null||stateSelect==""){
+		    	stateSelect="all";}
+		    
 		
 
 	    String state=req.getParameter("state");
@@ -85,14 +88,15 @@ public class ActionController extends Action{
 	    int startRow=(currentPage -1 )*pageSize+1;
 	    int endRow=currentPage*pageSize;
 	    int count=0;
+	    int allcount=0;
 	    int number=0;
 	    List productList=null;
 	    
 	   AuctionDBBean apro=AuctionDBBean.getInstance();
-	    count=apro.getAproductCount();
-	    
+	    count=apro.getAproductCount(stateSelect);
+	    allcount=apro.getAproductCount("all");
 	    if(count>0){
-	    	productList=apro.getProducts(startRow,endRow);}
+	    	productList=apro.getProducts(startRow,endRow, stateSelect);}
 	    
 	    number=count-(currentPage-1)*pageSize;
 	    
@@ -109,6 +113,8 @@ public class ActionController extends Action{
     		String olddate="";
     		String formatSdate="";
     		String formatEdate="";
+    		
+    		if(count>0){
     		for(int i=0;i<productList.size();i++) {
     			tmp=(AuctionDataBean)productList.get(i);
     			olddate=tmp.getSdate();
@@ -118,10 +124,13 @@ public class ActionController extends Action{
     			tmp.setSdate(formatSdate);
     			tmp.setEdate(formatEdate);
     			
-    		}
+    		}}
     	
-    		req.setAttribute("state", state); 	//나중에쓸거
+    		req.setAttribute("stateSelect", stateSelect); 
+    		
+    		
     		req.setAttribute("count", count);
+    		req.setAttribute("allcount", allcount);
     		req.setAttribute("productList", productList);
     		req.setAttribute("startPage", startPage);
     		req.setAttribute("bottomLine", bottomLine);
@@ -132,7 +141,7 @@ public class ActionController extends Action{
 	   
     	
 	
-		return "/view/auction.jsp";
+		return "/view/auction.jsp?stateSelect="+stateSelect;
 			} 
 	
 	public String acontent(HttpServletRequest req,
@@ -197,7 +206,7 @@ public class ActionController extends Action{
 			req.setAttribute("rhour", rhour);
 			req.setAttribute("rday", rday);
 			req.setAttribute("startRemain", startRemain);
-			
+			System.out.println("=====startRemain==="+startRemain);
 			AhistoryDBBean hpro=AhistoryDBBean.getInstance();
 			List historylist=hpro.getHistoryList(0, 3, num);
 			int historycount=hpro.getHistoryCount(num);
@@ -323,9 +332,9 @@ public class ActionController extends Action{
 			 HttpServletResponse res)  throws Throwable { 
 		req.setAttribute("title", "공동구매");
 		
-		   String state=req.getParameter("state");
-		    if(state==null||state==""){
-		    	state="2";}
+		   String stateSelect=req.getParameter("stateSelect");
+		    if(stateSelect==null||stateSelect==""){
+		    	stateSelect="all";}
 		    
 		     int pageSize=6;
 		    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -337,16 +346,18 @@ public class ActionController extends Action{
 		    int startRow=(currentPage -1 )*pageSize+1;
 		    int endRow=currentPage*pageSize;
 		    int count=0;
+		    int allcount=0;
 		    int number=0;
 		   
 		    List productList=null;
 		  GpurcDBBean gpro=GpurcDBBean.getInstance();
-		    count=gpro.getGproductCount();
-		    
+		    count=gpro.getGproductCount(stateSelect);
+		    allcount=gpro.getGproductCount("all");
 		    if(count>0){
-		    	productList=gpro.getProducts(startRow,endRow);}
+		    	productList=gpro.getProducts(startRow,endRow,stateSelect);}
 		    
 		    GpurcDataBean tmp=null;
+		    if(count>0){
 		    for(int i=0;i<productList.size();i++) {
 		    	tmp=(GpurcDataBean) productList.get(i);
 		    	Date date = new Date();
@@ -357,7 +368,7 @@ public class ActionController extends Action{
 		    	
 				tmp.setEdate(rday+"");
 		    	
-		    }
+		    }}
 		    
 		    number=count-(currentPage-1)*pageSize;
 		    
@@ -371,8 +382,9 @@ public class ActionController extends Action{
 	    		if(endPage>pageCount)endPage=pageCount;
 	    	
 	    		
-	    		req.setAttribute("state", state); 	//나중에쓸거
+	    		req.setAttribute("stateSelect", stateSelect); 	
 	    		req.setAttribute("count", count);
+	    		req.setAttribute("allcount", allcount);
 	    		req.setAttribute("productList", productList);
 	    		req.setAttribute("startPage", startPage);
 	    		req.setAttribute("bottomLine", bottomLine);
@@ -381,7 +393,7 @@ public class ActionController extends Action{
 	    		req.setAttribute("pageCount", pageCount);
 	    		req.setAttribute("number", number);
 		   
-	    		return "/view/gpurchase.jsp?select=gpurchase";
+	    		return "/view/gpurchase.jsp?select=gpurchase&stateSelect="+stateSelect;
 			} 
 	
 	public String gcontent(HttpServletRequest req,
@@ -753,6 +765,7 @@ public class ActionController extends Action{
 		pay.setAddr(req.getParameter("addr"));
 		pay.setDeliv(req.getParameter("deliv"));
 		pay.setName(req.getParameter("name"));
+		pay.setCount(Integer.parseInt(req.getParameter("count")));
 		
 		
 		if(pcode.equals("a")) {
@@ -770,10 +783,16 @@ public class ActionController extends Action{
 		System.out.println(pay);
 		
 		int price=Integer.parseInt(req.getParameter("price"));
+		System.out.println("=====가격======"+price);
+		
 		int point=Integer.parseInt(req.getParameter("point"));
+		System.out.println("======포인트====="+point);
+		pay.setPoint(point+"");
 		int afterprice=price-point;
 		
+		System.out.println("====결제가격====="+afterprice);
 		pay.setPrice(afterprice+"");
+		pay.setOrdernum(ordernum);
 		paypro.addPay(pay);
 		
 		int userpoint=Integer.parseInt(user.getPoint());
@@ -933,5 +952,102 @@ public class ActionController extends Action{
 		return "/mypage/mypage_complist.jsp?select=pay";
 			
 	    	} 
+	
+	public String mypagePayView(HttpServletRequest req,
+			 HttpServletResponse res)  throws Throwable { 
+			req.setAttribute("title", "마이페이지");
+		String pcode=req.getParameter("pcode");
+		String apageNum=req.getParameter("apageNum");
+		String gpageNum=req.getParameter("gpageNum");
+		int num=Integer.parseInt(req.getParameter("num"));
+		int pronum=Integer.parseInt(req.getParameter("pronum"));
+		
+		String count=req.getParameter("count");
+		if(count==null||count.equals("")) {
+			count="1";
+		}
+		
+		if(pcode.equals("a")) {
+		AuctionDBBean apro=AuctionDBBean.getInstance();
+		AuctionDataBean product=apro.getProduct(pronum, "");
+		req.setAttribute("product", product);}
+		else if(pcode.equals("g")) {
+			GpurcDBBean gpro=GpurcDBBean.getInstance();
+			GpurcDataBean product=gpro.getProduct(pronum, "");
+			req.setAttribute("product", product);
+		}
+		
+		UserlistDBBean upro=UserlistDBBean.getInstance();
+		UserlistDataBean user=upro.getUser((String)req.getSession().getAttribute("loginId"));
+		
+		String ordernum=req.getParameter("ordernum");
+		
+		
+		PaylistDBBean paypro=PaylistDBBean.getInstance();
+		PaylistDataBean pay=paypro.getPay(num);
+		
+		
+		
+		
+		req.setAttribute("pay", pay);
+		req.setAttribute("num", num);
+		req.setAttribute("apageNum", apageNum);
+		req.setAttribute("gpageNum", gpageNum);
+		req.setAttribute("pcode", pcode);
+		req.setAttribute("user", user);
+		req.setAttribute("ordernum", ordernum);
+		req.setAttribute("count", count);
+		return  "/mypage/mypage_payView.jsp?select=pay"; 
+			} 
+	
+	public String payCancelPro(HttpServletRequest req,
+			 HttpServletResponse res)  throws Throwable { 
+			req.setAttribute("title", "마이페이지");
+		
+			String pcode=req.getParameter("pcode");
+		String apageNum=req.getParameter("apageNum");
+		String gpageNum=req.getParameter("gpageNum");
+		int num=Integer.parseInt(req.getParameter("num"));
+		int pronum=Integer.parseInt(req.getParameter("pronum"));
+		
+		
+		String ordernum=req.getParameter("ordernum");
+		
+		OrderDBBean opro=OrderDBBean.getInstance();
+		OrderDataBean order=opro.getOrder(Integer.parseInt(ordernum));
+		order.setPayState("2");
+		
+		opro.updateOrder(order);
+		
+		//취소단계로바꾸기
+		
+		UserlistDBBean upro=UserlistDBBean.getInstance();
+		UserlistDataBean user=upro.getUser((String)req.getSession().getAttribute("loginId"));
+		
+		
+		PaylistDBBean paypro=PaylistDBBean.getInstance();
+		PaylistDataBean pay=paypro.getPay(num);
+		
+		int payPoint=Integer.parseInt(pay.getPoint());
+		int userPoint=Integer.parseInt(user.getPoint());
+		user.setPoint((payPoint+userPoint)+"");
+		
+		upro.updateUser(user);
+		
+		//유저포인트복구
+		
+		req.setAttribute("pay", pay);
+		req.setAttribute("num", num);
+		req.setAttribute("apageNum", apageNum);
+		req.setAttribute("gpageNum", gpageNum);
+		req.setAttribute("pcode", pcode);
+		req.setAttribute("user", user);
+		req.setAttribute("ordernum", ordernum);
+		
+	
+		return  "/mypage/mypage_payView.jsp?select=pay"; 
+			} 
+	
+	
 	
 }

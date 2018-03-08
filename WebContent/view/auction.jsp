@@ -6,7 +6,11 @@
 <html>
 <title>Plant shop</title>
 <meta charset="UTF-8">
+<%
+String stateSelect=request.getParameter("stateSelect");
 
+
+%>
  <SCRIPT>
 var RemainTime;
 function showCountdown(ExpireTime){
@@ -17,25 +21,25 @@ function showCountdown(ExpireTime){
             RemainTime = ExpireTime - 1;
             CountText = ""
             
-            if (RemainTime >= 0){
-            	
-            	
-                        day = Math.floor(ExpireTime / (3600 * 24));
-                        mod = ExpireTime % (24 * 3600);
+     if (RemainTime >= 0){
+     	
+     	
+                 day = Math.floor(ExpireTime / (3600 * 24));
+                 mod = ExpireTime % (24 * 3600);
 
-                        hour = Math.floor(mod / 3600);
-                        mod = mod % 3600;
+                 hour = Math.floor(mod / 3600);
+                 mod = mod % 3600;
 
-                        min = Math.floor(mod / 60);
+                 min = Math.floor(mod / 60);
 
-                        sec = mod % 60;
+                 sec = mod % 60;
 
-                        CountText = (day > 0) ? day + "일 " : "0일 ";
-                        CountText = (hour > 0) ? CountText + hour + "시간 " : (CountText.length > 0) ? CountText + hour + "시간 " : CountText;
-                        CountText = (min > 0) ? CountText + min + "분 " : (CountText.length > 0) ? CountText + min + "분 " : CountText;
-                        CountText = CountText + sec + "초"
-            
-            	if(RemainTime <86000){
+                 CountText = (day > 0) ? day + "일 " : "0일 ";
+                 CountText = (hour > 0) ? CountText + hour + "시간 " : (CountText.length > 0) ? CountText + hour + "시간 " : CountText;
+                 CountText = (min > 0) ? CountText + min + "분 " : (CountText.length > 0) ? CountText + min + "분 " : CountText;
+                 CountText = CountText + sec + "초"
+     
+     	if(RemainTime <86000){
             		
             	}
             }
@@ -61,12 +65,13 @@ function showCountdown(ExpireTime){
     <div class="w3-section w3-bottombar w3-padding-16 w3-small">
       <span class="w3-margin-right">Filter:</span> 
       
-      <button class="w3-button w3-black">ALL(${count})</button>
-      <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>인기</button>
-      <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>진행 중</button>
-      <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>마감임박</button>
-      <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>진행예정</button>
-       <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>완료</button>
+      <button class="w3-button <%=(stateSelect!=null&&stateSelect.equals("all"))?"w3-black":"w3-white" %>" onclick="location.href='auction?stateSelect=all'">ALL(${allcount})</button>
+    
+      <button class="w3-button <%=(stateSelect!=null&&stateSelect.equals("top"))?"w3-black":"w3-white" %>" onclick="location.href='auction?stateSelect=top'"><i class="fa fa-diamond w3-margin-right"></i>인기순</button>
+      <button class="w3-button <%=(stateSelect!=null&&stateSelect.equals("2"))?"w3-black":"w3-white" %> w3-hide-small" onclick="location.href='auction?stateSelect=2'"><i class="fa fa-map-pin w3-margin-right"></i>진행 중</button>
+     
+         <button class="w3-button <%=(stateSelect!=null&&stateSelect.equals("1"))?"w3-black":"w3-white" %> w3-hide-small" onclick="location.href='auction?stateSelect=1'"><i class="fa fa-map-pin w3-margin-right"></i>진행 예정</button>
+          <button class="w3-button <%=(stateSelect!=null&&stateSelect.equals("3"))?"w3-black":"w3-white" %> w3-hide-small" onclick="location.href='auction?stateSelect=3'"><i class="fa fa-map-pin w3-margin-right"></i>마감</button>
     </div>
     </div>
  

@@ -66,7 +66,7 @@ ${anumber }
 
 
 <td width="35%"><span style="width: 100%;"><div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <p><a href="surveyview.jsp">${order.aproduct.title }</a><p/>
+ <p><a href="acontent?num=${order.aproduct.num}&part=content">${order.aproduct.title }</a><p/>
 </div></span></td>
 
 
@@ -191,7 +191,7 @@ ${gnumber }
 </c:if></div></div></span></td>
 
 <td width="35%"><span style="width: 100%;"><div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <p><a href="surveyview.jsp">${order.gproduct.title }</a><p/>
+ <p><a href="gcontent?num=${order.gproduct.num}&part=content">${order.gproduct.title }</a><p/>
 </div></span></td>
 
 

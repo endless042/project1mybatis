@@ -7,14 +7,14 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
    
  <jsp:include page="adminheader.jsp"></jsp:include>
-    
+   
       <span class="w3-small"> <p>(전체 주문수:${count})</p></span>
    
  
   <c:if test="${count==0}">
     	<table class="w3-table w3-border w3-hoverable w3-center w3-small" width="90%">
     	<tr class="w3-light-grey">
-    	<td class="w3-center">회원 주문이 없습니다.</td>
+    	<td class="w3-center">회원 참여가 없습니다.</td>
     	
     	</table>
     	</c:if>
@@ -28,8 +28,8 @@
     	<td class="w3-center" width="10%"><b>회원아이디</b></td>
     	<td class="w3-center" width="15%"><b>결제가격</b></td>
 
-    	<td class="w3-center" width="15%"><b>주문일</b></td>
-    	<td class="w3-center" width="20%"><b>주문수량</b></td>
+    	<td class="w3-center" ><b>주문일</b></td>
+    	<td class="w3-center" width="10%"><b>주문수량</b></td>
     	<td class="w3-center" width="20%"><b>관리</b></td>
     
     <c:forEach var="order" items="${oList}">

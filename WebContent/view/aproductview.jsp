@@ -11,7 +11,7 @@
 
 <SCRIPT>
 var RemainTime;
-
+var StartOrNot;
 function showCountdown(ExpireTime,startRemain){
 
 	 var btn=document.getElementById('submitAuction');
@@ -30,6 +30,7 @@ function showCountdown(ExpireTime,startRemain){
             var CountText
            
             RemainTime = ExpireTime - 1;
+            StartOrNot =startRemain;
             CountText = ""
             
            
@@ -56,15 +57,20 @@ function showCountdown(ExpireTime,startRemain){
             	}
             }
 
-            if (( sec <= 0 && CountText == "0초" ) || ( CountText == "" )){
+            if (( sec <= 0 && CountText == "0초"  ) || ( CountText == "" )){
                         CountText = "종료";
                         btn_off();
             }
+            if (( startRemain==1 ) || ( CountText == "" )){
+                CountText = "예정";
+                btn_off();
+    }
+            
 
             window.document.all.Countdown.value = CountText;
 
             if (CountText != "종료"){
-                        setTimeout("showCountdown(RemainTime)", 1000);
+                        setTimeout("showCountdown(RemainTime,StartOrNot)", 1000);
             }
             
            
@@ -117,24 +123,7 @@ font-family: "Montserrat", sans-serif;
     	<b>크기 : </b>약 ${aproduct.height} cm<br>
    </td></tr>
    
-   <%-- <tr><td class="w3-border-bottom">
-    <p><b>배송방법 : </b>   <c:if test="${aproduct.deliv=='1'}">
-    픽업만 가능
-    <input type="hidden" name="delivSelect" value="pickup">
-    </c:if>
-       <c:if test="${aproduct.deliv=='2'}">
-   택배만 가능
-     <input type="hidden" name="delivSelect" value="parcel">
-    </c:if>
-       <c:if test="${aproduct.deliv=='3'}">
-    <select  class="w3-select w3-border " required="required" style="width: 120px; display: inline-block;" name="delivSelect">
-	<option  selected="selected" disabled="disabled" >배송방법 선택</option>
-	<option value="pickup">픽업</option>
-    <option value="parcel">택배</option>
-    </select>
-    </c:if></p>
-    
-   </td></tr> --%>
+  
    <tr><td class="w3-border-bottom"> 
    
       <p><b>진행기간 : </b>${formatSdate} ~ ${formatEdate}</p>

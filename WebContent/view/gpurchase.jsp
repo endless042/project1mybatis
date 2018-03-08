@@ -7,18 +7,22 @@
 <title>Plant shop</title>
 <meta charset="UTF-8">
 
+<%
+String stateSelect=request.getParameter("stateSelect");
 
+
+%>
  
 <!-- category -->
     <div class="w3-container">
     <div class="w3-section w3-bottombar w3-padding-16 w3-small">
       <span class="w3-margin-right">Filter:</span> 
-      <button class="w3-button w3-black">ALL(${count })</button>
-      <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>인기</button>
-      <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>진행 중</button>
-      <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>마감임박</button>
-         <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>진행예정</button>
-       <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>완료</button>
+      <button class="w3-button <%=(stateSelect!=null&&stateSelect.equals("all"))?"w3-black":"w3-white" %>" onclick="location.href='gpurchase?stateSelect=all'">ALL(${allcount })</button>
+      <button class="w3-button <%=(stateSelect!=null&&stateSelect.equals("top"))?"w3-black":"w3-white" %>" onclick="location.href='gpurchase?stateSelect=top'"><i class="fa fa-diamond w3-margin-right"></i>인기순</button>
+      <button class="w3-button <%=(stateSelect!=null&&stateSelect.equals("2"))?"w3-black":"w3-white" %> w3-hide-small" onclick="location.href='gpurchase?stateSelect=2'"><i class="fa fa-map-pin w3-margin-right"></i>진행 중</button>
+     
+         <button class="w3-button <%=(stateSelect!=null&&stateSelect.equals("1"))?"w3-black":"w3-white" %> w3-hide-small" onclick="location.href='gpurchase?stateSelect=1'"><i class="fa fa-map-pin w3-margin-right"></i>진행 예정</button>
+          <button class="w3-button <%=(stateSelect!=null&&stateSelect.equals("3"))?"w3-black":"w3-white" %> w3-hide-small" onclick="location.href='gpurchase?stateSelect=3'"><i class="fa fa-map-pin w3-margin-right"></i>마감</button>
     </div>
     </div>
  
@@ -39,7 +43,7 @@
     
        <div class="w3-third w3-container w3-margin-bottom w3-padding w3-small">
         <div class="w3-display-container"><img src="<%= request.getContextPath() %>/fileSave/${gproduct.imgs}" class="w3-border-top w3-border-left w3-border-right" style="height:350px; width:100%;">
-      <span class="w3-tag w3-display-topleft">New</span>
+     <%--  <span class="w3-tag w3-display-topleft">${gproduct.state }</span> --%>
           <div class="w3-display-middle w3-display-hover">
             <button class="w3-button w3-red"  onclick="location.href='gcontent?num=${gproduct.num}&pageNum=${currentPage}&part=content';">참여하기</button>
           </div>

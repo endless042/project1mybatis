@@ -81,7 +81,7 @@ text-decoration: none;
 	  <%  }%>
    
       
-  <a href="<%= request.getContextPath() %>/page/contact" class="w3-bar-item w3-button w3-padding">ABOUT US</a> 
+  <%-- <a href="<%= request.getContextPath() %>/page/contact" class="w3-bar-item w3-button w3-padding">ABOUT US</a>  --%>
  <br><br>
  
  <!-- 최근 본 상품 -->

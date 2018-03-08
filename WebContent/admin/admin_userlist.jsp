@@ -7,7 +7,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
    
  <jsp:include page="adminheader.jsp"></jsp:include>
-    
+    <h4>회원 목록</h4>
       <span class="w3-small"> <p>(전체 회원수:${count})</p></span>
    
  

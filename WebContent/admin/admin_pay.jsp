@@ -7,7 +7,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
    
  <jsp:include page="adminheader.jsp"></jsp:include>
-    
+     <h4>${pageTitle }</h4>
       <span class="w3-small"> <p>(전체 주문수:${count})</p></span>
    
  
@@ -26,27 +26,36 @@
     	<tr class="w3-light-grey">
     	<td class="w3-center" width="10%"><b>상품번호</b></td>
     	<td class="w3-center" width="10%"><b>회원아이디</b></td>
-    	<td class="w3-center" width="15%"><b>결제가격</b></td>
+    	<td class="w3-center" ><b>결제가격</b></td>
 
-    	<td class="w3-center" width="15%"><b>주문일</b></td>
-    	<td class="w3-center" width="20%"><b>주문수량</b></td>
-    	<td class="w3-center" width="20%"><b>결제상태</b></td>
-    	<td class="w3-center" width="20%"><b>배송방법</b></td>
     	
-    	<td class="w3-center" width="20%"><b>관리</b></td>
+    	<td class="w3-center" ><b>주문수량</b></td>
     
-    <c:forEach var="order" items="${pList}">
+    	<td class="w3-center" ><b>배송방법</b></td>
+    	<td class="w3-center" ><b>주문일</b></td>
+    	<td class="w3-center" ><b>관리</b></td>
+    
+    <c:forEach var="pay" items="${pList}">
    
     			<tr >
-    			<td class="w3-center" >${order.pronum}</td>
-    			<td class="w3-center" >${order.userid}</td>
-    			<td class="w3-center" >${order.aproduct.eprice}</td>
-    			<td class="w3-center" >${order.rdate}</td>
-    			<td class="w3-center" >${order.count}</td>
-    				<td class="w3-center" >완료</td>
-    				<td class="w3-center" >${order.aproduct.}</td>
+    			<td class="w3-center" >${pay.pronum}</td>
+    			<td class="w3-center" >${pay.userid}</td>
+    			<td class="w3-center" >${pay.price}</td>
     			
+    			<td class="w3-center" >${pay.count}</td>
+    				
+    				<td class="w3-center" >
+    				
+    				<c:if test="${pay.deliv=='1'}">
+    				픽업
+    				</c:if>
+    				<c:if test="${pay.deliv=='2'}">
+    				택배
+    				</c:if>
+    				
+    				</td>
     			
+    			<td class="w3-center" >${pay.rdate}</td>
     			<td class="w3-center" >
     			
     			

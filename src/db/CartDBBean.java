@@ -21,24 +21,6 @@ public class CartDBBean {
  }
  
  
-
-	public static Connection getConnection(){
-		
-		Connection con=null;
-		try {
-			String jdbcUrl="jdbc:oracle:thin:@localhost:1521:orcl";
-			String dbId="scott";
-			String dbPass="tiger";
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			con=DriverManager.getConnection(jdbcUrl,dbId,dbPass);
-			
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return con;
-	}
 	
 	public void close(Connection con, ResultSet rs,PreparedStatement pstmt) {
 		if(rs!=null)
@@ -60,7 +42,7 @@ public class CartDBBean {
 public void addCart(CartDataBean cart) {
 		
 		String sql="";
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
@@ -93,7 +75,7 @@ public void addCart(CartDataBean cart) {
 
 public int getCartCount (String pcode, String userid){
 	String sql="select count(*) from cart where pronum like concat (?, '%') and userid=?";
-	Connection con=getConnection();
+	Connection con=DBcontrol.getConnection();
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	int x=0;
@@ -119,14 +101,14 @@ public int getCartCount (String pcode, String userid){
 public List getCarts(int startRow, int endRow, String pcode, String userid) {
 		
 		
-		Connection con=getConnection();
+		Connection con=DBcontrol.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List carts=null;
 		String sql="";
 		
 		try {
-			con=getConnection();
+			con=DBcontrol.getConnection();
 			sql="select * from (" + 
 					"select rownum rum , b.* from (" + 
 					"select a.* from cart a  where pronum like concat (?, '%') and userid=? ORDER BY rdate desc) b) " + 

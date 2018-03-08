@@ -51,6 +51,7 @@
 </div></span></td>
 <td  align="right"><span style="width: 100%;"><div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <p><a href="surveyview.jsp">${count}</a><p/>
+ 
 </div></span></td>
 
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
@@ -162,6 +163,7 @@
   <input type="hidden" name="pronum" value="${product.num }">
   <input type="hidden" name="pcode" value="${pcode }">
  <input type="hidden" name="ordernum" value="${ordernum }">
+ <input type="hidden" name="count" value="${count }">
 </form>
  <script>
 function delivSel(){
