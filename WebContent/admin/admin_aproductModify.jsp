@@ -1,7 +1,3 @@
-<%@page import="db.UserlistDataBean"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="db.UserlistDBBean"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -57,15 +53,7 @@ class="w3-select w3-border w3-hover-light-grey w3-small" name="deliv" >
   </select>
  
   </td></tr>
-<!-- 
-<tr height="50px"><td><label><b>진행단계</b></label>
-</td>
-<td align="left">&nbsp;&nbsp;&nbsp;<select required="required" style="max-width: 150px;" class="w3-select w3-hover-light-grey w3-border w3-small" name="state">
-    <option value="0" selected disabled="disabled">선택</option>
-    <option value="1">진행 예정</option>
-    <option value="2">진행 중</option>
-    <option value="3">완료</option>
-  </select></td></tr> -->
+
   <tr><td>
   <label><b>제목</b></label></td><td><input required="required" 
   class="w3-input w3-hover-light-grey" type="text" name="title" value="${aproduct.title}" ><p/></td></tr>

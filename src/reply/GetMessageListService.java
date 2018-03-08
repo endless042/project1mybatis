@@ -1,12 +1,12 @@
-package guestbook.service;
+package reply;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-import guestbook.dao.MessageDao;
-import guestbook.model.Message;
+import db.MessageDBBean;
+import db.MessageDataBean;
 import jdbc.ConnectionProvider;
 import jdbc.JdbcUtil;
 
@@ -29,9 +29,9 @@ public class GetMessageListService {
 
 		try {
 			conn = ConnectionProvider.getConnection();
-			MessageDao messageDao = MessageDao.getInstance();
+			MessageDBBean messageDao = MessageDBBean.getInstance();
 			int messageTotalCount = messageDao.selectCount(conn,pronum);
-			List<Message> messageList = null;
+			List<MessageDataBean> messageList = null;
 			int firstRow = 0;
 			int endRow = 0;
 

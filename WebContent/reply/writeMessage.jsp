@@ -1,9 +1,7 @@
+<%@page import="reply.WriteMessageService"%>
 <%@ page contentType="text/html; charset=utf-8" %>
 
-<%@ page import="guestbook.model.Message" %>
-<%@ page import="guestbook.service.WriteMessageService" %>
-
-<jsp:useBean id="message" class="guestbook.model.Message">
+<jsp:useBean id="message" class="db.MessageDataBean">
 	<jsp:setProperty name="message" property="*" />
 </jsp:useBean>
 <%

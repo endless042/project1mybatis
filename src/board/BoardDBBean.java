@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import comment.CommentData;
+
 
 public class BoardDBBean {
 	private static BoardDBBean instance=new BoardDBBean();
@@ -267,86 +267,8 @@ public class BoardDBBean {
 		}
 		
 		
-		public ArrayList<CommentData> getComments(int num, int commPageSize) {
-			
-			
-			
-			Connection con=getConnection();
-			PreparedStatement pstmt=null;
-			ResultSet rs=null;
-			ArrayList<CommentData> comments=null;
-			
-			String sql="";
-			
-			try {
-				con=getConnection();
-				sql="select * from (SELECT id,cocontent, codate,articlenum From"
-						+ " comments WHERE articlenum= ? order by conum DESC) comments "
-						+ "WHERE rownum BETWEEN 1 AND ?";
-				
-				
-					pstmt=con.prepareStatement(sql);
-					pstmt.setInt(1, num);
-					pstmt.setInt(2, commPageSize);
-					
-					
-					rs=pstmt.executeQuery();
-					comments=new ArrayList<>();
-				
-					if(rs.next()) {
-						comments=new ArrayList();
-						do {
-							CommentData comment=new CommentData();
-						
-							
-							comment.setId(rs.getString("id"));
-							comment.setCocontent(rs.getString("cocontent"));
-							comment.setCodate(rs.getDate("codate"));
-							comment.setArticlenum(rs.getInt("articlenum"));
-							
-							comments.add(comment);
-						
-						}while(rs.next());
-					}
-				}catch(Exception ex) {
-						ex.printStackTrace();
-				}finally {close(con, rs, pstmt);}
-			
-			return comments;
-			
-		}
 		
-		public synchronized HashMap<String, Object> insertComment(String id, String cocontent, int articlenum) {
-			
-			String sql="";
-			Connection con=getConnection();
-			PreparedStatement pstmt=null;
-			ResultSet rs=null;
-			int number=0;
-			HashMap<String,Object> map=new HashMap<>();
-			try {
-			pstmt=con.prepareStatement("INSERT INTO comments VALUES(coser.nextval, ?,?, sysdate, ?)");
-			pstmt.setString(1, id);
-			pstmt.setString(2, cocontent);
-			pstmt.setInt(3, articlenum);
-			
-			rs=pstmt.executeQuery();
-			ArrayList<CommentData> comments=getComments(articlenum, 10);
-			
-			
-			map.put("result", rs);
-			map.put("comments",comments);
-			
-			}catch(SQLException e) {
-				e.printStackTrace();
-			}finally {
-				close(con,rs,pstmt);
-				
-			}
-			
-			return map;
-			
-		}
+		
 		
 		public int updateArticle(BoardDataBean article) {
 			

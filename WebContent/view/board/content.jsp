@@ -58,9 +58,9 @@ font-family: "Montserrat", sans-serif;
 <input type="button" class="w3-button w3-black " value="답글" onclick="document.location.href='writeForm?num=${num}&ref=${ref}&re_step=${re_step}&re_level=${re_level}&pageNum=${pageNum}&boardid=${boardid}'">
 &nbsp;&nbsp;&nbsp;&nbsp;
 <input type="button" class="w3-button w3-black " value="목록" onclick="document.location.href='list?pageNum=${pageNum}&boardid=${boardid}'">
-</td></tr><tr><td colspan="4"><b>댓글</b></td></tr>
+</td></tr><%-- <tr><td colspan="4"><b>댓글</b></td></tr>
 <tr><td colspan="4">
- <%-- <jsp:include page="../../reply/list.jsp"></jsp:include> --%></td></tr>
+ <jsp:include page="../../reply/list.jsp"></jsp:include></td></tr> --%>
 </table>
 
 

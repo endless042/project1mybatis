@@ -1,8 +1,8 @@
-package guestbook.model;
+package db;
 
 import java.util.Date;
 
-public class Message {
+public class MessageDataBean {
 
 	private int num;
 	private String userid;

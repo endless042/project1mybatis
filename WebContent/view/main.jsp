@@ -26,7 +26,7 @@
 <!-- category -->
     <div class="w3-container" id="gg">
     <div class=" w3-section w3-row-padding " style="padding-top: 6px; padding-bottom:6px;">
-  <span class="w3-margin-right"><b>인기 경매 ▶</b></span> 
+   <a href="auction?stateSelect=top&select=auction"><span class="w3-margin-right"><b>인기 경매 ▶</b></span> </a>
     
     </div>
     
@@ -34,6 +34,7 @@
  
   <!-- Product grid -->
   <div class="w3-row-padding ">
+  <c:if test="${acount>0 }">
      <c:forEach var="aproduct" items="${aTopProduct }">
       
          <div class="w3-third w3-container w3-margin-bottom w3-padding w3-small">
@@ -58,18 +59,27 @@
       </div>
     </div>
      </c:forEach>
+ </c:if>
+ <c:if test="${acount==0 }">
+ <table class="w3-table w3-border w3-hoverable w3-center w3-small " width="90%">
+    	<tr class="w3-light-grey">
+    	<td class="w3-center">등록된 상품이 없습니다.</td>
+    	
+    	</table>
  
- 
+ </c:if>
+ </div>
   <!-- category -->
     <div class="w3-container" >
   <div class=" w3-section w3-row-padding " style="padding-top: 6px; padding-bottom:6px;">
-  <span class="w3-margin-right"><b>인기 공동구매 ▶</b></span> 
+  <a href="gpurchase?stateSelect=top&select=gpurchase"><span class="w3-margin-right"><b>인기 공동구매 ▶</b></span> </a>
     
     </div>
     </div>
  
   <!-- Product grid -->
   <div class="w3-row-padding ">
+  <c:if test="${gcount>0 }">
       <c:forEach var="gproduct" items="${gTopProduct}">
     	
        <div class="w3-third w3-container w3-margin-bottom w3-padding w3-small">
@@ -103,6 +113,15 @@
       
         
 </c:forEach>
+</c:if>
+ <c:if test="${gcount==0 }">
+ <table class="w3-table w3-border w3-hoverable w3-center w3-small " width="90%">
+    	<tr class="w3-light-grey">
+    	<td class="w3-center">등록된 상품이 없습니다.</td>
+    	
+    	</table>
+ 
+ </c:if>
   </div>
   
   

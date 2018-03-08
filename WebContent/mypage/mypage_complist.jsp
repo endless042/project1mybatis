@@ -167,7 +167,7 @@ ${gnumber }
 
 <td class="w3-center"><span style="width: 100%;">
 <div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<span class="w3-tag w3-green">
+<span class="w3-tag w3-black">
 <c:if test="${pay.gproduct.process =='1' }">
 협상
 </c:if>

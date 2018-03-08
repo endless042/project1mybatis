@@ -19,10 +19,10 @@
  <td><input type="text"  class="w3-input w3-hover-light-grey" required="required" name="category" ><p/></td></tr>
  <tr ><td> <label><b>식물크기</b></label></td>
  <td align="left">약 <input type="number" style="display: inline-block; width: 150px;" min="0" class="w3-input w3-hover-light-grey" required="required" name="height" >cm<p/></td></tr>
-<tr ><td>  <label><b>경매시작일시</b></label></td><td align="left">
+<tr ><td>  <label><b>공구시작일시</b></label></td><td align="left">
 <input type="date" required="required" style="display: inline-block; width: 150px;" class="w3-input w3-hover-light-grey  w3-margin-right" name="sdate" >
 <input type="number" style="display: inline-block; width: 150px;" required="required" placeholder="(0~23) 시간 선택" min="0" max="23" class="w3-input w3-border  w3-hover-light-grey  " name="sdatetime" > 시부터<p/></td></tr>
-<tr ><td>  <label><b>경매종료일시</b></label></td><td align="left"><input type="date" required="required" style="display: inline-block; width: 150px;" class="w3-input w3-hover-light-grey  w3-margin-right" name="edate" >
+<tr ><td>  <label><b>공구종료일시</b></label></td><td align="left"><input type="date" required="required" style="display: inline-block; width: 150px;" class="w3-input w3-hover-light-grey  w3-margin-right" name="edate" >
 <input type="number" style="display: inline-block; width: 150px;" required="required" placeholder="(0~23) 시간 선택" min="0" max="23" class="w3-input w3-border w3-hover-light-grey " name="edatetime" > 시까지<p/></td></tr>
 <tr ><td>  <label><b>공구가격</b></label></td>
 <td><input type="number" required="required" class="w3-input w3-hover-light-grey" name="price" ><p/></td></tr>

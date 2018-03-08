@@ -47,8 +47,8 @@ text-decoration: none;
       <%= (select!=null&&select.equals("auction"))?"w3-light-grey":"" %>" >경매</a>
       <a href="<%= request.getContextPath() %>/page/gpurchase?select=gpurchase" class="w3-bar-item w3-button 
       <%= (select!=null&&select.equals("gpurchase"))?"w3-light-grey":"" %>" >공동구매</a>
-      <a href="<%= request.getContextPath() %>/page/survey?select=survey" class="w3-bar-item w3-button 
-      <%= (select!=null&&select.equals("survey"))?"w3-light-grey":"" %>" >수입제안</a>
+      <%-- <a href="<%= request.getContextPath() %>/page/survey?select=survey" class="w3-bar-item w3-button 
+      <%= (select!=null&&select.equals("survey"))?"w3-light-grey":"" %>" >수입제안</a> --%>
    
 
    

@@ -1,6 +1,6 @@
+<%@page import="reply.InvalidPassowrdException"%>
+<%@page import="reply.DeleteMessageService"%>
 <%@ page contentType="text/html; charset=utf-8" %>
-<%@ page import="guestbook.service.DeleteMessageService" %>
-<%@ page import="guestbook.service.InvalidPassowrdException" %>
 <%
 	int messageId = Integer.parseInt(request.getParameter("messageId"));
 	String password = request.getParameter("password");

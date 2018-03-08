@@ -1,10 +1,10 @@
-package guestbook.service;
+package reply;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import guestbook.dao.MessageDao;
-import guestbook.model.Message;
+import db.MessageDBBean;
+import db.MessageDataBean;
 import jdbc.ConnectionProvider;
 import jdbc.JdbcUtil;
 
@@ -15,11 +15,11 @@ public class WriteMessageService {
 		return instance;
 	}
 	private WriteMessageService() {}
-	public void write(Message message) {
+	public void write(MessageDataBean message) {
 		Connection conn=null;
 		try {
 			conn=ConnectionProvider.getConnection();
-			MessageDao messageDao=MessageDao.getInstance();
+			MessageDBBean messageDao=MessageDBBean.getInstance();
 			messageDao.insert(conn,message);
 			
 		}catch(SQLException e) {

@@ -65,7 +65,7 @@
  <br><br>
       </div>
 
-<form  class="w3-container w3-section" method="post" action="payCancelPro" style="padding-left:50px;">
+<form  class="w3-container w3-section" method="post" action="payCancelPro?ordernum=${pay.ordernum }" style="padding-left:50px;">
  
  
    <table class="w3-white w3-small w3-margin-left" style="width: 80%;" >

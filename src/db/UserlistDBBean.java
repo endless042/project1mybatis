@@ -85,7 +85,7 @@ public class UserlistDBBean {
 	public UserlistDataBean getUser(String id, String pwd) {
 			
 			
-			Connection con=DBcontrol.getConnection();
+		Connection con=null;
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;
 			String sql="";
@@ -134,7 +134,7 @@ public class UserlistDBBean {
 	public UserlistDataBean getUser(String id) {
 		
 		
-		Connection con=DBcontrol.getConnection();
+		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		String sql="";
@@ -184,7 +184,7 @@ public class UserlistDBBean {
 	public int loginCheck(String id,String pwd) {
 		int ck=-1;
 		
-		Connection con=DBcontrol.getConnection();
+		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		String sql="";
@@ -226,7 +226,7 @@ public class UserlistDBBean {
 public List getUsers(int startRow, int endRow) {
 		
 		
-		Connection con=DBcontrol.getConnection();
+	Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List users=null;

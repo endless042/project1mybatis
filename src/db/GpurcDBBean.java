@@ -226,7 +226,7 @@ public int getGproductCount (String stateSelect){
 public List getProducts(int startRow, int endRow, String stateSelect) {
 		
 		
-		Connection con=DBcontrol.getConnection();
+		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List productList=null;
@@ -318,7 +318,7 @@ public List getProducts(int startRow, int endRow, String stateSelect) {
 public List getTopProducts(int startRow, int endRow) {
 		
 		
-	Connection con=DBcontrol.getConnection();
+	Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List productList=null;
@@ -383,7 +383,7 @@ public List getTopProducts(int startRow, int endRow) {
 public GpurcDataBean getProduct(int num,  String chk) {
 	
 	
-	Connection con=DBcontrol.getConnection();
+	Connection con=null;
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	String sql="";

@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<%@page import="db.UserlistDataBean"%>
-<%@page import="db.UserlistDBBean"%>
-<%@page import="java.sql.SQLException"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -88,7 +85,7 @@ ${order.aproduct.edate }<br>
  
  <c:if test="${(order.remainTime==0) && (order.aprice==order.aproduct.eprice)}">
  <span class="w3-tag w3-blue">낙찰</span><p/>
-  <c:if test="${order.payState!='1' }">
+  <c:if test="${order.payState!='1' && order.payState!='2' }">
   <form method="post" action="mypagePay">
   <button type="submit"
    class="w3-button w3-padding-small w3-small w3-black">결제하기</button>
@@ -96,11 +93,19 @@ ${order.aproduct.edate }<br>
   <input type="hidden" name="apageNum" value="${apageNum }">
   <input type="hidden" name="ordernum" value="${order.num}">
   <input type="hidden" name="pcode" value="a">
-  </form> </c:if>
+  </form> 
+  
+  
+  </c:if>
     <c:if test="${order.payState=='1' }">
  
   <button 
    class="w3-button w3-padding-small w3-small w3-green">결제완료</button>
+ </c:if>
+   <c:if test="${order.payState=='2' }">
+ 
+  <button 
+   class="w3-button w3-padding-small w3-small w3-black">결제취소</button>
  </c:if>
   
   
@@ -210,7 +215,8 @@ ${order.gproduct.price*order.count}
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
 <p><c:if test="${order.gproduct.goal<=order.gproduct.count}">
  <span class="w3-tag w3-blue">달성</span><p/>
-  <%-- 	<c:if test="${(order.remainTime==0) && (order.startRemain==0) }"> --%>
+   	<c:if test="${(order.remainTime==0) && (order.startRemain==0) }"> 
+    <c:if test="${order.payState!='1'&&order.payState!='2' }">
   <form method="post" action="mypagePay">
   <button type="submit"
    class="w3-button w3-padding-small w3-small w3-black">결제하기</button>
@@ -219,7 +225,20 @@ ${order.gproduct.price*order.count}
   <input type="hidden" name="ordernum" value="${order.num}">
   <input type="hidden" name="count" value="${order.count}">
   <input type="hidden" name="pcode" value="g">
-  </form> <%-- </c:if> --%>
+  </form>  </c:if>
+  <c:if test="${order.payState=='1' }">
+ 
+  <button 
+   class="w3-button w3-padding-small w3-small w3-green">결제완료</button>
+
+  
+  </c:if> 
+   </c:if>
+   <c:if test="${order.payState=='2' }">
+ 
+  <button 
+   class="w3-button w3-padding-small w3-small  w3-black">결제취소</button>
+ </c:if>
  </c:if>
  <c:if test="${(order.remainTime==0) && (order.gproduct.goal>order.gproduct.count)}">
  <span class="w3-tag w3-red">미달</span><p/>

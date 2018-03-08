@@ -103,7 +103,7 @@ public class AdminController extends Action{
    		if(endPage>pageCount)endPage=pageCount;
    		
    		 
-   	    req.setAttribute("count", count);
+   	   
    	    req.setAttribute("aList", aList);
    	    req.setAttribute("pageNum", pageNum);
    	    req.setAttribute("bottomLine", bottomLine);
@@ -113,7 +113,7 @@ public class AdminController extends Action{
    	    req.setAttribute("endPage", endPage);
 
 	    }
-	   
+	    req.setAttribute("count", count);
 
 			 return  "/admin/admin_alist.jsp"; 
 			} 
@@ -151,18 +151,21 @@ public class AdminController extends Action{
   	
   		if(endPage>pageCount)endPage=pageCount;
   		
-  		 
-  	    req.setAttribute("count", count);
-  	    req.setAttribute("gList", gList);
-  	    req.setAttribute("pageNum", pageNum);
-  	    req.setAttribute("bottomLine", bottomLine);
-  	    req.setAttribute("startPage", startPage);
-  	    req.setAttribute("currentPage", currentPage);
-  	    req.setAttribute("pageCount", pageCount);
-  	    req.setAttribute("endPage", endPage);
+  	  req.setAttribute("gList", gList);
+	    req.setAttribute("pageNum", pageNum);
+	    req.setAttribute("bottomLine", bottomLine);
+	    req.setAttribute("startPage", startPage);
+	    req.setAttribute("currentPage", currentPage);
+	    req.setAttribute("pageCount", pageCount);
+	    req.setAttribute("endPage", endPage);
+  	    
+  	    
+  	  
+  	  
 
 	    }
-	   
+	    req.setAttribute("count", count);
+	  
 
 			 return  "/admin/admin_glist.jsp"; 
 			} 
@@ -208,7 +211,7 @@ public class AdminController extends Action{
  		if(endPage>pageCount)endPage=pageCount;
  		
  		 
- 	    req.setAttribute("count", count);
+ 	   
  	    req.setAttribute("oList", oList);
  	    req.setAttribute("pageNum", pageNum);
  	    req.setAttribute("bottomLine", bottomLine);
@@ -218,7 +221,7 @@ public class AdminController extends Action{
  	    req.setAttribute("endPage", endPage);
 
 	    }
-	   
+	    req.setAttribute("count", count);
 
 			 return  "/admin/admin_orderlist.jsp?pcode="+pcode; 
 			} 
@@ -264,7 +267,7 @@ public class AdminController extends Action{
 		if(endPage>pageCount)endPage=pageCount;
 		
 		 
-	    req.setAttribute("count", count);
+	   
 	    req.setAttribute("pList", pList);
 	    req.setAttribute("pageNum", pageNum);
 	    req.setAttribute("bottomLine", bottomLine);
@@ -274,7 +277,7 @@ public class AdminController extends Action{
 	    req.setAttribute("endPage", endPage);
 
 	    }
-	   
+	    req.setAttribute("count", count);
 
 			 return  "/admin/admin_pay.jsp?pcode="+pcode; 
 			} 

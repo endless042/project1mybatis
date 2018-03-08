@@ -3,8 +3,6 @@
     pageEncoding="UTF-8"%>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
-<html>
-<title>Plant shop</title>
 
 
 <meta charset="UTF-8">
@@ -229,7 +227,7 @@ ${history.userid }님&nbsp;&nbsp;(${history.price }원)&nbsp;&nbsp;${history.ada
 
 <c:if test="${part=='content'}">
   <div class="w3-container w3-section" id="content">
-  <p>등록일시 : ${aproduct.rdate }</p>
+  <p><font color="grey" class="w3-small">등록일시 : ${aproduct.rdate }</font></p>
   <pre><p>${aproduct.content }</p></pre>
  
   </div>
@@ -237,12 +235,16 @@ ${history.userid }님&nbsp;&nbsp;(${history.price }원)&nbsp;&nbsp;${history.ada
  
 <c:if test="${part=='qna'}">
   <div class="w3-container w3-section" id="qna">
-  <jsp:include page="/list.jsp"></jsp:include>
+   <jsp:include page="/list.jsp">
+  <jsp:param value="2" name="boardid"/>
+  </jsp:include>
   </div>
     </c:if>
  <c:if test="${part=='review'}">
    <div class="w3-container w3-section" id="review">
-  <jsp:include page="/list.jsp"></jsp:include>
+ <jsp:include page="/list.jsp">
+  <jsp:param value="3" name="boardid"/>
+  </jsp:include>
   </div>
     </c:if>
  

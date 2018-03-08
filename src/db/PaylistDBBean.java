@@ -69,8 +69,8 @@ public class PaylistDBBean {
 	
 		
 			sql="insert into paylist"
-					+ " (num,pronum,userid,price,name,addr,tel,deliv,count,point)"
-					+ " values(?,?,?,?,?,?,?,?,?)";
+					+ " (num,pronum,userid,price,name,addr,tel,deliv,count,point,ordernum)"
+					+ " values(?,?,?,?,?,?,?,?,?,?,?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, number);
 			pstmt.setString(2, (pay.getPronum()));
@@ -82,6 +82,7 @@ public class PaylistDBBean {
 			pstmt.setString(8, pay.getDeliv());
 			pstmt.setInt(9, pay.getCount());
 			pstmt.setString(10, pay.getPoint());
+			pstmt.setString(11, pay.getOrdernum());
 			pstmt.executeUpdate();
 			
 		
@@ -148,8 +149,7 @@ public int getPayCountAdmin (String pcode){
 
 public List getPaylistUser(int startRow, int endRow, String pcode, String userid) {
 		
-
-Connection con=DBcontrol.getConnection();
+	Connection con=null;
 PreparedStatement pstmt=null;
 ResultSet rs=null;
 List paylist=null;
@@ -219,7 +219,7 @@ return paylist;
 public List getPaylistAdmin(int startRow, int endRow, String pcode) {
 		
 
-Connection con=DBcontrol.getConnection();
+	Connection con=null;
 PreparedStatement pstmt=null;
 ResultSet rs=null;
 List paylist=null;
@@ -276,7 +276,7 @@ return paylist;
 public PaylistDataBean getPay(int num) {
 	
 	
-	Connection con=DBcontrol.getConnection();
+	Connection con=null;
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	String sql="";
@@ -308,6 +308,7 @@ public PaylistDataBean getPay(int num) {
 			pay.setRdate(rs.getTimestamp("rdate"));
 			pay.setTel(rs.getString("tel"));
 			pay.setPoint(rs.getString("point"));
+			pay.setOrdernum(rs.getString("ordernum"));
 			
 			if(rs.getString("pronum").substring(1).equals("a")) {
 				AuctionDBBean apro=AuctionDBBean.getInstance();
@@ -336,6 +337,37 @@ public PaylistDataBean getPay(int num) {
 
 }
 
+public int deletePay(int num) throws Exception {
+	
+	
+	Connection con=null;
+	PreparedStatement pstmt=null;
+	ResultSet rs=null;
+	String sql="delete from paylist where num=?";
+	
+	int x=-1;
+	try {
+
+		con=DBcontrol.getConnection();
+		
+		pstmt=con.prepareStatement(sql);
+		
+		pstmt.setInt(1, num);
+		
+		x=pstmt.executeUpdate();
+		
+		
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(con, rs, pstmt);
+		}
+		
+	return x;
+	
+	
+}
 
 
 	

@@ -1,4 +1,4 @@
-package guestbook.dao;
+package db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,17 +9,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import guestbook.model.Message;
 import jdbc.JdbcUtil;
 
-public class MessageDao {
-	private static MessageDao messageDao = new MessageDao();
+public class MessageDBBean {
+	private static MessageDBBean messageDao = new MessageDBBean();
 
-	public static MessageDao getInstance() {
+	public static MessageDBBean getInstance() {
 		return messageDao;
 	}
 
-	private MessageDao() {
+	private MessageDBBean() {
 	}
 
 	public int selectCount(Connection conn, String pronum) throws SQLException {
@@ -39,7 +38,7 @@ public class MessageDao {
 
 	}
 
-	public Message select(Connection conn, int num) throws SQLException {
+	public MessageDataBean select(Connection conn, int num) throws SQLException {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -61,7 +60,7 @@ public class MessageDao {
 
 	}
 	
-	public List<Message> selectList(Connection conn,int firstRow, int endRow, String pronum) throws SQLException{
+	public List<MessageDataBean> selectList(Connection conn,int firstRow, int endRow, String pronum) throws SQLException{
 		
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -78,7 +77,7 @@ public class MessageDao {
 			rs=pstmt.executeQuery();
 			
 		if(rs.next()) {
-			List<Message> messageList=new ArrayList<Message>();
+			List<MessageDataBean> messageList=new ArrayList<MessageDataBean>();
 			do {messageList.add(makeMessageFromResultSet(rs));
 			
 			}while(rs.next());
@@ -94,9 +93,9 @@ public class MessageDao {
 		
 	}
 	
-	private Message makeMessageFromResultSet(ResultSet rs) throws SQLException {
+	private MessageDataBean makeMessageFromResultSet(ResultSet rs) throws SQLException {
 		
-		Message message=new Message();
+		MessageDataBean message=new MessageDataBean();
 		message.setUserid(rs.getString("userid"));
 		message.setPassword(rs.getString("password"));
 		message.setContent(rs.getString("content"));
@@ -107,7 +106,7 @@ public class MessageDao {
 		return message;
 	}
 	
-	public int insert(Connection conn,Message message) throws SQLException{
+	public int insert(Connection conn,MessageDataBean message) throws SQLException{
 		
 		PreparedStatement pstmt=null;
 		ResultSet rs;

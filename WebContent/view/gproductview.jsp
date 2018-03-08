@@ -6,60 +6,73 @@
 <title>Plant shop</title>
 <meta charset="UTF-8">
 
-<SCRIPT LANGUAGE="JavaScript">
 
-var RemainTime
+<SCRIPT>
+var RemainTime;
+var StartOrNot;
+function showCountdown(ExpireTime,startRemain){
 
-function showCountdown(ExpireTime){
-	
+	 var btn=document.getElementById('submitGpurc');
+	  function btn_on() {
+	   
+	   btn.disabled = false;
+	  }
+	  
+	  function btn_off() {
+	  
+	   btn.disabled = 'disabled';
+	  }
+	  
+	  
+            var day, hour, min, sec, mod
+            var CountText
+           
+            RemainTime = ExpireTime - 1;
+            StartOrNot =startRemain;
+            CountText = ""
+            
+           
+            if (RemainTime >= 0){
+            		btn_on();
+            	
+                        day = Math.floor(ExpireTime / (3600 * 24));
+                        mod = ExpireTime % (24 * 3600);
 
- var btn=document.getElementById('submitGpurc');
+                        hour = Math.floor(mod / 3600);
+                        mod = mod % 3600;
 
-  function btn_on() {
-   
-   btn.disabled = false;
-  }
-  
-  function btn_off() {
-  
-   btn.disabled = 'disabled';
-  }
-  
-           var day, hour, min, sec, mod
-           var CountText
-           RemainTime = ExpireTime - 1;
+                        min = Math.floor(mod / 60);
 
-           CountText = ""
+                        sec = mod % 60;
 
-           if (RemainTime >= 0){
-           	btn_on();
-         
-              day = Math.floor(ExpireTime / (3600 * 24));
-              mod = ExpireTime % (24 * 3600);
+                        CountText = (day > 0) ? day + "일 " : "0일 ";
+                        CountText = (hour > 0) ? CountText + hour + "시간 " : (CountText.length > 0) ? CountText + hour + "시간 " : CountText;
+                        CountText = (min > 0) ? CountText + min + "분 " : (CountText.length > 0) ? CountText + min + "분 " : CountText;
+                        CountText = CountText + sec + "초"
+            
+            	if(RemainTime <86000){
+            		 window.document.all.Countdown.style.color='red';
+            	}
+            }
 
-              hour = Math.floor(mod / 3600);
-              mod = mod % 3600;
+            if (( sec <= 0 && CountText == "0초"  ) || ( CountText == "" )){
+                        CountText = "종료";
+                        btn_off();
+            }
+            if (( startRemain==1 ) || ( CountText == "" )){
+                CountText = "예정";
+                btn_off();
+    }
+            
 
-              min = Math.floor(mod / 60);
+            window.document.all.Countdown.value = CountText;
 
-              sec = mod % 60;
-
-              CountText = (day > 0) ? day + "일 " : "";
-              CountText = (hour > 0) ? CountText + hour + "시간 " : (CountText.length > 0) ? CountText + hour + "시간 " : CountText;
-              CountText = (min > 0) ? CountText + min + "분 " : (CountText.length > 0) ? CountText + min + "분 " : CountText;
-              CountText = CountText + sec + "초"
-           }
-
-           if (( sec <= 0 && CountText == "0초" ) || ( CountText == "" )){
-                       CountText = "종료";
-                       btn_off();
-           }
-
-           window.document.all.Countdown.value = CountText;
-
-           if (CountText != "종료"){
-                       setTimeout("showCountdown(RemainTime)", 1000);
-           }
+            if (CountText != "종료"){
+                        setTimeout("showCountdown(RemainTime,StartOrNot)", 1000);
+            }
+            
+           
+            
 }
 
 </SCRIPT>
@@ -108,31 +121,13 @@ font-family: "Montserrat", sans-serif;
     	<b>크기 : </b>약 ${gproduct.height } cm<br>
    </td></tr>
    
-  <%--  <tr><td class="w3-border-bottom">
-    <p><b>배송방법 : </b>
-    <c:if test="${gproduct.deliv=='1'}">
-    픽업만 가능
-    <input type="hidden" name="delivSelect" value="pickup">
-    </c:if>
-       <c:if test="${gproduct.deliv=='2'}">
-   택배만 가능
-     <input type="hidden" name="delivSelect" value="parcel">
-    </c:if>
-       <c:if test="${gproduct.deliv=='3'}">
-    <select  class="w3-select w3-border " required="required" style="width: 120px; display: inline-block;" name="delivSelect">
-	<option  selected="selected" disabled="disabled" >배송방법 선택</option>
-	<option value="pickup">픽업</option>
-    <option value="parcel">택배</option>
-    </select>
-    </c:if></p>
-    
-   </td></tr> --%>
+ 
    <tr><td class="w3-border-bottom"> 
    
       <p><b>진행기간 : </b>${formatSdate} ~ ${formatEdate}</p>
        
     
-    <body onload="javascript:showCountdown('${timeCount}');">
+    <body onload="javascript:showCountdown('${timeCount}','${startRemain}');">
           <label><b>남은시간 :</b> </label> <input type="text" name="Countdown" value="" style="border:0px; " readonly>
 </body><p/>
  </td><tr><tr><td class="w3-border-bottom">
@@ -225,7 +220,7 @@ function priceCal(price){
 
 <c:if test="${part=='content'}">
   <div class="w3-container w3-section  " id="content">
-  
+  <p><font color="grey" class="w3-small">등록일시 : ${gproduct.rdate }</font></p>
   <pre><p>${gproduct.content }</p></pre>
  
   </div>
@@ -233,13 +228,17 @@ function priceCal(price){
  
 <c:if test="${part=='qna'}">
   <div class="w3-container w3-section  " id="qna">
-  <jsp:include page="/list.jsp"></jsp:include>
+  <jsp:include page="/list.jsp">
+  <jsp:param value="2" name="boardid"/>
+  </jsp:include>
   </div>
   </c:if>
  
   <c:if test="${part=='review'}">
    <div class="w3-container w3-section  " id="review">
-  <jsp:include page="/list.jsp"></jsp:include>
+  <jsp:include page="/list.jsp">
+  <jsp:param value="3" name="boardid"/>
+  </jsp:include>
   </div>
     </c:if>
  

@@ -44,7 +44,7 @@ public class OrderDBBean {
 public OrderDataBean getOrder(int num) {
 	
 	
-	Connection con=DBcontrol.getConnection();
+	Connection con=null;
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	String sql="";
@@ -240,7 +240,7 @@ public int getPayOrderCount (String pcode){
 public List getOrders(int startRow, int endRow, String pcode, String userid) {
 		
 		
-		Connection con=DBcontrol.getConnection();
+	Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List orders=null;
@@ -340,7 +340,7 @@ public List getOrders(int startRow, int endRow, String pcode, String userid) {
 public List getOrdersAdmin(int startRow, int endRow, String pcode) {
 		
 		
-		Connection con=DBcontrol.getConnection();
+	Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List orders=null;
@@ -438,7 +438,7 @@ public List getOrdersAdmin(int startRow, int endRow, String pcode) {
 public List getPayOrders(int startRow, int endRow, String pcode) {
 		
 		
-		Connection con=DBcontrol.getConnection();
+	Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List orders=null;

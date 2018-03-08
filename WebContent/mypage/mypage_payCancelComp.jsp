@@ -30,7 +30,7 @@
   주문이 취소되었습니다.
   <br>
   <br>
-  <button class="w3-button" onclick="location.href='${cur}'">확인</button>
+  <button class="w3-button w3-black" onclick="location.href='paylist'">확인</button>
   
   </div></div>
 

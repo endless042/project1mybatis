@@ -1,10 +1,10 @@
-package guestbook.service;
+package reply;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import guestbook.dao.MessageDao;
-import guestbook.model.Message;
+import db.MessageDBBean;
+import db.MessageDataBean;
 import jdbc.ConnectionProvider;
 import jdbc.JdbcUtil;
 
@@ -20,8 +20,8 @@ public class DeleteMessageService {
 		try {
 			conn=ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
-			MessageDao messageDao=MessageDao.getInstance();
-			Message message=messageDao.select(conn, num);
+			MessageDBBean messageDao=MessageDBBean.getInstance();
+			MessageDataBean message=messageDao.select(conn, num);
 			if(message==null) {
 				throw new MessageNotFoundException("메세지 없음");
 				

@@ -1,20 +1,20 @@
-package guestbook.service;
+package reply;
 
 import java.util.List;
 
-import guestbook.model.Message;
+import db.MessageDataBean;
 
 public class MessageListView {
 
 	private int messageTotalCount;
 	private int currentPageNumber;
-	private List<Message> messageList;
+	private List<MessageDataBean> messageList;
 	private int pageTotalCount;
 	private int messageCountPerPage;
 	private int firstRow;
 	private int endRow;
 
-	public MessageListView(List<Message> messageList, int messageTotalCount, 
+	public MessageListView(List<MessageDataBean> messageList, int messageTotalCount, 
 			int currentPageNumber, int messageCountPerPage, 
 			int startRow, int endRow) {
 		this.messageList = messageList;
@@ -46,7 +46,7 @@ public class MessageListView {
 		return currentPageNumber;
 	}
 
-	public List<Message> getMessageList() {
+	public List<MessageDataBean> getMessageList() {
 		return messageList;
 	}
 

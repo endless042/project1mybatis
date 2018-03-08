@@ -3,8 +3,6 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
-<html>
-<title>Plant shop</title>
 <meta charset="UTF-8">
 <%
 String stateSelect=request.getParameter("stateSelect");
