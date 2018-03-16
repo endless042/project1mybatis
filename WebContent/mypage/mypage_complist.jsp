@@ -161,13 +161,15 @@ ${gnumber }
  
 <td style="width: 30%;"><span style="width: 100%;">
 <div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
- <a href="gcontent?num=${pay.num}&part=content&pronum=${pay.gproduct.num}">${pay.gproduct.title}</a>
+ <a href="mypagePayView?num=${pay.num}&select=pay&pcode=g&apageNum=${apageNum}&gpageNum=${gpageNum}&pronum=${pay.gproduct.num}">
+ ${pay.gproduct.title}
+ </a>
 </div></span></td>
 
 
 <td class="w3-center"><span style="width: 100%;">
 <div class="  w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<span class="w3-tag w3-black">
+<span class="w3-tag w3-white w3-border">
 <c:if test="${pay.gproduct.process =='1' }">
 협상
 </c:if>

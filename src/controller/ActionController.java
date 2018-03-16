@@ -27,27 +27,21 @@ import db.UserlistDataBean;
 public class ActionController extends Action {
 
 	public String main(HttpServletRequest req, HttpServletResponse res) throws Throwable {
-
 		req.setAttribute("title", "메인");
-
 		List aTopProduct = null;
 		List gTopProduct = null;
-
 		int acount;
 		int gcount;
-
 		try {
 			AuctionDBBean apro = AuctionDBBean.getInstance();
 			acount = apro.getAproductCount("top");
 			if (acount > 0) {
 				aTopProduct = apro.getTopProducts(1, 3);
-			
 				AuctionDataBean tmp = new AuctionDataBean();
 				String olddate = "";
 				String formatSdate = "";
 				String formatEdate = "";
 
-			
 					for (int i = 0; i < aTopProduct.size(); i++) {
 						tmp = (AuctionDataBean) aTopProduct.get(i);
 						olddate = tmp.getSdate();
@@ -58,11 +52,9 @@ public class ActionController extends Action {
 								+ "일 " + olddate.substring(8, 10) + "시";
 						tmp.setSdate(formatSdate);
 						tmp.setEdate(formatEdate);
-
 					}
 				}
-			
-			
+
 			GpurcDBBean gpro = GpurcDBBean.getInstance();
 			gcount = gpro.getGproductCount("top");
 			if (gcount > 0) {
@@ -78,10 +70,8 @@ public class ActionController extends Action {
 					int rday = timeCount / 24 / 60 / 60;
 
 					tmp.setEdate(rday + "");
-
 				}
 			}
-
 			int i = 1;
 			int j = 1;
 			req.setAttribute("acount", acount);
@@ -95,6 +85,7 @@ public class ActionController extends Action {
 		}
 		return "/view/main.jsp";
 	}
+	
 
 	public String auction(HttpServletRequest req, HttpServletResponse res) throws Throwable {
 		req.setAttribute("title", "경매");
@@ -282,9 +273,9 @@ public class ActionController extends Action {
 
 		int c = aproduct.getCount();
 
-		System.out.println("===========" + c);
+		
 		aproduct.setCount(c + 1);
-		System.out.println("=============" + (c + 1));
+	
 
 		apro.updateAproduct(aproduct);
 		System.out.println(aproduct);
@@ -329,9 +320,7 @@ public class ActionController extends Action {
 			int gcount = gproduct.getCount();
 			System.out.println(gcount);
 
-			gproduct.setCount(gcount + selectquantity); //
-
-			System.out.println("gproduct 카운트" + gproduct.getCount());
+			gproduct.setCount(gcount + selectquantity);
 
 			gpro.updateGproduct(gproduct);
 
@@ -690,15 +679,33 @@ public class ActionController extends Action {
 
 		OrderDBBean oPro = OrderDBBean.getInstance();
 		acount = oPro.getOrderCount("a", userid);
-
-		// System.out.println("acount:"+acount);
-
 		gcount = oPro.getOrderCount("g", userid);
-
+		OrderDataBean order1=null;
 		int bottomLine = 5;
 		try {
 			if (acount > 0) {
 				aList = oPro.getOrders(astartRow, aendRow, "a", userid);
+				AuctionDataBean tmp = new AuctionDataBean();
+				String olddate = "";
+				String formatSdate = "";
+				String formatEdate = "";
+
+		
+				for (int i = 0; i < aList.size(); i++) {
+					order1=(OrderDataBean) aList.get(i);
+					tmp = order1.getAproduct();
+				
+					
+					olddate = tmp.getSdate();
+					formatSdate = olddate.substring(0, 4) + "년 " + olddate.substring(4, 6) + "월 " + olddate.substring(6, 8)
+							+ "일 " + olddate.substring(8, 10) + "시";
+					olddate = tmp.getEdate();
+					formatEdate = olddate.substring(0, 4) + "년 " + olddate.substring(4, 6) + "월 " + olddate.substring(6, 8)
+							+ "일 " + olddate.substring(8, 10) + "시";
+					tmp.setSdate(formatSdate);
+					tmp.setEdate(formatEdate);
+
+					}
 			}
 
 			anumber = acount - (acurrentPage - 1) * pageSize;
@@ -712,8 +719,27 @@ public class ActionController extends Action {
 
 			if (gcount > 0) {
 				gList = oPro.getOrders(gstartRow, gendRow, "g", userid);
-			}
+				GpurcDataBean tmp1 = new GpurcDataBean();
+				String olddate = "";
+				String formatSdate = "";
+				String formatEdate = "";
 
+		
+				for (int i = 0; i < gList.size(); i++) {
+					order1=(OrderDataBean) gList.get(i);
+					tmp1 = order1.getGproduct();
+					System.out.println("=======alist======");
+					
+					olddate = tmp1.getSdate();
+					formatSdate = olddate.substring(0, 4) + "년 " + olddate.substring(4, 6) + "월 " + olddate.substring(6, 8)
+							+ "일 " + olddate.substring(8, 10) + "시";
+					olddate = tmp1.getEdate();
+					formatEdate = olddate.substring(0, 4) + "년 " + olddate.substring(4, 6) + "월 " + olddate.substring(6, 8)
+							+ "일 " + olddate.substring(8, 10) + "시";
+					tmp1.setSdate(formatSdate);
+					tmp1.setEdate(formatEdate);
+					}
+			}
 			gnumber = gcount - (gcurrentPage - 1) * pageSize;
 
 			int gpageCount = gcount / pageSize + (gcount % pageSize == 0 ? 0 : 1);

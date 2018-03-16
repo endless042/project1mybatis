@@ -457,7 +457,7 @@ public int updateAproduct(AuctionDataBean aproduct) {
 		sql="update aproduct set "
 				+ "sprice=?, count=?, state=?, name=?, origin=?,"
 				+ "category=?, height=?, sdate=?, edate=?,"
-				+ "eprice=?, deliv=?, content=?, imgs=?, imgsize=? where num=?";
+				+ "eprice=?, deliv=?, content=?, imgs=?, imgsize=?, title=? where num=?";
 		
 		
 		pstmt=con.prepareStatement(sql);
@@ -479,7 +479,8 @@ public int updateAproduct(AuctionDataBean aproduct) {
 		pstmt.setString(12, aproduct.getContent());
 		pstmt.setString(13, aproduct.getImgs());
 		pstmt.setInt(14, aproduct.getImgsize());
-		pstmt.setInt(15, aproduct.getNum());
+		pstmt.setString(15, aproduct.getTitle());
+		pstmt.setInt(16, aproduct.getNum());
 		
 		chk=pstmt.executeUpdate(); 	
 		

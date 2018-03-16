@@ -237,6 +237,105 @@ public int getPayOrderCount (String pcode){
 }
 
 
+public List getAuctionOrders(int startRow, int endRow, String pcode, String userid) {
+		
+		
+	Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List orders=null;
+		String sql="";
+		
+		try {
+			con=DBcontrol.getConnection();
+			sql="select * from (" + 
+					"select rownum rum , b.* from (" + 
+					"select a.* from orderlist a  where pronum like concat (?, '%') and userid=? ORDER BY rdate desc) b) " + 
+					"where rum between ? and ?";
+			
+			
+				pstmt=con.prepareStatement(sql);
+				
+				pstmt.setString(1, pcode);
+				pstmt.setString(2, userid);
+				pstmt.setInt(3, startRow);
+				pstmt.setInt(4, endRow);
+				
+				rs=pstmt.executeQuery();
+			
+				if(rs.next()) {
+					orders=new ArrayList();
+					do {
+						
+						OrderDataBean order=new OrderDataBean();
+						
+						if(pcode.equals("a")) {
+						AuctionDBBean apro=AuctionDBBean.getInstance();
+						AuctionDataBean product=apro.getProduct(Integer.parseInt(rs.getString("pronum").substring(1)), "");
+						AhistoryDBBean hpro=AhistoryDBBean.getInstance();
+						AhistoryDataBean ahistory=hpro.getHistory(userid, "");						
+						
+						order.setAprice(ahistory.getPrice()); 
+						
+						order.setAproduct(product);
+						order.setNum(rs.getInt("num"));
+						order.setPronum(rs.getString("pronum"));
+						order.setRdate(rs.getTimestamp("rdate"));
+						order.setUserid(userid);
+						order.setAprice(rs.getString("aprice"));
+						order.setPayState(rs.getString("paystate"));
+						
+						Date date = new Date();
+
+						SimpleDateFormat simple = new SimpleDateFormat("yyyyMMddHHmmss");
+
+						System.out.println(simple.format(date));
+						String curtime=simple.format(date);
+						
+						order.setRemainTime(apro.getRemainTime(product, curtime));
+						order.setStartRemain(apro.getStartRemain(product, curtime));
+						
+						
+						}else if(pcode.equals("g")) {
+							GpurcDBBean gpro=GpurcDBBean.getInstance();
+							GpurcDataBean product=gpro.getProduct(Integer.parseInt(rs.getString("pronum").substring(1)), "");
+						
+							order.setGproduct(product);
+							order.setNum(rs.getInt("num"));
+							order.setPronum(rs.getString("pronum"));
+							order.setRdate(rs.getTimestamp("rdate"));
+							order.setUserid(userid);
+							order.setCount(rs.getInt("count"));
+							order.setPayState(rs.getString("paystate"));
+							
+							Date date = new Date();
+
+							SimpleDateFormat simple = new SimpleDateFormat("yyyyMMddHHmmss");
+
+							System.out.println(simple.format(date));
+							String curtime=simple.format(date);
+							
+							order.setRemainTime(gpro.getRemainTime(product, curtime));
+							order.setStartRemain(gpro.getStartRemain(product, curtime));
+							
+						}
+						
+						
+					
+		
+						
+						orders.add(order);
+					
+					}while(rs.next());
+				}
+			}catch(Exception ex) {
+					ex.printStackTrace();
+			}finally {close(con, rs, pstmt);}
+		
+		return orders;
+		
+	}
+
 public List getOrders(int startRow, int endRow, String pcode, String userid) {
 		
 		

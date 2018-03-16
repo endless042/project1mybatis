@@ -82,7 +82,6 @@ ${order.aproduct.edate }<br>
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
  <p>
  
- 
  <c:if test="${(order.remainTime==0) && (order.aprice==order.aproduct.eprice)}">
  <span class="w3-tag w3-blue">낙찰</span><p/>
   <c:if test="${order.payState!='1' && order.payState!='2' }">
@@ -94,36 +93,21 @@ ${order.aproduct.edate }<br>
   <input type="hidden" name="ordernum" value="${order.num}">
   <input type="hidden" name="pcode" value="a">
   </form> 
-  
-  
   </c:if>
     <c:if test="${order.payState=='1' }">
- 
-  <button 
-   class="w3-button w3-padding-small w3-small w3-green">결제완료</button>
+  <button class="w3-button w3-padding-small w3-small w3-green">결제완료</button>
  </c:if>
    <c:if test="${order.payState=='2' }">
- 
-  <button 
-   class="w3-button w3-padding-small w3-small w3-black">결제취소</button>
+  <span class="w3-tag w3-small w3-white w3-border">취소됨</span>
  </c:if>
-  
-  
  </c:if>
- 
- 
  <c:if test="${(order.remainTime==0) && (order.aprice!=order.aproduct.eprice)}">
  <span class="w3-tag w3-white w3-border">종료</span><p/>
  </c:if>
- 
- 
   <c:if test="${order.remainTime!=0}">
  <span class="w3-tag w3-white w3-border">진행중</span><p/>
  </c:if>
-
 </div></span></td>
-
-
 </tr>
 </c:forEach>
  </table>
@@ -213,7 +197,8 @@ ${order.gproduct.price*order.count}
 </div></span></td>
 
 <td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
-<p><c:if test="${order.gproduct.goal<=order.gproduct.count}">
+<p>
+<c:if test="${order.gproduct.goal<=order.gproduct.count}">
  <span class="w3-tag w3-blue">달성</span><p/>
    	<c:if test="${(order.remainTime==0) && (order.startRemain==0) }"> 
     <c:if test="${order.payState!='1'&&order.payState!='2' }">
@@ -227,17 +212,11 @@ ${order.gproduct.price*order.count}
   <input type="hidden" name="pcode" value="g">
   </form>  </c:if>
   <c:if test="${order.payState=='1' }">
- 
-  <button 
-   class="w3-button w3-padding-small w3-small w3-green">결제완료</button>
-
-  
+  <button class="w3-button w3-padding-small w3-small w3-green">결제완료</button>
   </c:if> 
    </c:if>
    <c:if test="${order.payState=='2' }">
- 
-  <button 
-   class="w3-button w3-padding-small w3-small  w3-black">결제취소</button>
+   <span class="w3-tag w3-small w3-white w3-border">취소됨</span>
  </c:if>
  </c:if>
  <c:if test="${(order.remainTime==0) && (order.gproduct.goal>order.gproduct.count)}">
@@ -248,6 +227,7 @@ ${order.gproduct.price*order.count}
   <span class="w3-tag w3-white w3-border">모집중</span><p/>
   (${order.gproduct.count }/${order.gproduct.goal })
  </c:if>
+ 
 </div></span></td>
 
 

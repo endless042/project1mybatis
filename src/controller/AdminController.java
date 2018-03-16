@@ -20,7 +20,9 @@ import db.GpurcDBBean;
 import db.GpurcDataBean;
 import db.OrderDBBean;
 import db.PaylistDBBean;
+import db.PaylistDataBean;
 import db.UserlistDBBean;
+import db.UserlistDataBean;
 
 public class AdminController extends Action{
 	public String userlist(HttpServletRequest req,
@@ -808,6 +810,46 @@ public class AdminController extends Action{
 		
 		return  "/admin/admin_gModifyPro.jsp"; 
 			} 
-	
+	public String payView(HttpServletRequest req, HttpServletResponse res) throws Throwable {
+		req.setAttribute("title", "관리자페이지");
+		String pcode = req.getParameter("pcode");
+		String apageNum = req.getParameter("apageNum");
+		String gpageNum = req.getParameter("gpageNum");
+		int num = Integer.parseInt(req.getParameter("num"));
+		int pronum = Integer.parseInt(req.getParameter("pronum").substring(1));
+
+		String count = req.getParameter("count");
+		if (count == null || count.equals("")) {
+			count = "1";
+		}
+
+		if (pcode.equals("a")) {
+			AuctionDBBean apro = AuctionDBBean.getInstance();
+			AuctionDataBean product = apro.getProduct(pronum, "");
+			req.setAttribute("product", product);
+		} else if (pcode.equals("g")) {
+			GpurcDBBean gpro = GpurcDBBean.getInstance();
+			GpurcDataBean product = gpro.getProduct(pronum, "");
+			req.setAttribute("product", product);
+		}
+
+		UserlistDBBean upro = UserlistDBBean.getInstance();
+		UserlistDataBean user = upro.getUser((String) req.getSession().getAttribute("loginId"));
+
+		
+
+		PaylistDBBean paypro = PaylistDBBean.getInstance();
+		PaylistDataBean pay = paypro.getPay(num);
+		String ordernum=pay.getOrdernum();
+		req.setAttribute("pay", pay);
+		req.setAttribute("num", num);
+		req.setAttribute("apageNum", apageNum);
+		req.setAttribute("gpageNum", gpageNum);
+		req.setAttribute("pcode", pcode);
+		req.setAttribute("user", user);
+		req.setAttribute("ordernum", ordernum);
+		req.setAttribute("count", count);
+		return "/admin/admin_payView.jsp"; 
+	}
 	
 }

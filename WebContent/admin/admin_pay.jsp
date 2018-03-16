@@ -59,17 +59,18 @@
     			<td class="w3-center" >
     			
     			
-    			<form method="post" action="admin_userModify" style="display: inline-block;">
+    			<form method="post" action="payView?num=${pay.num}&select=pay&pcode=${pcode }&apageNum=${apageNum}&gpageNum=${gpageNum}&pronum=${pay.pronum}" style="display: inline-block;">
     			<%-- <input type="hidden" name="pageNum" value="${pageNum}">
     			<input type="hidden" name="id" value="${user.id}">
     			<input type="hidden" name="pwd" value="${user.pwd}"> --%>
     			<input type="hidden" name="select" value="auserlist">
     			<button class="w3-button w3-padding-small w3-black tablink w3-hover-green w3-small w3-padding-small" 
-    			type="submit" onclick="openAdminPage(event,'userModify')"  >수정</button></form>
+    			type="submit" onclick="openAdminPage(event,'userModify')"  >보기</button></form>
     			
     			
-    			<form method="post" action="deleteUserPro" style="display: inline-block;"><button class="w3-padding-small w3-hover-red
-    			 w3-button w3-small w3-black w3-padding-small" type="submit"  >삭제</button>
+    			<form method="post" action="payCancelPro?ordernum=${pay.ordernum}" style="display: inline-block;"><button class="w3-padding-small w3-hover-red
+    			 w3-button w3-small w3-black w3-padding-small" type="submit"  >취소</button>
+    			   <input type="hidden" name="pcode" value="${pcode }">
     			 <%-- <input type="hidden" name="pageNum" value="${pageNum}">
     			<input type="hidden" name="id" value="${user.id}">
     			<input type="hidden" name="pwd" value="${user.pwd}"> --%></form></td>
