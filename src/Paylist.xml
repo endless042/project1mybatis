@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="paylist">
+
+	<select id="getNextNumber" resultType="int" >
+		select payser.nextval from dual
+	</select>
+	
+	<insert id="addPay" parameterType="Paylist">
+		insert into paylist
+		 (num,pronum,userid,price,name,
+		 addr,tel,deliv,count,point,ordernum)
+		 values(#{num},#{pronum},#{userid},#{price},
+		 #{name},#{addr},#{tel},#{deliv},#{count},#{point},#{ordernum})
+	</insert>
+	
+	<select id="getPayCountUser" resultType="int" parameterType="hashmap">
+		select count(*) from paylist where pronum like concat (#{pcode}, '%') and userid=#{userid}
+	</select>
+	
+		<select id="getPayCountAdmin" resultType="int" parameterType="hashmap">
+		select count(*) from paylist where pronum like concat (#{pcode}, '%')
+	</select>
+	
+			<select id="getPaylistUser" resultType="Paylist" parameterType="hashmap">
+	select * from (
+	select rownum rum , b.* from (
+	select a.* from paylist a  where pronum like concat (#{pcode}, '%') and userid=#{userid} ORDER BY rdate desc) b)
+	where rum between #{startRow} and #{endRow}
+	</select>
+	
+	
+<select id="getPaylistAdmin" resultType="Paylist" parameterType="hashmap">
+	select * from (
+	select rownum rum , b.* from (
+	select a.* from paylist a  where pronum like concat (#{pcode}, '%')  ORDER BY rdate desc) b) 
+	where rum between #{startRow} and #{endRow}
+	</select>
+	
+	<select id="getPay" resultType="Paylist" parameterType="hashmap">
+		Select * from paylist where num=#{num}
+	</select>
+
+<delete id="deletePay" parameterType="hashmap">
+delete from paylist where num=#{num}
+</delete>
+
+	
+</mapper>

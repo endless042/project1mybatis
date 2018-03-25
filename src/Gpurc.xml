@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gpurc">
+	<insert id="addGproduct" parameterType="Gpurc">
+insert into gproduct (num,state,origin,title,name,
+	category,height,sdate,edate,price,goal,deliv,
+	content,process,imgs,rdate,imgsize)
+values(#{num},#{state},#{origin},#{title},#{name},#{category},#{height},#{sdate},#{edate},#{price},#{goal},#{deliv},
+#{content},#{process},#{imgs},sysdate,#{imgsize})	
+	</insert>
+	
+	<select id="getNextNumber" resultType="int">
+		select aSer.nextval from dual
+	</select>
+	
+	<select id="getRemainTime" resultType="int" parameterType="hashmap">
+		select (to_date(#{edate},'yyyymmddhh24miss') - 
+			to_date(#{curtime},'yyyymmddhh24miss'))*24*60*60 from dual
+		
+	</select>
+	
+		<select id="getStartRemain" resultType="int" parameterType="hashmap">
+		select (to_date(#{sdate},'yyyymmddhh24miss') - 
+			to_date(#{curtime},'yyyymmddhh24miss'))*24*60*60 from dual
+	</select>
+	
+
+	<select id="getGgproductCountAll" resultType="int">
+		select count(*) from gproduct 
+		
+	</select>
+	
+	<select id="getGgproductCount" resultType="int" parameterType="hashmap">
+		select count(*) from gproduct where state=#{stateSelect}
+		
+	</select>
+	
+
+	<select id="getProductsAll" resultType="Gpurc" parameterType="hashmap">
+		select * from (
+			select rownum rum , b.* from (
+			select a.* from gproduct a  ORDER BY rdate DESC) b)
+			where rum between #{startRow} and #{endRow} ORDER BY  num desc
+	</select>
+	
+		<select id="getProductsTop" resultType="Gpurc" parameterType="hashmap">
+		select * from (
+		select rownum rum , b.* from (
+		select a.* from gproduct a  ) b)
+		where rum between  #{startRow} and #{endRow} ORDER BY  readcount desc
+	</select>
+	
+
+			<select id="getProducts" resultType="Gpurc" parameterType="hashmap">
+		select * from (
+			select rownum rum , b.* from (
+		select a.* from gproduct a where state=#{stateSelect} ORDER BY rdate DESC) b)
+		where rum between #{startRow} and #{endRow} ORDER BY  num desc
+	</select>
+	
+
+	<select id="getProduct" resultType="Gpurc" parameterType="hashmap">
+	Select * from gproduct where num=#{num}
+	</select>
+	
+
+	<update id="updateReadcount" parameterType="hashmap">
+		Update gproduct set readcount=readcount+1 where num=#{num}
+	</update>
+	
+	
+	
+		<update id="updateGproduct" parameterType="Gpurc">
+		update gproduct set 
+		count=#{count}, state=#{state}, process=#{process}, origin=#{origin},
+		 title=#{title}, name=#{name}, category=#{category},
+		height=#{height}, sdate=#{sdate}, edate=#{edate}, price=#{price},
+		goal=#{goal}, deliv=#{deliv}, imgs=#{imgs}, content=#{content}, imgsize=#{imgsize} where num=#{num}
+	</update>
+
+	
+	
+</mapper>

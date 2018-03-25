@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cart">
+<insert id="addCart" parameterType="Cart">
+		insert into cart (userid,pronum) values(#{userid},#{pronum})
+	</insert>
+
+<select id="getCartCount" resultType="int" parameterType="hashmap">
+		select count(*) from cart where pronum like concat (#{pcode}, '%') and userid=#{userid}
+	</select>
+	
+	
+	<select id="getCarts" resultType="Cart" parameterType="hashmap">
+		select * from (
+			select rownum rum , b.* from ( 
+			select a.* from cart a  where pronum like concat (#{pcode}, '%') 
+			and userid=#{userid} ORDER BY rdate desc) b) 
+			where rum between #{startRow} and #{endRow}
+	</select>
+	
+	
+	
+	
+</mapper>

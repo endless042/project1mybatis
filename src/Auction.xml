@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="auction">
+	<insert id="addAproduct" parameterType="Auction">
+	insert into aproduct (num,state,origin,title,name,
+	category,height,sdate,edate,sprice,eprice,deliv,content,imgs,rdate,imgsize) 
+	values(#{num},#{state},#{origin},#{title},#{name},#{category},#{height},#{sdate},#{edate},#{sprice},#{eprice},#{deliv},#{content},#{imgs},sysdate,#{imgsize})	
+	</insert>
+	
+	<select id="getNextNumber" resultType="int">
+		select aSer.nextval from dual
+	</select>
+	
+	<select id="getAproductCountAll" resultType="int">
+		select count(*) from aproduct 
+		
+	</select>
+	
+	<select id="getAproductCount" resultType="int" parameterType="hashmap">
+		select count(*) from aproduct where state=#{stateSelect}
+		
+	</select>
+	
+		<select id="getRemainTime" resultType="int" parameterType="hashmap">
+		select (to_date(#{edate},'yyyymmddhh24miss') - 
+			to_date(#{curtime},'yyyymmddhh24miss'))*24*60*60 from dual
+		
+	</select>
+	
+		<select id="getStartRemain" resultType="int" parameterType="hashmap">
+		select (to_date(#{sdate},'yyyymmddhh24miss') - 
+			to_date(#{curtime},'yyyymmddhh24miss'))*24*60*60 from dual
+	</select>
+	
+	
+	<select id="getProductsAll" resultType="Auction" parameterType="hashmap">
+		select * from (
+			select rownum rum , b.* from (
+			select a.* from aproduct a  ORDER BY rdate DESC) b)
+			where rum between #{startRow} and #{endRow} ORDER BY  num desc
+	</select>
+	
+		<select id="getProductsTop" resultType="Auction" parameterType="hashmap">
+		select * from (
+		select rownum rum , b.* from (
+		select a.* from aproduct a  ) b)
+		where rum between  #{startRow} and #{endRow} ORDER BY  readcount desc
+	</select>
+	
+			<select id="getProducts" resultType="Auction" parameterType="hashmap">
+		select * from (
+			select rownum rum , b.* from (
+		select a.* from aproduct a where state=#{stateSelect} ORDER BY rdate DESC) b)
+		where rum between #{startRow} and #{endRow} ORDER BY  num desc
+	</select>
+	
+	
+	
+	<select id="getProduct" resultType="Auction" parameterType="hashmap">
+	Select * from aproduct where num=#{num}
+	</select>
+	
+
+	
+	<update id="updateReadcount" parameterType="hashmap">
+		Update aproduct set readcount=readcount+1 where num=#{num}
+	</update>
+	
+		<update id="updateAproduct" parameterType="Auction">
+		update aproduct set 
+				sprice=#{sprice}, count=#{count}, state=#{state}, name=#{name}, origin=#{origin},
+				category=#{category}, height=#{height}, sdate=#{sdate}, edate=#{edate},
+				eprice=#{eprice}, deliv=#{deliv}, content=#{content}, imgs=#{imgs}, imgsize=#{imgsize}, title=#{title} where num=#{num}
+	</update>
+	<update id="updateAproduct1" parameterType="Auction">
+		update aproduct set 
+				sprice=#{sprice}, count=#{count}, state=#{state}, name=#{name}, origin=#{origin},
+				category=#{category}, height=#{height}, sdate=#{sdate}, edate=#{edate},
+				eprice=#{sprice}, deliv=#{deliv}, content=#{content}, imgs=#{imgs}, imgsize=#{imgsize}, title=#{title} where num=#{num}
+	</update>
+	
+	
+	
+</mapper>

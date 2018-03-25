@@ -1,9 +1,4 @@
-package user;
-
-import java.sql.SQLException;
-
-import db.UserlistDBBean;
-import db.UserlistDataBean;
+package userlist;
 
 public class JoinService {
 	private UserlistDBBean userpro=UserlistDBBean.getInstance();

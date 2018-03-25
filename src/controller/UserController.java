@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sist.msk.Action;
 
-import db.UserlistDBBean;
-import db.UserlistDataBean;
-import user.JoinRequest;
-import user.JoinService;
+import userlist.JoinRequest;
+import userlist.JoinService;
+import userlist.UserlistDBBean;
+import userlist.UserlistDataBean;
 
 public class UserController extends Action{
 	

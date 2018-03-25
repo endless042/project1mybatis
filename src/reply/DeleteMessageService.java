@@ -3,8 +3,6 @@ package reply;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import db.MessageDBBean;
-import db.MessageDataBean;
 import jdbc.ConnectionProvider;
 import jdbc.JdbcUtil;
 
@@ -20,8 +18,8 @@ public class DeleteMessageService {
 		try {
 			conn=ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
-			MessageDBBean messageDao=MessageDBBean.getInstance();
-			MessageDataBean message=messageDao.select(conn, num);
+			ReplyDBBean messageDao=ReplyDBBean.getInstance();
+			ReplyDataBean message=messageDao.select(num);
 			if(message==null) {
 				throw new MessageNotFoundException("메세지 없음");
 				
@@ -29,7 +27,7 @@ public class DeleteMessageService {
 			if(!message.matchPassword(password)) {
 				throw new InvalidPassowrdException("bad password");
 			}
-			messageDao.delete(conn,num);
+			messageDao.delete(num);
 			conn.commit();
 		}catch(SQLException ex) {
 			JdbcUtil.rollback(conn);

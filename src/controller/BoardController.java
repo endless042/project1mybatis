@@ -10,8 +10,8 @@ import com.sist.msk.Action;
 
 import board.BoardDBBean;
 import board.BoardDataBean;
-import db.UserlistDBBean;
-import db.UserlistDataBean;
+import userlist.UserlistDBBean;
+import userlist.UserlistDataBean;
 
 public class BoardController extends Action {
 

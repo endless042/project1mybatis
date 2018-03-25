@@ -1,6 +1,6 @@
-<%@page import="db.UserlistDataBean"%>
+<%@page import="userlist.UserlistDataBean"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="db.UserlistDBBean"%>
+<%@page import="userlist.UserlistDBBean"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

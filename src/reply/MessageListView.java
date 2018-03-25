@@ -2,19 +2,17 @@ package reply;
 
 import java.util.List;
 
-import db.MessageDataBean;
-
 public class MessageListView {
 
 	private int messageTotalCount;
 	private int currentPageNumber;
-	private List<MessageDataBean> messageList;
+	private List<ReplyDataBean> messageList;
 	private int pageTotalCount;
 	private int messageCountPerPage;
 	private int firstRow;
 	private int endRow;
 
-	public MessageListView(List<MessageDataBean> messageList, int messageTotalCount, 
+	public MessageListView(List<ReplyDataBean> messageList, int messageTotalCount, 
 			int currentPageNumber, int messageCountPerPage, 
 			int startRow, int endRow) {
 		this.messageList = messageList;
@@ -46,7 +44,7 @@ public class MessageListView {
 		return currentPageNumber;
 	}
 
-	public List<MessageDataBean> getMessageList() {
+	public List<ReplyDataBean> getMessageList() {
 		return messageList;
 	}
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<%@page import="db.UserlistDataBean"%>
-<%@page import="db.UserlistDBBean"%>
+<%@page import="userlist.UserlistDataBean"%>
+<%@page import="userlist.UserlistDBBean"%>
 <%@page import="java.sql.SQLException"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -89,7 +89,7 @@
  <c:if test="${product.deliv=='3'}">
   <tr ><td > <label><b>배송방법</b><p/></label></td>
   <td align="left">
-<select id="delevselect" onchange="delivSel();"  class="w3-select w3-border " required="required" style="width: 120px; display: inline-block;" name="quantity">
+<select id="delevselect" onchange="delivSel();" required=required class="w3-select w3-border " required="required" style="width: 120px; display: inline-block;" name="quantity">
 	<option  selected="selected" disabled="disabled" >배송 방법 선택</option>
 	<option value="1">픽업</option>
     <option value="2">택배</option>
@@ -170,7 +170,7 @@ function delivSel(){
 	var x=document.getElementById("delevselect").value;
 	
 	if(x=='1'){
-		document.getElementById("userselect").innerHTML='직접 픽업 오시면 됩니다.<input type="hidden" name="deliv" value="1">';
+		document.getElementById("userselect").innerHTML='직접 픽업 오시면 됩니다.<input type="hidden" name="deliv" value="1"><input type="hidden" name="addr" value="">';
 		document.getElementById("totalprice").innerHTML='&nbsp;&nbsp;&nbsp;<b>${price1} 원</b><p/>'+'<input type="hidden" name="price" value="${price1}">';
 	}
 	else if(x=='2'){

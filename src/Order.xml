@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="order">
+
+	<select id="getOrder" resultType="Order" parameterType="hashmap">
+		Select *
+		from orderlist where num=#{num}
+	</select>
+	<update id="updateOrder" parameterType="Order">
+		update orderlist set
+		payState=#{payState} where num=#{num}
+	</update>
+
+	<insert id="addOrder" parameterType="Order">
+		insert into orderlist
+		(userid,pronum,aprice,num,count)
+		values(#{userid},#{pronum},#{aprice},#{num},#{count})
+	</insert>
+
+	<select id="getNextNumber" resultType="int">
+		select oser.nextval from
+		dual
+	</select>
+
+
+	<select id="getOrderCount" resultType="int" parameterType="hashmap">
+		select count(*) from orderlist where pronum like concat (#{pcode},
+		'%') and userid=#{userid}
+	</select>
+
+	<select id="getTotalOrderCount" resultType="int" parameterType="hashmap">
+		select count(*) from orderlist where pronum like concat (#{pcode},
+		'%')
+	</select>
+
+	<select id="getPayOrderCount" resultType="int" parameterType="hashmap">
+		select count(*) from orderlist where pronum like concat (#{pcode},
+		'%')
+		and paystate is not null
+	</select>
+
+	<select id="getSelectOrders" resultType="Order" parameterType="hashmap">
+		select * from (
+		select rownum rum , b.* from (
+		select a.* from orderlist a where pronum like concat (#{pcode}, '%') and
+		userid=#{userid} ORDER BY rdate desc) b)
+		where rum between #{startRow} and #{endRow}
+	</select>
+
+	<select id="getOrdersAdmin" resultType="Order" parameterType="hashmap">
+		select * from (
+		select rownum rum , b.* from (
+		select a.* from orderlist a where pronum like concat (#{pcode}, '%') 
+		 ORDER BY rdate desc) b)
+		where rum between #{startRow} and #{endRow}
+	</select>
+	
+	<select id="getPayOrders" resultType="Order" parameterType="hashmap">
+	select * from (select rownum rum , b.* from (
+		select a.* from orderlist a  where pronum like concat (#{pcode}, '%') 
+		and payState is not null ORDER BY rdate desc) b) 
+		where rum between #{startRow} and #{endRow}
+	</select>
+
+</mapper>

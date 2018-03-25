@@ -1,4 +1,4 @@
-package user;
+package userlist;
 
 import java.util.Map;
 

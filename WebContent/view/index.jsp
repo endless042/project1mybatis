@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>PLANT SHOT</title>
+<title>PLANT SHOP</title>
 </head>
 <body>
 <% response.sendRedirect(request.getContextPath()+"/page/main"); %>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<%@page import="db.UserlistDataBean"%>
-<%@page import="db.UserlistDBBean"%>
+<%@page import="userlist.UserlistDataBean"%>
+<%@page import="userlist.UserlistDBBean"%>
 <%@page import="java.sql.SQLException"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

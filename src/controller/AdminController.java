@@ -14,15 +14,15 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.sist.msk.Action;
 
-import db.AuctionDBBean;
-import db.AuctionDataBean;
-import db.GpurcDBBean;
-import db.GpurcDataBean;
-import db.OrderDBBean;
-import db.PaylistDBBean;
-import db.PaylistDataBean;
-import db.UserlistDBBean;
-import db.UserlistDataBean;
+import auction.AuctionDBBean;
+import auction.AuctionDataBean;
+import gpurc.GpurcDBBean;
+import gpurc.GpurcDataBean;
+import order.OrderDBBean;
+import paylist.PaylistDBBean;
+import paylist.PaylistDataBean;
+import userlist.UserlistDBBean;
+import userlist.UserlistDataBean;
 
 public class AdminController extends Action{
 	public String userlist(HttpServletRequest req,

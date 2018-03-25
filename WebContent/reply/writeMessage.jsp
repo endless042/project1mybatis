@@ -1,7 +1,7 @@
 <%@page import="reply.WriteMessageService"%>
 <%@ page contentType="text/html; charset=utf-8" %>
 
-<jsp:useBean id="message" class="db.MessageDataBean">
+<jsp:useBean id="message" class="reply.ReplyDataBean">
 	<jsp:setProperty name="message" property="*" />
 </jsp:useBean>
 <%

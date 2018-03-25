@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sist.msk.Action;
 
-import db.AhistoryDBBean;
-import db.AhistoryDataBean;
-import db.AuctionDBBean;
-import db.AuctionDataBean;
-import db.CartDBBean;
-import db.CartDataBean;
-import db.GpurcDBBean;
-import db.GpurcDataBean;
-import db.OrderDBBean;
-import db.OrderDataBean;
-import db.PaylistDBBean;
-import db.PaylistDataBean;
-import db.UserlistDBBean;
-import db.UserlistDataBean;
+import ahistory.AhistoryDBBean;
+import ahistory.AhistoryDataBean;
+import auction.AuctionDBBean;
+import auction.AuctionDataBean;
+import cart.CartDBBean;
+import cart.CartDataBean;
+import gpurc.GpurcDBBean;
+import gpurc.GpurcDataBean;
+import order.OrderDBBean;
+import order.OrderDataBean;
+import paylist.PaylistDBBean;
+import paylist.PaylistDataBean;
+import userlist.UserlistDBBean;
+import userlist.UserlistDataBean;
 
 public class ActionController extends Action {
 
@@ -178,6 +178,8 @@ public class ActionController extends Action {
 		}
 
 		int num = Integer.parseInt(req.getParameter("num"));
+		
+		System.out.println("num======================="+num);
 		String pageNum = req.getParameter("pageNum");
 
 		if (pageNum == null || pageNum == "") {
@@ -225,12 +227,17 @@ public class ActionController extends Action {
 			req.setAttribute("rhour", rhour);
 			req.setAttribute("rday", rday);
 			req.setAttribute("startRemain", startRemain);
-			System.out.println("=====startRemain===" + startRemain);
+		
 			AhistoryDBBean hpro = AhistoryDBBean.getInstance();
-			List historylist = hpro.getHistoryList(0, 3, num);
+			List historylist = null;
 			int historycount = hpro.getHistoryCount(num);
-			req.setAttribute("historylist", historylist);
 			req.setAttribute("historycount", historycount);
+			
+			if(historycount!=0) {
+			historylist=hpro.getHistoryList(0, 3, num);
+			
+			req.setAttribute("historylist", historylist);
+		}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -684,7 +691,7 @@ public class ActionController extends Action {
 		int bottomLine = 5;
 		try {
 			if (acount > 0) {
-				aList = oPro.getOrders(astartRow, aendRow, "a", userid);
+				aList = oPro.getSelectOrders(astartRow, aendRow, "a", userid);
 				AuctionDataBean tmp = new AuctionDataBean();
 				String olddate = "";
 				String formatSdate = "";
@@ -718,7 +725,7 @@ public class ActionController extends Action {
 				aendPage = apageCount;
 
 			if (gcount > 0) {
-				gList = oPro.getOrders(gstartRow, gendRow, "g", userid);
+				gList = oPro.getSelectOrders(gstartRow, gendRow, "g", userid);
 				GpurcDataBean tmp1 = new GpurcDataBean();
 				String olddate = "";
 				String formatSdate = "";

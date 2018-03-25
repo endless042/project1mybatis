@@ -43,7 +43,8 @@
 <td class="w3-center"><b>결과</b></td></tr>
 <c:forEach var="order" items="${aList}">
 
-<tr><td class="w3-center"><span style="width: 100%;"><div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
+<tr><td class="w3-center"><span style="width: 100%;">
+<div class=" w3-cell w3-cell-middle" style="height: 100px; width: 100%;">
 ${anumber }
 <c:set var="anumber" value="${anumber-1 }"/>
 </div></span></td>

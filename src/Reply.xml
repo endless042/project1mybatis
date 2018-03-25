@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reply">
+		<select id="selectCount" resultType="int" parameterType="hashmap">
+		select count(*) from reply where pronum=#{pronum}
+	</select>
+
+		<select id="select" resultType="Reply" parameterType="hashmap">
+	select * from reply where num=#{num}
+	</select>
+	
+	<select id="selectList" resultType="Reply" parameterType="hashmap">
+	select * from (select rownum rnum , a.* from (select num, 
+	userid, rdate, pronum, password, content from 
+ 	reply where pronum=#{pronum} order by rdate desc) a) 
+ 	where rnum between #{firstRow} and #{endRow}
+	</select>
+
+
+	<insert id="insert" parameterType="Reply">
+		insert into reply (userid,rdate,password,
+		pronum,content,num) values(#{userid},sysdate,#{password},#{pronum},
+		#{content},#{num})
+	</insert>
+
+
+		<select id="getNumber" resultType="int">
+	select nvl(max(num),0) from reply
+	</select>
+	
+	<delete id="delete" parameterType="hashmap">
+	delete from reply where num=#{num}
+	</delete>
+	
+</mapper>

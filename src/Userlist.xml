@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userlist">
+	<select id="getNextNumber" resultType="int">
+		select userseq.nextval from dual
+	</select>
+
+	<insert id="addUser" parameterType="Userlist">
+		insert into userlist (num,name,id,pwd,bdate,addr,tel,email) 
+		values(#{num},#{name},#{id},#{pwd},#{bdate},#{addr},#{tel},#{email})
+	</insert>
+	
+	<select id="getUser" resultType="Userlist" parameterType="hashmap">
+	select * from userlist where id=#{id}
+	<if test="pwd!=null">
+	and pwd=#{pwd}
+	</if>
+	</select>
+
+	
+	
+<select id="getUsers" resultType="Userlist" parameterType="hashmap">
+select * from (
+select rownum rum , b.* from (
+select a.* from userlist a  ORDER BY cdate DESC, ulevel asc) b)
+where rum between #{startRow} and #{endRow} ORDER BY   num desc
+	</select>
+	
+	
+<select id="getUserCount" resultType="int" parameterType="hashmap">
+	select nvl(count(*),0) from userlist where ulevel like #{ulevel}
+	</select>
+	
+<delete id="deleteUser" parameterType="hashmap">
+delete from userlist where id=#{id} and pwd=#{pwd}
+</delete>
+
+<update id="updateUser" parameterType="Userlist">
+update userlist set name=#{name}, bdate=#{bdate}, addr=#{addr}, tel=#{tel}, email=#{email}, point=#{point},
+ ulevel=#{ulevel} where id=#{id} and pwd=#{pwd}
+</update>
+	
+</mapper>

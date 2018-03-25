@@ -5,8 +5,6 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-import db.MessageDBBean;
-import db.MessageDataBean;
 import jdbc.ConnectionProvider;
 import jdbc.JdbcUtil;
 
@@ -29,16 +27,16 @@ public class GetMessageListService {
 
 		try {
 			conn = ConnectionProvider.getConnection();
-			MessageDBBean messageDao = MessageDBBean.getInstance();
-			int messageTotalCount = messageDao.selectCount(conn,pronum);
-			List<MessageDataBean> messageList = null;
+			ReplyDBBean messageDao = ReplyDBBean.getInstance();
+			int messageTotalCount = messageDao.selectCount(pronum);
+			List<ReplyDataBean> messageList = null;
 			int firstRow = 0;
 			int endRow = 0;
 
 			if (messageTotalCount > 0) {
 				firstRow = (pageNumber - 1) * MESSAGE_COUNT_PER_PAGE + 1;
 				endRow = firstRow + MESSAGE_COUNT_PER_PAGE - 1;
-				messageList = messageDao.selectList(conn, firstRow, endRow, pronum);
+				messageList = messageDao.selectList(firstRow, endRow, pronum);
 			} else {
 				currentPageNumber = 0;
 				messageList = Collections.emptyList();
