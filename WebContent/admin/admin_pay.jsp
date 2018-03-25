@@ -28,7 +28,7 @@
     	<td class="w3-center" width="10%"><b>회원아이디</b></td>
     	<td class="w3-center" ><b>결제가격</b></td>
 
-    	
+    	  
     	<td class="w3-center" ><b>주문수량</b></td>
     
     	<td class="w3-center" ><b>배송방법</b></td>
